@@ -13,6 +13,9 @@ import {
   Wifi,
   Star,
 } from 'lucide-react';
+import { PCT_TRACK } from './pct-track';
+import { AT_TRACK } from './at-track';
+import { CDT_TRACK } from './cdt-track';
 
 export const ALL_SERVICES: Service[] = [
   { id: 'rides', name: 'Rides', icon: Car },
@@ -153,3 +156,21 @@ export const RADIO_MESSAGES: RadioMessage[] = [
         timestamp: '2024-07-15T14:22:00Z',
     }
 ];
+
+export const TRAILS = {
+    pct: {
+        name: 'Pacific Crest Trail',
+        track: PCT_TRACK,
+        color: '#f28c28' // Orange
+    },
+    at: {
+        name: 'Appalachian Trail',
+        track: AT_TRACK,
+        color: '#28f24b' // Green
+    },
+    cdt: {
+        name: 'Continental Divide Trail',
+        track: CDT_TRACK,
+        color: '#286ff2' // Blue
+    }
+}

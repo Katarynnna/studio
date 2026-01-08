@@ -1,7 +1,9 @@
 "use client";
 
 import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
+import { Polyline } from "@vis.gl/react-google-maps/dist/polyline";
 import type { TrailAngel } from "@/lib/types";
+import { TRAILS } from "@/lib/data";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 
@@ -44,6 +46,24 @@ export default function TrailAngelMap({ angels, onSelectAngel }: TrailAngelMapPr
         disableDefaultUI={true}
         gestureHandling="greedy"
       >
+        <Polyline
+          path={TRAILS.pct.track}
+          strokeColor={TRAILS.pct.color}
+          strokeOpacity={0.8}
+          strokeWeight={3}
+        />
+        <Polyline
+          path={TRAILS.at.track}
+          strokeColor={TRAILS.at.color}
+          strokeOpacity={0.8}
+          strokeWeight={3}
+        />
+        <Polyline
+          path={TRAILS.cdt.track}
+          strokeColor={TRAILS.cdt.color}
+          strokeOpacity={0.8}
+          strokeWeight={3}
+        />
         {angels.map((angel) => (
           <AdvancedMarker
             key={angel.id}
