@@ -103,11 +103,12 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
               
               <TabsContent value="availability" className="mt-4">
                 <p className="text-sm text-muted-foreground mb-2">Highlighted dates show when {angel.name} is available.</p>
-                <div className="flex justify-center rounded-md border my-4">
+                <div className="flex justify-center rounded-md border">
                   <Calendar
                     mode="multiple"
                     selected={angel.availability}
                     defaultMonth={angel.availability[0] || new Date()}
+                    className="my-4"
                   />
                 </div>
               </TabsContent>
