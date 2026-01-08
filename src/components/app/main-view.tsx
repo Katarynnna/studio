@@ -1,0 +1,91 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import type { TrailAngel } from "@/lib/types";
+import { TRAIL_ANGELS, ALL_SERVICES } from "@/lib/data";
+import Filters, { type FilterState } from "./filters";
+import TrailRadio from "./trail-radio";
+import TrailAngelMap from "./trail-angel-map";
+import TrailAngelSheet from "./trail-angel-sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card } from "@/components/ui/card";
+
+const initialFilters: FilterState = {
+  name: "",
+  services: [],
+  donationExpected: "any",
+};
+
+export default function MainView() {
+  const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const [selectedAngel, setSelectedAngel] = useState<TrailAngel | null>(null);
+
+  const filteredAngels = useMemo(() => {
+    return TRAIL_ANGELS.filter((angel) => {
+      // Name filter
+      if (
+        filters.name &&
+        !angel.name.toLowerCase().includes(filters.name.toLowerCase())
+      ) {
+        return false;
+      }
+
+      // Services filter
+      if (
+        filters.services.length > 0 &&
+        !filters.services.every((serviceId) =>
+          angel.services.includes(serviceId)
+        )
+      ) {
+        return false;
+      }
+
+      // Donation filter
+      if (filters.donationExpected !== "any") {
+        const expectsDonation = filters.donationExpected === "yes";
+        if (angel.donationExpected !== expectsDonation) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [filters]);
+
+  const handleSelectAngel = (angel: TrailAngel | null) => {
+    setSelectedAngel(angel);
+  };
+  
+  const handleSheetOpenChange = (open: boolean) => {
+    if (!open) {
+      setSelectedAngel(null);
+    }
+  };
+
+  return (
+    <div className="flex h-full">
+      <Card className="w-full max-w-sm border-0 border-r rounded-none">
+        <ScrollArea className="h-full">
+          <div className="p-4 space-y-6">
+            <Filters
+              services={ALL_SERVICES}
+              filters={filters}
+              onFilterChange={setFilters}
+            />
+            <TrailRadio />
+          </div>
+        </ScrollArea>
+      </Card>
+      <div className="flex-1 relative">
+        <TrailAngelMap
+          angels={filteredAngels}
+          onSelectAngel={handleSelectAngel}
+        />
+      </div>
+      <TrailAngelSheet
+        angel={selectedAngel}
+        onOpenChange={handleSheetOpenChange}
+      />
+    </div>
+  );
+}
