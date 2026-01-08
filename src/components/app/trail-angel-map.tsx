@@ -1,10 +1,11 @@
 "use client";
 
-import { APIProvider, Map, AdvancedMarker, Polyline } from "@vis.gl/react-google-maps";
+import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 import type { TrailAngel } from "@/lib/types";
 import { TRAILS } from "@/lib/data";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 type TrailAngelMapProps = {
   angels: TrailAngel[];
@@ -29,6 +30,33 @@ const MissingApiKey = () => (
   </div>
 );
 
+const Polyline = (options: google.maps.PolylineOptions) => {
+  const [polyline, setPolyline] = useState<google.maps.Polyline>();
+  const map = (window as any).google?.maps?.map;
+
+  useEffect(() => {
+    if (!polyline) {
+      setPolyline(new google.maps.Polyline());
+    }
+
+    // remove polyline from map on unmount
+    return () => {
+      if (polyline) {
+        polyline.setMap(null);
+      }
+    };
+  }, [polyline]);
+
+  useEffect(() => {
+    if (polyline) {
+      polyline.setOptions({ ...options, map });
+    }
+  }, [polyline, options, map]);
+
+  return null;
+};
+
+
 export default function TrailAngelMap({ angels, onSelectAngel }: TrailAngelMapProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
@@ -44,6 +72,7 @@ export default function TrailAngelMap({ angels, onSelectAngel }: TrailAngelMapPr
         mapId="trail_angel_hub_map"
         disableDefaultUI={true}
         gestureHandling="greedy"
+        onLoad={map => ((window as any).google.maps.map = map)}
       >
         <Polyline
           path={TRAILS.pct.track}
