@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useState, useEffect, useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { Radio } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ export default function TrailRadio() {
   const { toast } = useToast();
   
   const initialState = { success: false, message: "" };
-  const [state, formAction] = useFormState(submitRadioMessage, initialState);
+  const [state, formAction] = useActionState(submitRadioMessage, initialState);
   
   const [formKey, setFormKey] = useState(Date.now());
   const [textareaValue, setTextareaValue] = useState('');
