@@ -35,7 +35,7 @@ function Calendar({
         head_row: "",
         head_cell:
           "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
-        row: "w-full mt-2",
+        row: "mt-2",
         cell: "h-9 w-9 text-center text-sm p-0 relative first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
         day: cn(
           buttonVariants({ variant: "ghost" }),
