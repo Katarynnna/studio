@@ -33,6 +33,7 @@ import {
   Star,
   Mail,
 } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type TrailAngelSheetProps = {
   angel: TrailAngel | null;
@@ -160,8 +161,3 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
     </Sheet>
   );
 }
-
-// Dummy ScrollArea for type compatibility, since it's in a UI component
-const ScrollArea = ({ className, children }: { className?: string; children: React.ReactNode }) => (
-  <div className={className}>{children}</div>
-);
