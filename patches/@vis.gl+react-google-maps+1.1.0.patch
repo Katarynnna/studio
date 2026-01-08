@@ -1,0 +1,28 @@
+diff --git a/node_modules/@vis.gl/react-google-maps/dist/index.d.ts b/node_modules/@vis.gl/react-google-maps/dist/index.d.ts
+index 735201b..4133499 100644
+--- a/node_modules/@visGreact-google-maps/dist/index.d.ts
++++ b/node_modules/@vis.gl/react-google-maps/dist/index.d.ts
+@@ -21,3 +21,4 @@
+ export { useMapsLibrary } from './hooks/use-maps-library';
+ export { useStreetViewPanorama } from './hooks/use-street-view-panorama';
+ export { useVisibleRegion } from './hooks/use-visible-region';
++export { Polyline } from './components/polyline';
+\ No newline at end of file
+diff --git a/node_modules/@vis.gl/react-google-maps/dist/index.mjs b/node_modules/@vis.gl/react-google-maps/dist/index.mjs
+index 9a6136d..20141f8 100644
+--- a/node_modules/@vis.gl/react-google-maps/dist/index.mjs
++++ b/node_modules/@vis.gl/react-google-maps/dist/index.mjs
+@@ -19,3 +19,4 @@
+ export { useMapsLibrary } from './hooks/use-maps-library.mjs';
+ export { useStreetViewPanorama } from './hooks/use-street-view-panorama.mjs';
+ export { useVisibleRegion } from './hooks/use-visible-region.mjs';
++export { Polyline } from './components/polyline.mjs';
+diff --git a/node_modules/@vis.gl/react-google-maps/dist/index.module.mjs b/node_modules/@vis.gl/react-google-maps/dist/index.module.mjs
+index 9a6136d..20141f8 100644
+--- a/node_modules/@vis.gl/react-google-maps/dist/index.module.mjs
++++ b/node_modules/@vis.gl/react-google-maps/dist/index.module.mjs
+@@ -19,3 +19,4 @@
+ export { useMapsLibrary } from './hooks/use-maps-library.mjs';
+ export { useStreetViewPanorama } from './hooks/use-street-view-panorama.mjs';
+ export { useVisibleRegion } from './hooks/use-visible-region.mjs';
++export { Polyline } from './components/polyline.mjs';

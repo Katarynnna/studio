@@ -1,7 +1,6 @@
 "use client";
 
-import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
-import { Polyline } from "@vis.gl/react-google-maps/dist/polyline";
+import { APIProvider, Map, AdvancedMarker, Polyline } from "@vis.gl/react-google-maps";
 import type { TrailAngel } from "@/lib/types";
 import { TRAILS } from "@/lib/data";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
