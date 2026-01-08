@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { TrailAngel } from "@/lib/types";
 import { TRAIL_ANGELS, ALL_SERVICES } from "@/lib/data";
 import Filters, { type FilterState } from "./filters";
@@ -19,6 +19,11 @@ const initialFilters: FilterState = {
 export default function MainView() {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedAngel, setSelectedAngel] = useState<TrailAngel | null>(null);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const filteredAngels = useMemo(() => {
     return TRAIL_ANGELS.filter((angel) => {
@@ -61,6 +66,11 @@ export default function MainView() {
       setSelectedAngel(null);
     }
   };
+
+  if (!isClient) {
+    // Render a placeholder on the server and during the initial client render
+    return null;
+  }
 
   return (
     <div className="flex h-full">
