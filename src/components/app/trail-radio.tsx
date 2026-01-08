@@ -28,7 +28,7 @@ export default function TrailRadio() {
   const initialState = { success: false, message: "" };
   const [state, formAction] = useActionState(submitRadioMessage, initialState);
   
-  const [formKey, setFormKey] = useState(Date.now());
+  const [formKey, setFormKey] = useState('initial-form-key');
   const [textareaValue, setTextareaValue] = useState('');
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function TrailRadio() {
         setMessages(prev => [newMessage, ...prev]);
 
         // Clear form
-        setFormKey(Date.now());
+        setFormKey(Date.now().toString());
         setTextareaValue('');
       }
     }

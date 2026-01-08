@@ -22,7 +22,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import {
@@ -65,20 +65,20 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
     <Sheet open={!!angel} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-lg p-0">
         <ScrollArea className="h-full">
-          <SheetHeader className="p-6 space-y-2 text-left">
-            <SheetTitle className="text-3xl font-headline">{angel.name}</SheetTitle>
-            <SheetDescription>{angel.location}</SheetDescription>
-            <div className="flex flex-wrap gap-2 pt-2">
-              {angel.badges.map((badge) => (
-                <Badge key={badge} variant="secondary">
-                  {badge}
-                </Badge>
-              ))}
-              {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
-            </div>
-          </SheetHeader>
-          <Separator />
           <div className="p-6">
+            <SheetHeader className="space-y-2 text-left">
+              <SheetTitle className="text-3xl font-headline">{angel.name}</SheetTitle>
+              <SheetDescription>{angel.location}</SheetDescription>
+              <div className="flex flex-wrap gap-2 pt-2">
+                {angel.badges.map((badge) => (
+                  <Badge key={badge} variant="secondary">
+                    {badge}
+                  </Badge>
+                ))}
+                {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
+              </div>
+            </SheetHeader>
+            <Separator className="my-6" />
             <Tabs defaultValue="about">
               <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1" />About</TabsTrigger>
