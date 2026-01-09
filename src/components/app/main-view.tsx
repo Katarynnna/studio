@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import type { TrailAngel, DirectMessage } from "@/lib/types";
 import { TRAIL_ANGELS, ALL_SERVICES } from "@/lib/data";
 import Filters, { type FilterState } from "./filters";
@@ -85,13 +85,9 @@ export default function MainView({ setProfileOpen, onSendMessage }: MainViewProp
     }
   };
 
-  const handleFilterChange = (newFilters: FilterState) => {
+  const handleFilterChange = useCallback((newFilters: FilterState) => {
     setFilters(newFilters);
-    if (isMobile) {
-        // Optional: close dialog on applying filters, or have an "Apply" button
-        // setFilterDialogOpen(false);
-    }
-  };
+  }, []);
 
   const viewToggle = (
     <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-inner">
