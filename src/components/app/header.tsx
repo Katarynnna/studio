@@ -1,3 +1,4 @@
+
 "use client";
 
 import { User, Mail, Radio } from "lucide-react";
@@ -11,9 +12,10 @@ type HeaderProps = {
   setProfileOpen: Dispatch<SetStateAction<boolean>>;
   setInboxOpen: Dispatch<SetStateAction<boolean>>;
   setTrailRadioOpen: Dispatch<SetStateAction<boolean>>;
+  hasUnreadMessages: boolean;
 };
 
-export default function Header({ setProfileOpen, setInboxOpen, setTrailRadioOpen }: HeaderProps) {
+export default function Header({ setProfileOpen, setInboxOpen, setTrailRadioOpen, hasUnreadMessages }: HeaderProps) {
   return (
     <header className="flex items-center justify-between h-16 px-4 md:px-6 border-b shrink-0 z-20 bg-background">
       <Link href="/" className="flex items-center gap-2">
@@ -28,7 +30,10 @@ export default function Header({ setProfileOpen, setInboxOpen, setTrailRadioOpen
             <Radio />
             <span className="sr-only">Trail Radio</span>
         </Button>
-        <Button variant="ghost" onClick={() => setInboxOpen(true)} size="icon">
+        <Button variant="ghost" onClick={() => setInboxOpen(true)} size="icon" className="relative">
+            {hasUnreadMessages && (
+                <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-accent" />
+            )}
           <Mail />
           <span className="sr-only md:hidden">Inbox</span>
         </Button>
