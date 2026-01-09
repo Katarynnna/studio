@@ -19,7 +19,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const [trailRadioOpen, setTrailRadioOpen] = useState(false);
   const [messages, setMessages] = useState<DirectMessage[]>([]);
 
-  const handleSendMessage = (angel: TrailAngel, message: string) => {
+  const addMessageToInbox = (angel: TrailAngel, message: string) => {
     const newMessage: DirectMessage = {
       id: `dm-${Date.now()}`,
       senderId: "user-wired",
@@ -37,7 +37,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
       // @ts-expect-error - injecting props
-      return React.cloneElement(child, { setProfileOpen, onSendMessage: handleSendMessage });
+      return React.cloneElement(child, { setProfileOpen, addMessageToInbox });
     }
     return child;
   });

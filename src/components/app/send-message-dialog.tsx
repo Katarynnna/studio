@@ -32,10 +32,10 @@ type SendMessageDialogProps = {
   children: React.ReactNode;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSendMessage?: (angel: TrailAngel, message: string) => void;
+  addMessageToInbox?: (angel: TrailAngel, message: string) => void;
 };
 
-export default function SendMessageDialog({ angel, children, open, onOpenChange, onSendMessage }: SendMessageDialogProps) {
+export default function SendMessageDialog({ angel, children, open, onOpenChange, addMessageToInbox }: SendMessageDialogProps) {
   const { toast } = useToast();
   const [textareaValue, setTextareaValue] = useState('');
   
@@ -52,13 +52,13 @@ export default function SendMessageDialog({ angel, children, open, onOpenChange,
         variant: state.success ? "default" : "destructive",
       });
 
-      if (state.success && state.sentMessage && onSendMessage) {
-        onSendMessage(angel, state.sentMessage);
+      if (state.success && state.sentMessage && addMessageToInbox) {
+        addMessageToInbox(angel, state.sentMessage);
         onOpenChange(false);
         setTextareaValue('');
       }
     }
-  }, [state, toast, onOpenChange, angel, onSendMessage]);
+  }, [state, toast, onOpenChange, angel, addMessageToInbox]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

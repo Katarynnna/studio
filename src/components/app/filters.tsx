@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Filter } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import type { ReactNode } from "react";
+import type { ReactNode, Dispatch, SetStateAction } from "react";
 import React from 'react';
 
 export type FilterState = {
@@ -20,7 +20,7 @@ export type FilterState = {
 type FiltersProps = {
   services: Service[];
   filters: FilterState;
-  onFilterChange: (filters: FilterState) => void;
+  setFilters: Dispatch<SetStateAction<FilterState>>;
   viewToggle?: ReactNode;
 };
 
@@ -40,18 +40,20 @@ const ServiceCheckbox = React.memo(({ service, isChecked, onToggle }: { service:
 ServiceCheckbox.displayName = 'ServiceCheckbox';
 
 
-export default function Filters({ services, filters, onFilterChange, viewToggle }: FiltersProps) {
+export default function Filters({ services, filters, setFilters, viewToggle }: FiltersProps) {
   const isMobile = useIsMobile();
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onFilterChange({ ...filters, [e.target.name]: e.target.value });
+    setFilters(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleServiceToggle = (serviceId: string, isChecked: boolean) => {
-    const newServices = isChecked
-      ? [...filters.services, serviceId]
-      : filters.services.filter((id) => id !== serviceId);
-    onFilterChange({ ...filters, services: newServices });
+    setFilters(prev => {
+        const newServices = isChecked
+        ? [...prev.services, serviceId]
+        : prev.services.filter((id) => id !== serviceId);
+        return { ...prev, services: newServices };
+    });
   };
   
   const content = (

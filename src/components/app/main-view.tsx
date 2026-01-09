@@ -2,8 +2,8 @@
 
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
-import type { TrailAngel, DirectMessage } from "@/lib/types";
+import { useState, useMemo, useEffect } from "react";
+import type { TrailAngel } from "@/lib/types";
 import { TRAIL_ANGELS, ALL_SERVICES } from "@/lib/data";
 import Filters, { type FilterState } from "./filters";
 import TrailRadio from "./trail-radio";
@@ -31,10 +31,10 @@ const initialFilters: FilterState = {
 
 type MainViewProps = {
   setProfileOpen?: (open: boolean) => void;
-  onSendMessage?: (angel: TrailAngel, message: string) => void;
+  addMessageToInbox?: (angel: TrailAngel, message: string) => void;
 };
 
-export default function MainView({ setProfileOpen, onSendMessage }: MainViewProps) {
+export default function MainView({ setProfileOpen, addMessageToInbox }: MainViewProps) {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedAngel, setSelectedAngel] = useState<TrailAngel | null>(null);
   const [isClient, setIsClient] = useState(false);
@@ -85,10 +85,6 @@ export default function MainView({ setProfileOpen, onSendMessage }: MainViewProp
     }
   };
 
-  const handleFilterChange = (newFilters: FilterState) => {
-    setFilters(newFilters);
-  };
-
   const viewToggle = (
     <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-inner">
       <Button onClick={() => setViewMode('map')} size="sm" variant={viewMode === 'map' ? 'default' : 'ghost'} className={cn("rounded-full h-8 w-8 p-2", viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
@@ -122,7 +118,7 @@ export default function MainView({ setProfileOpen, onSendMessage }: MainViewProp
               <Filters
                 services={ALL_SERVICES}
                 filters={filters}
-                onFilterChange={handleFilterChange}
+                setFilters={setFilters}
               />
             </DialogContent>
           </Dialog>
@@ -139,7 +135,7 @@ export default function MainView({ setProfileOpen, onSendMessage }: MainViewProp
             )}
         </div>
         
-        <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} onSendMessage={onSendMessage} />
+        <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
       </div>
     );
   }
@@ -160,14 +156,14 @@ export default function MainView({ setProfileOpen, onSendMessage }: MainViewProp
               <Filters
                 services={ALL_SERVICES}
                 filters={filters}
-                onFilterChange={handleFilterChange}
+                setFilters={setFilters}
                 viewToggle={viewToggle}
               />
               <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
             </div>
         </Card>
       </div>
-      <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} onSendMessage={onSendMessage} />
+      <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
     </div>
   );
 }
