@@ -24,22 +24,6 @@ type FiltersProps = {
   viewToggle?: ReactNode;
 };
 
-// Internal component to prevent re-renders of the entire filter list
-const ServiceCheckbox = React.memo(({ service, isChecked, onToggle }: { service: Service, isChecked: boolean, onToggle: (id: string, checked: boolean) => void }) => {
-  return (
-    <div className="flex items-center gap-2">
-      <Checkbox
-        id={`service-${service.id}`}
-        checked={isChecked}
-        onCheckedChange={(checked) => onToggle(service.id, !!checked)}
-      />
-      <Label htmlFor={`service-${service.id}`} className="font-normal">{service.name}</Label>
-    </div>
-  );
-});
-ServiceCheckbox.displayName = 'ServiceCheckbox';
-
-
 export default function Filters({ services, filters, setFilters, viewToggle }: FiltersProps) {
   const isMobile = useIsMobile();
 
@@ -47,11 +31,11 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
     setFilters(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleServiceToggle = (serviceId: string, isChecked: boolean) => {
+  const handleServiceToggle = (serviceId: string) => {
     setFilters(prev => {
-        const newServices = isChecked
-        ? [...prev.services, serviceId]
-        : prev.services.filter((id) => id !== serviceId);
+        const newServices = prev.services.includes(serviceId)
+        ? prev.services.filter((id) => id !== serviceId)
+        : [...prev.services, serviceId];
         return { ...prev, services: newServices };
     });
   };
@@ -85,12 +69,14 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
           <Label>Services Offered</Label>
           <div className="grid grid-cols-2 gap-2">
             {services.map((service) => (
-               <ServiceCheckbox 
-                key={service.id}
-                service={service}
-                isChecked={filters.services.includes(service.id)}
-                onToggle={handleServiceToggle}
-              />
+                <div key={service.id} className="flex items-center gap-2">
+                    <Checkbox
+                        id={`service-${service.id}`}
+                        checked={filters.services.includes(service.id)}
+                        onCheckedChange={() => handleServiceToggle(service.id)}
+                    />
+                    <Label htmlFor={`service-${service.id}`} className="font-normal">{service.name}</Label>
+                </div>
             ))}
           </div>
         </div>
