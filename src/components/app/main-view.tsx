@@ -8,7 +8,6 @@ import Filters, { type FilterState } from "./filters";
 import TrailRadio from "./trail-radio";
 import TrailAngelMap from "./trail-angel-map";
 import TrailAngelSheet from "./trail-angel-sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
 import TrailAngelList from "./trail-angel-list";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -134,7 +133,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             {viewToggle}
         </div>
         
-        <div className="h-full w-full overflow-y-auto">
+        <div className="h-full w-full">
             {viewMode === 'map' ? (
             <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             ) : (
@@ -154,7 +153,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
     <div className="flex flex-row h-full">
       <div className="w-96 max-w-sm shrink-0">
         <Card className="border-0 border-b md:border-b-0 md:border-r rounded-none h-full overflow-y-auto">
-            <div className="p-4 space-y-4">
+            <div className="p-4 space-y-2">
               <Filters
                 services={ALL_SERVICES}
                 filters={filters}
