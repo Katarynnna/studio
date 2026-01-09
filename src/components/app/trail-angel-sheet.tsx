@@ -88,16 +88,28 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                    {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 </div>
               </div>
-              <div className="flex justify-between items-center pt-2">
-                <div className="flex flex-wrap gap-2">
-                  {angel.badges.map((badge) => (
-                    <Badge key={badge} variant="secondary">
-                      {badge}
-                    </Badge>
-                  ))}
-                  {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
-                </div>
-                <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
+                  <div className="flex-1 space-y-2">
+                    <div className="flex flex-wrap gap-2">
+                      {angel.badges.map((badge) => (
+                        <Badge key={badge} variant="secondary">
+                          {badge}
+                        </Badge>
+                      ))}
+                       {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
+                    </div>
+                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4" />
+                            <span>Last active: {angel.lastActivity}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <MessageCircle className="w-4 h-4" />
+                            <span>{angel.responseRate}% response rate</span>
+                        </div>
+                    </div>
+                  </div>
+                <div className="flex gap-2 self-start sm:self-center">
                   {angel.socials?.twitter && (
                     <Link href={`https://twitter.com/${angel.socials.twitter}`} target="_blank" rel="noopener noreferrer">
                       <Button variant="outline" size="icon">
@@ -115,26 +127,15 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                 </div>
               </div>
             </SheetHeader>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6 text-sm">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Clock className="w-4 h-4" />
-                  <span>Last active: {angel.lastActivity}</span>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <MessageCircle className="w-4 h-4" />
-                  <span>{angel.responseRate}% response rate</span>
-                </div>
-            </div>
-
-            <Separator />
+            
+            <Separator className="my-6" />
             
             <Tabs defaultValue="about" className="mt-6">
-              <TabsList className="grid w-full grid-cols-4 h-auto sm:h-10">
-                <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1" />About</TabsTrigger>
-                <TabsTrigger value="availability"><CalendarIcon className="w-4 h-4 mr-1" />Calendar</TabsTrigger>
-                <TabsTrigger value="gallery"><GalleryHorizontal className="w-4 h-4 mr-1" />Gallery</TabsTrigger>
-                <TabsTrigger value="reviews"><Users className="w-4 h-4 mr-1" />Reviews</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-4 h-auto sm:h-10 text-xs">
+                <TabsTrigger value="about" className="p-2 sm:p-1"><BadgeInfo className="w-4 h-4 mr-1 hidden sm:inline-flex" />About</TabsTrigger>
+                <TabsTrigger value="availability" className="p-2 sm:p-1"><CalendarIcon className="w-4 h-4 mr-1 hidden sm:inline-flex" />Calendar</TabsTrigger>
+                <TabsTrigger value="gallery" className="p-2 sm:p-1"><GalleryHorizontal className="w-4 h-4 mr-1 hidden sm:inline-flex" />Gallery</TabsTrigger>
+                <TabsTrigger value="reviews" className="p-2 sm:p-1"><Users className="w-4 h-4 mr-1 hidden sm:inline-flex" />Reviews</TabsTrigger>
               </TabsList>
               
               <TabsContent value="about" className="mt-4">

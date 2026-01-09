@@ -95,34 +95,10 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen, isSheet }: T
     </div>
   );
 
-  const content = (
-      <>
-        {isSheet ? (
-          <div className="h-64 pr-4">{messageList}</div>
-        ) : (
-          <ScrollArea className="h-64 pr-4">
-            {messageList}
-            <ScrollBar />
-          </ScrollArea>
-        )}
-         <form key={formKey} action={formAction} className="w-full space-y-2 mt-4">
-          <Textarea 
-            name="message" 
-            placeholder="Post a utility request or trail update..." 
-            required 
-            minLength={3}
-            value={textareaValue}
-            onChange={(e) => setTextareaValue(e.target.value)}
-          />
-          <SubmitButton />
-        </form>
-      </>
-  );
-
   if (isSheet) {
     return (
         <>
-            <div className="space-y-3 h-64 overflow-y-auto">
+            <div className="space-y-3">
                 {messageList}
             </div>
             <form key={formKey} action={formAction} className="w-full space-y-2 mt-4">
