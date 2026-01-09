@@ -32,13 +32,14 @@ type SendMessageDialogProps = {
   children: React.ReactNode;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onSendMessage?: (angel: TrailAngel, message: string) => void;
 };
 
-export default function SendMessageDialog({ angel, children, open, onOpenChange }: SendMessageDialogProps) {
+export default function SendMessageDialog({ angel, children, open, onOpenChange, onSendMessage }: SendMessageDialogProps) {
   const { toast } = useToast();
   const [textareaValue, setTextareaValue] = useState('');
   
-  const initialState = { success: false, message: "", error: null };
+  const initialState = { success: false, message: "", error: null, sentMessage: null };
   const sendMessageWithAngelId = submitDirectMessage.bind(null, angel.id);
   const [state, formAction] = useActionState(sendMessageWithAngelId, initialState);
 
@@ -51,12 +52,13 @@ export default function SendMessageDialog({ angel, children, open, onOpenChange 
         variant: state.success ? "default" : "destructive",
       });
 
-      if (state.success) {
+      if (state.success && state.sentMessage && onSendMessage) {
+        onSendMessage(angel, state.sentMessage);
         onOpenChange(false);
         setTextareaValue('');
       }
     }
-  }, [state, toast, onOpenChange]);
+  }, [state, toast, onOpenChange, angel, onSendMessage]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -65,7 +67,13 @@ export default function SendMessageDialog({ angel, children, open, onOpenChange 
         <DialogHeader>
           <DialogTitle>Message {angel.name}</DialogTitle>
         </DialogHeader>
-        <form action={formAction}>
+        <form action={formAction} onSubmit={(e) => {
+             e.preventDefault();
+             // Manually set the textarea value on the form data
+             const formData = new FormData(e.currentTarget);
+             formData.set('message', textareaValue);
+             formAction(formData);
+        }}>
             <div className="grid gap-4 py-4">
                 <Textarea
                     id="message"

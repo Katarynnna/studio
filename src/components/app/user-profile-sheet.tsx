@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import Image from 'next/image';
@@ -37,7 +38,7 @@ import {
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const userProfile = {
+export const userProfile = {
   name: 'Wired',
   description: "PCT Class of '24",
   avatar: "https://picsum.photos/seed/123/200/200",
@@ -192,7 +193,7 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                         <span className="text-xs text-muted-foreground pt-0.5">{review.date}</span>
                       </div>
                       <StarRating rating={review.rating} />
-                      <p className="text-sm text-muted-foreground pt-1">{review.comment}</p>
+                      <p className="text-sm text-muted-foreground pt-2">{review.comment}</p>
                     </div>
                   </div>
                 ))}

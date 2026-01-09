@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import type { TrailAngel } from "@/lib/types";
@@ -47,6 +48,7 @@ import { useState } from "react";
 type TrailAngelSheetProps = {
   angel: TrailAngel | null;
   onOpenChange: (open: boolean) => void;
+  onSendMessage?: (angel: TrailAngel, message: string) => void;
 };
 
 function StarRating({ rating }: { rating: number }) {
@@ -64,7 +66,7 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheetProps) {
+export default function TrailAngelSheet({ angel, onOpenChange, onSendMessage }: TrailAngelSheetProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   if (!angel) return null;
 
@@ -154,7 +156,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                     </div>
                   ))}
                 </div>
-                <SendMessageDialog angel={angel} open={dialogOpen} onOpenChange={setDialogOpen}>
+                <SendMessageDialog angel={angel} open={dialogOpen} onOpenChange={setDialogOpen} onSendMessage={onSendMessage}>
                     <Button className="w-full mt-6">
                        Message
                     </Button>

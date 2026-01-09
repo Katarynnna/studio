@@ -1,8 +1,9 @@
 
+
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import type { TrailAngel } from "@/lib/types";
+import type { TrailAngel, DirectMessage } from "@/lib/types";
 import { TRAIL_ANGELS, ALL_SERVICES } from "@/lib/data";
 import Filters, { type FilterState } from "./filters";
 import TrailRadio from "./trail-radio";
@@ -30,9 +31,10 @@ const initialFilters: FilterState = {
 
 type MainViewProps = {
   setProfileOpen?: (open: boolean) => void;
+  onSendMessage?: (angel: TrailAngel, message: string) => void;
 };
 
-export default function MainView({ setProfileOpen }: MainViewProps) {
+export default function MainView({ setProfileOpen, onSendMessage }: MainViewProps) {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedAngel, setSelectedAngel] = useState<TrailAngel | null>(null);
   const [isClient, setIsClient] = useState(false);
@@ -141,7 +143,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             )}
         </div>
         
-        <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
+        <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} onSendMessage={onSendMessage} />
       </div>
     );
   }
@@ -149,7 +151,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   // Desktop View
   return (
     <div className="flex flex-row h-full">
-      <div className="flex-1 relative h-full">
+       <div className="flex-1 relative h-full">
         {viewMode === 'map' ? (
           <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         ) : (
@@ -158,7 +160,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
       </div>
       <div className="w-96 max-w-sm shrink-0">
         <Card className="border-0 border-b md:border-b-0 md:border-l rounded-none h-full overflow-y-auto">
-            <div className="p-4 space-y-2">
+            <div className="p-4 space-y-4">
               <Filters
                 services={ALL_SERVICES}
                 filters={filters}
@@ -169,7 +171,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             </div>
         </Card>
       </div>
-      <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
+      <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} onSendMessage={onSendMessage} />
     </div>
   );
 }

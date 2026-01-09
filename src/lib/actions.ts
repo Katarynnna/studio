@@ -67,6 +67,7 @@ type DirectMessageFormState = {
   success: boolean;
   message: string;
   error: string | null;
+  sentMessage: string | null;
 };
 
 export async function submitDirectMessage(
@@ -83,6 +84,7 @@ export async function submitDirectMessage(
       success: false,
       message: "Invalid message.",
       error: validatedFields.error.flatten().fieldErrors.message?.[0] ?? null,
+      sentMessage: null,
     };
   }
 
@@ -91,10 +93,11 @@ export async function submitDirectMessage(
   // In a real app, you would save the message to a database here.
   console.log(`Message for angel ${angelId} would be saved:`, message);
 
-  // We'll just simulate a success for now.
+  // We'll just simulate a success for now and return the message content.
   return {
     success: true,
     message: "Your message has been sent!",
     error: null,
+    sentMessage: message,
   };
 }

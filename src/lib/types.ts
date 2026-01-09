@@ -1,3 +1,4 @@
+
 import type { LucideIcon } from 'lucide-react';
 
 export type Service = {
@@ -46,4 +47,15 @@ export type RadioMessage = {
   author: string;
   message: string;
   timestamp: string;
+};
+
+export type DirectMessage = {
+  id: string;
+  senderId: string;
+  senderName: string;
+  recipientId: string;
+  recipientName: string;
+  message: string;
+  timestamp: string;
+  read: boolean;
 };
