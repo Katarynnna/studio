@@ -82,13 +82,15 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                   <AvatarFallback>{userProfile.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="space-y-1.5 flex-1">
-                  <div className="flex justify-between items-center">
-                    <SheetTitle className="text-3xl font-headline flex items-center gap-2">
-                      {userProfile.name}
-                    </SheetTitle>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <SheetTitle className="text-3xl font-headline flex items-center gap-2">
+                        {userProfile.name}
+                      </SheetTitle>
+                      <SheetDescription>{userProfile.description}</SheetDescription>
+                    </div>
                     <Button variant="outline" size="sm">Edit Profile</Button>
                   </div>
-                  <SheetDescription>{userProfile.description}</SheetDescription>
                    {userProfile.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 </div>
               </div>
@@ -123,9 +125,6 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
               
               <TabsContent value="about" className="mt-4">
                 <p className="text-muted-foreground mb-4">{userProfile.about}</p>
-                 <Button className="w-full mt-6">
-                   Message
-                </Button>
               </TabsContent>
 
               <TabsContent value="gallery" className="mt-4">
