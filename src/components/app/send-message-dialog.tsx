@@ -67,13 +67,7 @@ export default function SendMessageDialog({ angel, children, open, onOpenChange,
         <DialogHeader>
           <DialogTitle>Message {angel.name}</DialogTitle>
         </DialogHeader>
-        <form action={formAction} onSubmit={(e) => {
-             e.preventDefault();
-             // Manually set the textarea value on the form data
-             const formData = new FormData(e.currentTarget);
-             formData.set('message', textareaValue);
-             formAction(formData);
-        }}>
+        <form action={formAction}>
             <div className="grid gap-4 py-4">
                 <Textarea
                     id="message"
