@@ -151,8 +151,8 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   return (
     <div className="flex flex-row h-full">
       <div className="w-96 max-w-sm shrink-0">
-        <ScrollArea className="h-full max-h-screen">
-          <Card className="border-0 border-b md:border-b-0 md:border-r rounded-none">
+        <Card className="border-0 border-b md:border-b-0 md:border-r rounded-none h-full">
+          <ScrollArea className="h-full">
             <div className="p-4 space-y-6">
               <Filters
                 services={ALL_SERVICES}
@@ -162,8 +162,8 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
               />
               <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
             </div>
-          </Card>
-        </ScrollArea>
+          </ScrollArea>
+        </Card>
       </div>
       <div className="flex-1 relative h-full">
         {viewMode === 'map' ? (
