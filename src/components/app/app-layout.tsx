@@ -2,7 +2,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Header from "./header";
 import UserProfileSheet from "./user-profile-sheet";
 import InboxSheet from "./inbox-sheet";
@@ -19,7 +19,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const [trailRadioOpen, setTrailRadioOpen] = useState(false);
   const [messages, setMessages] = useState<DirectMessage[]>([]);
 
-  const addMessageToInbox = (angel: TrailAngel, message: string) => {
+  const addMessageToInbox = useCallback((angel: TrailAngel, message: string) => {
     const newMessage: DirectMessage = {
       id: `dm-${Date.now()}`,
       senderId: "user-wired",
@@ -31,7 +31,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
       read: true,
     };
     setMessages(prev => [newMessage, ...prev]);
-  };
+  }, []);
 
   // Pass state setters and message handler to children.
   const childrenWithProps = React.Children.map(children, (child) => {
