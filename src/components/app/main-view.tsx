@@ -83,20 +83,22 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
 
   return (
     <div className="flex flex-col md:flex-row h-full">
-      <Card className="w-full md:w-96 md:max-w-sm border-0 border-b md:border-b-0 md:border-r rounded-none shrink-0">
-        <ScrollArea className="h-full">
-          <div className="p-4 space-y-6">
-            <Filters
-              services={ALL_SERVICES}
-              filters={filters}
-              onFilterChange={setFilters}
-              viewMode={viewMode}
-              onViewModeChange={setViewMode}
-            />
-            <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
-          </div>
+      <div className="w-full md:w-96 md:max-w-sm shrink-0">
+        <ScrollArea className="h-full md:max-h-screen">
+          <Card className="border-0 border-b md:border-b-0 md:border-r rounded-none">
+            <div className="p-4 space-y-6">
+              <Filters
+                services={ALL_SERVICES}
+                filters={filters}
+                onFilterChange={setFilters}
+                viewMode={viewMode}
+                onViewModeChange={setViewMode}
+              />
+              <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
+            </div>
+          </Card>
         </ScrollArea>
-      </Card>
+      </div>
       <div className="flex-1 relative h-96 md:h-full">
         {viewMode === 'map' ? (
           <TrailAngelMap
