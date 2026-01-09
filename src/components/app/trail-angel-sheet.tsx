@@ -41,6 +41,8 @@ import {
   Instagram,
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import SendMessageDialog from "./send-message-dialog";
+import { useState } from "react";
 
 type TrailAngelSheetProps = {
   angel: TrailAngel | null;
@@ -63,6 +65,7 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheetProps) {
+  const [dialogOpen, setDialogOpen] = useState(false);
   if (!angel) return null;
 
   const services = ALL_SERVICES.filter((s) => angel.services.includes(s.id));
@@ -151,9 +154,11 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                     </div>
                   ))}
                 </div>
-                <Button className="w-full mt-6">
-                   Message
-                </Button>
+                <SendMessageDialog angel={angel} open={dialogOpen} onOpenChange={setDialogOpen}>
+                    <Button className="w-full mt-6">
+                       Message
+                    </Button>
+                </SendMessageDialog>
 
               </TabsContent>
               
@@ -206,7 +211,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                         <span className="text-xs text-muted-foreground pt-0.5">{review.date}</span>
                       </div>
                       <StarRating rating={review.rating} />
-                      <p className="text-sm text-muted-foreground pt-1">{review.comment}</p>
+                      <p className="text-sm text-muted-foreground pt-2">{review.comment}</p>
                     </div>
                   </div>
                 ))}
