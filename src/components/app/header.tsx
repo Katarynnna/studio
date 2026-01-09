@@ -15,7 +15,7 @@ export default function Header({ setProfileOpen, setInboxOpen }: HeaderProps) {
   return (
     <header className="flex items-center justify-between h-16 px-4 md:px-6 border-b shrink-0">
       <Link href="/" className="flex items-center gap-2">
-        <Image src="/assets/logo.svg" alt="Trail Angel Hub Logo" width={32} height={32} />
+        <Image src="/assets/logo.svg" alt="Trail Angel Hub Logo" width={32} height={32} className="text-primary" />
         <h1 className="text-2xl font-bold tracking-tight font-headline">
           Trail Angel Hub
         </h1>
