@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import type { Dispatch, SetStateAction } from "react";
 import { LogoIcon } from "@/components/icons/logo-icon";
+import { ThemeToggle } from "./theme-toggle";
 
 type HeaderProps = {
   setProfileOpen: Dispatch<SetStateAction<boolean>>;
@@ -21,6 +22,7 @@ export default function Header({ setProfileOpen, setInboxOpen }: HeaderProps) {
         </h1>
       </Link>
       <nav className="flex items-center gap-1">
+        <ThemeToggle />
         <Button variant="ghost" onClick={() => setInboxOpen(true)}>
           <Mail />
           <span>Inbox</span>
