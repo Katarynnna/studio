@@ -31,7 +31,6 @@ import {
   BadgeInfo,
   Calendar as CalendarIcon,
   Star,
-  Mail,
   CheckCircle2,
   Clock,
   MessageCircle,
@@ -127,10 +126,8 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                     </div>
                   ))}
                 </div>
-                <Button className="w-full mt-6" asChild>
-                  <a href={`mailto:example@example.com?subject=Message for ${angel.name}`}>
-                    <Mail className="w-4 h-4 mr-2" /> Message
-                  </a>
+                <Button className="w-full mt-6">
+                   Message
                 </Button>
 
               </TabsContent>

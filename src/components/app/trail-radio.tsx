@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import Link from "next/link";
 import { Radio } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -71,7 +72,7 @@ export default function TrailRadio() {
             {messages.map((msg) => (
               <div key={msg.id} className="text-sm">
                 <p>
-                  <a href="#" className="font-semibold hover:underline">{msg.author}</a>
+                  <Link href="/profile" className="font-semibold hover:underline">{msg.author}</Link>
                   <span className="text-xs text-muted-foreground font-normal ml-1">
                     {formatDistanceToNow(new Date(msg.timestamp), { addSuffix: true })}
                   </span>
