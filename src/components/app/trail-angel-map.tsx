@@ -74,13 +74,13 @@ export default function TrailAngelMap({ angels, onSelectAngel }: TrailAngelMapPr
       >
         <Polyline
           path={TRAILS.pct.track}
-          strokeColor={TRAILS.pct.color}
+          strokeColor={TRAILS.cdt.color}
           strokeOpacity={0.8}
           strokeWeight={3}
         />
         <Polyline
           path={TRAILS.at.track}
-          strokeColor={TRAILS.at.color}
+          strokeColor={TRAILS.cdt.color}
           strokeOpacity={0.8}
           strokeWeight={3}
         />
