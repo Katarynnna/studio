@@ -1,8 +1,13 @@
 import { MountainSnow, User, Mail, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import type { Dispatch, SetStateAction } from "react";
 
-export default function Header() {
+type HeaderProps = {
+  setProfileOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function Header({ setProfileOpen }: HeaderProps) {
   return (
     <header className="flex items-center justify-between h-16 px-4 md:px-6 border-b shrink-0">
       <Link href="/" className="flex items-center gap-2">
@@ -24,11 +29,9 @@ export default function Header() {
             <span>Inbox</span>
           </Link>
         </Button>
-        <Button variant="ghost" asChild>
-          <Link href="/profile">
-            <User />
-            <span>My Account</span>
-          </Link>
+        <Button variant="ghost" onClick={() => setProfileOpen(true)}>
+          <User />
+          <span>My Account</span>
         </Button>
       </nav>
     </header>

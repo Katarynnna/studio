@@ -1,8 +1,7 @@
+"use client";
 
-import AppLayout from "@/components/app/app-layout";
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
@@ -15,6 +14,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import {
   Users,
   GalleryHorizontal,
@@ -57,14 +64,18 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function ProfilePage() {
+type UserProfileSheetProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
+
+export default function UserProfileSheet({ open, onOpenChange }: UserProfileSheetProps) {
   return (
-    <AppLayout>
-      <div className="container mx-auto py-8">
-        <Card className="max-w-2xl mx-auto">
-          <ScrollArea className="h-full">
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="w-full sm:max-w-lg p-0">
+        <ScrollArea className="h-full">
           <div className="p-6">
-            <CardHeader className="p-0 space-y-2 text-left">
+            <SheetHeader className="p-0 space-y-2 text-left">
               <div className="flex items-center gap-4">
                  <Avatar className="w-20 h-20">
                   <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
@@ -72,12 +83,12 @@ export default function ProfilePage() {
                 </Avatar>
                 <div className="space-y-1.5 flex-1">
                   <div className="flex justify-between items-start">
-                    <CardTitle className="text-3xl font-headline flex items-center gap-2">
+                    <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                       {userProfile.name}
-                    </CardTitle>
+                    </SheetTitle>
                     <Button variant="outline" size="sm">Edit Profile</Button>
                   </div>
-                  <CardDescription>{userProfile.description}</CardDescription>
+                  <SheetDescription>{userProfile.description}</SheetDescription>
                    {userProfile.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 </div>
               </div>
@@ -88,7 +99,7 @@ export default function ProfilePage() {
                   </Badge>
                 ))}
               </div>
-            </CardHeader>
+            </SheetHeader>
 
             <div className="grid grid-cols-2 gap-4 my-6 text-sm">
                 <div className="flex items-center gap-2 text-muted-foreground">
@@ -163,8 +174,7 @@ export default function ProfilePage() {
             </Tabs>
           </div>
         </ScrollArea>
-        </Card>
-      </div>
-    </AppLayout>
+      </SheetContent>
+    </Sheet>
   );
 }
