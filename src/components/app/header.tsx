@@ -22,11 +22,11 @@ export default function Header({ setProfileOpen, setInboxOpen }: HeaderProps) {
       </Link>
       <nav className="flex items-center gap-1">
         <Button variant="ghost" onClick={() => setInboxOpen(true)}>
-          <Mail className="text-primary" />
+          <Mail />
           <span>Inbox</span>
         </Button>
         <Button variant="ghost" onClick={() => setProfileOpen(true)}>
-          <User className="text-accent" />
+          <User />
           <span>My Account</span>
         </Button>
       </nav>
