@@ -13,7 +13,7 @@ import { Card } from "@/components/ui/card";
 import TrailAngelList from "./trail-angel-list";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { Filter, List, Map as MapIcon, SlidersHorizontal } from "lucide-react";
+import { Filter, List, Map as MapIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -110,7 +110,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   // Mobile View
   if (isMobile) {
     return (
-      <div className="h-full relative">
+      <div className="h-full relative overflow-y-auto">
         <div className="absolute top-4 left-4 z-10">
            <Dialog open={filterDialogOpen} onOpenChange={setFilterDialogOpen}>
             <DialogTrigger asChild>
@@ -120,7 +120,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle className="flex items-center gap-2"><SlidersHorizontal /> Filters</DialogTitle>
+                <DialogTitle className="flex items-center gap-2"><Filter /> Filters</DialogTitle>
               </DialogHeader>
               <Filters
                 services={ALL_SERVICES}
