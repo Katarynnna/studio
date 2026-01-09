@@ -30,10 +30,10 @@ export default function Filters({ services, filters, onFilterChange, viewToggle 
     onFilterChange({ ...filters, [e.target.name]: e.target.value });
   };
 
-  const handleServiceChange = (serviceId: string, checked: boolean) => {
-    const newServices = checked
-      ? [...filters.services, serviceId]
-      : filters.services.filter((id) => id !== serviceId);
+  const handleServiceChange = (serviceId: string) => {
+    const newServices = filters.services.includes(serviceId)
+      ? filters.services.filter((id) => id !== serviceId)
+      : [...filters.services, serviceId];
     onFilterChange({ ...filters, services: newServices });
   };
   
@@ -70,7 +70,7 @@ export default function Filters({ services, filters, onFilterChange, viewToggle 
                 <Checkbox
                   id={`service-${service.id}`}
                   checked={filters.services.includes(service.id)}
-                  onCheckedChange={(checked) => handleServiceChange(service.id, !!checked)}
+                  onCheckedChange={() => handleServiceChange(service.id)}
                 />
                 <Label htmlFor={`service-${service.id}`} className="font-normal">{service.name}</Label>
               </div>
