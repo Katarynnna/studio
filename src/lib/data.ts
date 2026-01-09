@@ -159,24 +159,28 @@ export const TRAIL_ANGELS: TrailAngel[] = [
 export const RADIO_MESSAGES: RadioMessage[] = [
     {
         id: 'rm-1',
+        authorId: 'user-wired',
         author: 'Wired',
         message: 'Anyone know the water situation at mile 179? Heading north.',
         timestamp: '2024-07-15T08:30:00Z',
     },
     {
         id: 'rm-2',
-        author: 'Sidetrack',
+        authorId: 'ta-1',
+        author: 'Bighorn Betty',
         message: 'Heads up! Bear sighting near Bear Mountain, mile 1375. Looks like a mama with cubs, keep your distance.',
         timestamp: '2024-07-15T10:12:00Z',
     },
     {
         id: 'rm-3',
+        authorId: 'user-poptart',
         author: 'Poptart',
         message: 'Left a full fuel canister in the hiker box at Paradise Valley Cafe. Enjoy!',
         timestamp: '2024-07-15T11:05:00Z',
     },
     {
         id: 'rm-4',
+        authorId: 'user-glimmer',
         author: 'Glimmer',
         message: 'Looking to split a ride from Kennedy Meadows to Bishop on the 20th. Anyone interested?',
         timestamp: '2024-07-15T14:22:00Z',

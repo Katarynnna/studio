@@ -1,10 +1,15 @@
 import AppLayout from "@/components/app/app-layout";
 import MainView from "@/components/app/main-view";
+import type { Dispatch, SetStateAction } from "react";
 
-export default function Home() {
+type HomeProps = {
+  setProfileOpen?: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function Home({ setProfileOpen }: HomeProps) {
   return (
     <AppLayout>
-      <MainView />
+      <MainView setProfileOpen={setProfileOpen} />
     </AppLayout>
   );
 }

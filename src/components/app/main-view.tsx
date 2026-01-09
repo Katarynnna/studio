@@ -18,7 +18,11 @@ const initialFilters: FilterState = {
   donationRequired: false,
 };
 
-export default function MainView() {
+type MainViewProps = {
+  setProfileOpen?: (open: boolean) => void;
+};
+
+export default function MainView({ setProfileOpen }: MainViewProps) {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedAngel, setSelectedAngel] = useState<TrailAngel | null>(null);
   const [isClient, setIsClient] = useState(false);
@@ -97,7 +101,7 @@ export default function MainView() {
               viewMode={viewMode}
               onViewModeChange={setViewMode}
             />
-            <TrailRadio />
+            <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
           </div>
         </ScrollArea>
       </Card>

@@ -42,6 +42,7 @@ export type TrailAngel = {
 
 export type RadioMessage = {
   id: string;
+  authorId: string;
   author: string;
   message: string;
   timestamp: string;

@@ -2,15 +2,14 @@
 
 import { useState, useEffect, useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import Link from "next/link";
 import { Radio } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { submitRadioMessage } from "@/lib/actions";
-import { RADIO_MESSAGES } from "@/lib/data";
-import type { RadioMessage } from "@/lib/types";
+import { RADIO_MESSAGES, TRAIL_ANGELS } from "@/lib/data";
+import type { RadioMessage, TrailAngel } from "@/lib/types";
 import { formatDistanceToNow } from "date-fns";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
@@ -23,7 +22,13 @@ function SubmitButton() {
   );
 }
 
-export default function TrailRadio() {
+type TrailRadioProps = {
+  onSelectAngel: (angel: TrailAngel) => void;
+  setProfileOpen?: (open: boolean) => void;
+};
+
+
+export default function TrailRadio({ onSelectAngel, setProfileOpen }: TrailRadioProps) {
   const [messages, setMessages] = useState<RadioMessage[]>(RADIO_MESSAGES);
   const { toast } = useToast();
   
@@ -45,6 +50,7 @@ export default function TrailRadio() {
         // Optimistically add to UI, in a real app this would come from the DB.
         const newMessage: RadioMessage = {
           id: `new-${Date.now()}`,
+          authorId: 'user-wired', // The current user
           author: 'You',
           message: textareaValue,
           timestamp: new Date().toISOString(),
@@ -57,6 +63,17 @@ export default function TrailRadio() {
       }
     }
   }, [state, toast, textareaValue]);
+
+  const handleAuthorClick = (authorId: string) => {
+    if (authorId === 'user-wired') {
+      setProfileOpen?.(true);
+    } else {
+      const angel = TRAIL_ANGELS.find(a => a.id === authorId);
+      if (angel) {
+        onSelectAngel(angel);
+      }
+    }
+  };
 
   return (
     <Card>
@@ -72,7 +89,9 @@ export default function TrailRadio() {
             {messages.map((msg) => (
               <div key={msg.id} className="text-sm">
                 <p>
-                  <Link href="/profile" className="font-semibold hover:underline">{msg.author}</Link>
+                  <button onClick={() => handleAuthorClick(msg.authorId)} className="font-semibold hover:underline text-left">
+                    {msg.author}
+                  </button>
                   <span className="text-xs text-muted-foreground font-normal ml-1">
                     {formatDistanceToNow(new Date(msg.timestamp), { addSuffix: true })}
                   </span>
