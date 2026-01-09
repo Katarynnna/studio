@@ -105,11 +105,11 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                   <div className="flex-1 space-y-2">
                      <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground">
                         <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4" />
+                            <Clock className="w-3 h-3" />
                             <span>Last active: {userProfile.lastActivity}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <MessageCircle className="w-4 h-4" />
+                            <MessageCircle className="w-3 h-3" />
                             <span>{userProfile.responseRate}% response rate</span>
                         </div>
                     </div>
@@ -186,13 +186,13 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                     <Avatar>
                       <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    <div>
+                    <div className="flex-1 space-y-1">
                       <div className="flex items-center gap-2">
                         <p className="font-semibold">{review.author}</p>
                         <span className="text-xs text-muted-foreground">{review.date}</span>
                       </div>
                       <StarRating rating={review.rating} />
-                      <p className="text-sm text-muted-foreground mt-1">{review.comment}</p>
+                      <p className="text-sm text-muted-foreground pt-1">{review.comment}</p>
                     </div>
                   </div>
                 ))}

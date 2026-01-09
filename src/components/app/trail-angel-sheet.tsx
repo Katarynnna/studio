@@ -143,7 +143,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                   <h4 className="font-semibold">Services Offered</h4>
                   {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
                   {services.map((service) => (
                     <div key={service.id} className="flex items-center gap-3">
                       <service.icon className="w-5 h-5 text-primary" />
@@ -200,7 +200,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                     <Avatar>
                       <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    <div className="space-y-1">
+                    <div className="flex-1 space-y-1">
                       <div className="flex items-center gap-2">
                         <p className="font-semibold">{review.author}</p>
                         <span className="text-xs text-muted-foreground">{review.date}</span>
