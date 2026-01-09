@@ -82,7 +82,7 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                   <AvatarFallback>{userProfile.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="space-y-1.5 flex-1">
-                  <div className="flex justify-between items-start">
+                  <div className="flex justify-between items-center">
                     <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                       {userProfile.name}
                     </SheetTitle>
