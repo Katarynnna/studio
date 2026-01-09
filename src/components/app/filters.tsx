@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { SlidersHorizontal } from "lucide-react";
+import { Filter } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ReactNode } from "react";
 
@@ -88,7 +88,7 @@ export default function Filters({ services, filters, onFilterChange, viewToggle 
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
-          <SlidersHorizontal className="w-6 h-6" />
+          <Filter className="w-6 h-6" />
           <span>Filter Angels</span>
         </CardTitle>
         {viewToggle}
