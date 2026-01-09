@@ -12,7 +12,6 @@ export type FilterState = {
   name: string;
   location: string;
   services: string[];
-  donationRequired: boolean;
 };
 
 type FiltersProps = {
@@ -33,10 +32,6 @@ export default function Filters({ services, filters, onFilterChange, viewMode, o
       ? [...filters.services, serviceId]
       : filters.services.filter((id) => id !== serviceId);
     onFilterChange({ ...filters, services: newServices });
-  };
-  
-  const handleDonationChange = (checked: boolean) => {
-    onFilterChange({ ...filters, donationRequired: checked });
   };
 
   return (
@@ -94,17 +89,6 @@ export default function Filters({ services, filters, onFilterChange, viewMode, o
                 <Label htmlFor={`service-${service.id}`} className="font-normal">{service.name}</Label>
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Checkbox
-              id="donation-check"
-              checked={filters.donationRequired}
-              onCheckedChange={handleDonationChange}
-            />
-            <Label htmlFor="donation-check" className="font-normal">Donation required</Label>
           </div>
         </div>
       </CardContent>

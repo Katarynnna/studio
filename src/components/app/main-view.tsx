@@ -15,7 +15,6 @@ const initialFilters: FilterState = {
   name: "",
   location: "",
   services: [],
-  donationRequired: false,
 };
 
 type MainViewProps = {
@@ -61,13 +60,6 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
           return angelServices.includes(serviceId);
         });
         if (!hasAllServices) return false;
-      }
-
-      // Donation filter
-      if (filters.donationRequired) {
-        if (!angel.donationExpected) {
-          return false;
-        }
       }
 
       return true;
