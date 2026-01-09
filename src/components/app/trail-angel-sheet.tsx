@@ -3,6 +3,7 @@
 import type { TrailAngel } from "@/lib/types";
 import { ALL_SERVICES } from "@/lib/data";
 import Image from 'next/image';
+import Link from 'next/link';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import {
   Sheet,
@@ -35,6 +36,8 @@ import {
   Clock,
   MessageCircle,
   Footprints,
+  Twitter,
+  Instagram,
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -84,13 +87,31 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                    {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {angel.badges.map((badge) => (
-                  <Badge key={badge} variant="secondary">
-                    {badge}
-                  </Badge>
-                ))}
-                {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
+              <div className="flex justify-between items-center pt-2">
+                <div className="flex flex-wrap gap-2">
+                  {angel.badges.map((badge) => (
+                    <Badge key={badge} variant="secondary">
+                      {badge}
+                    </Badge>
+                  ))}
+                  {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
+                </div>
+                <div className="flex gap-2">
+                  {angel.socials?.twitter && (
+                    <Link href={`https://twitter.com/${angel.socials.twitter}`} target="_blank" rel="noopener noreferrer">
+                      <Button variant="outline" size="icon">
+                        <Twitter className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  )}
+                  {angel.socials?.instagram && (
+                    <Link href={`https://instagram.com/${angel.socials.instagram}`} target="_blank" rel="noopener noreferrer">
+                      <Button variant="outline" size="icon">
+                        <Instagram className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  )}
+                </div>
               </div>
             </SheetHeader>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -30,6 +31,8 @@ import {
   Clock,
   MessageCircle,
   Footprints,
+  Twitter,
+  Instagram,
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -46,7 +49,11 @@ const userProfile = {
   reviews: [
       { id: 'r-1-1', author: 'Bighorn Betty', rating: 5, comment: 'Wired was a respectful and tidy guest. A joy to host!', date: '2023-05-10' },
       { id: 'r-1-2', author: 'Cascade Dave', rating: 5, comment: 'Great conversation. Left the place cleaner than they found it.', date: '2023-08-02' },
-  ]
+  ],
+  socials: {
+    twitter: 'wiredhiker',
+    instagram: 'wiredpct24',
+  },
 };
 
 function StarRating({ rating }: { rating: number }) {
@@ -93,12 +100,30 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                    {userProfile.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {userProfile.badges.map((badge) => (
-                  <Badge key={badge} variant="secondary">
-                    {badge}
-                  </Badge>
-                ))}
+               <div className="flex justify-between items-center pt-2">
+                <div className="flex flex-wrap gap-2">
+                  {userProfile.badges.map((badge) => (
+                    <Badge key={badge} variant="secondary">
+                      {badge}
+                    </Badge>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  {userProfile.socials?.twitter && (
+                    <Link href={`https://twitter.com/${userProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer">
+                      <Button variant="outline" size="icon">
+                        <Twitter className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  )}
+                  {userProfile.socials?.instagram && (
+                    <Link href={`https://instagram.com/${userProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer">
+                      <Button variant="outline" size="icon">
+                        <Instagram className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  )}
+                </div>
               </div>
             </SheetHeader>
 

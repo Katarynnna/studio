@@ -52,6 +52,10 @@ export const TRAIL_ANGELS: TrailAngel[] = [
     lastActivity: '2 hours ago',
     responseRate: 95,
     hiking: false,
+    socials: {
+      twitter: 'bighornbetty',
+      instagram: 'bighornbetty',
+    },
   },
   {
     id: 'ta-2',
@@ -74,6 +78,9 @@ export const TRAIL_ANGELS: TrailAngel[] = [
     lastActivity: 'Online now',
     responseRate: 100,
     hiking: false,
+    socials: {
+      instagram: 'cascadedave',
+    },
   },
   {
     id: 'ta-3',
@@ -119,6 +126,9 @@ export const TRAIL_ANGELS: TrailAngel[] = [
     lastActivity: '3 days ago',
     responseRate: 70,
     hiking: false,
+    socials: {
+      twitter: 'at_annie',
+    },
   },
     {
     id: 'ta-5',

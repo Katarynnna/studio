@@ -34,6 +34,10 @@ export type TrailAngel = {
   lastActivity: string;
   responseRate: number; // Percentage
   hiking: boolean;
+  socials?: {
+    twitter?: string;
+    instagram?: string;
+  };
 };
 
 export type RadioMessage = {
