@@ -5,7 +5,6 @@ import type { TrailAngel } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Footprints, CheckCircle2 } from "lucide-react";
 
 type TrailAngelListProps = {
@@ -15,7 +14,7 @@ type TrailAngelListProps = {
 
 export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelListProps) {
   return (
-    <ScrollArea className="h-full">
+    <div className="h-full overflow-y-auto">
       <div className="p-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:pt-4">
         {angels.map((angel) => (
           <Card 
@@ -52,6 +51,6 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
           </Card>
         ))}
       </div>
-    </ScrollArea>
+    </div>
   );
 }
