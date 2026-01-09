@@ -115,7 +115,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
               </div>
             </SheetHeader>
 
-            <div className="grid grid-cols-2 gap-4 my-6 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6 text-sm">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Clock className="w-4 h-4" />
                   <span>Last active: {angel.lastActivity}</span>
@@ -129,7 +129,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
             <Separator />
             
             <Tabs defaultValue="about" className="mt-6">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto sm:h-10">
                 <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1" />About</TabsTrigger>
                 <TabsTrigger value="availability"><CalendarIcon className="w-4 h-4 mr-1" />Calendar</TabsTrigger>
                 <TabsTrigger value="gallery"><GalleryHorizontal className="w-4 h-4 mr-1" />Gallery</TabsTrigger>
@@ -139,7 +139,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
               <TabsContent value="about" className="mt-4">
                 <p className="text-muted-foreground mb-4">{angel.about}</p>
                 <h4 className="font-semibold mb-2">Services Offered</h4>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {services.map((service) => (
                     <div key={service.id} className="flex items-center gap-3">
                       <service.icon className="w-5 h-5 text-primary" />

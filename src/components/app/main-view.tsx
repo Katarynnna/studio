@@ -82,8 +82,8 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   }
 
   return (
-    <div className="flex h-full">
-      <Card className="w-full max-w-sm border-0 border-r rounded-none">
+    <div className="flex flex-col md:flex-row h-full">
+      <Card className="w-full md:w-96 md:max-w-sm border-0 border-b md:border-b-0 md:border-r rounded-none shrink-0">
         <ScrollArea className="h-full">
           <div className="p-4 space-y-6">
             <Filters
@@ -97,7 +97,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
           </div>
         </ScrollArea>
       </Card>
-      <div className="flex-1 relative">
+      <div className="flex-1 relative h-96 md:h-full">
         {viewMode === 'map' ? (
           <TrailAngelMap
             angels={filteredAngels}
