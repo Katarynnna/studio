@@ -93,11 +93,11 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   };
 
   const viewToggle = (
-    <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-lg">
-      <Button onClick={() => setViewMode('map')} size="icon" variant={viewMode === 'map' ? 'default' : 'ghost'} className={cn("rounded-full", viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
+    <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-inner">
+      <Button onClick={() => setViewMode('map')} size="sm" variant={viewMode === 'map' ? 'default' : 'ghost'} className={cn("rounded-full h-8 w-8 p-2", viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
         <MapIcon size={16} />
       </Button>
-        <Button onClick={() => setViewMode('list')} size="icon" variant={viewMode === 'list' ? 'default' : 'ghost'} className={cn("rounded-full", viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
+        <Button onClick={() => setViewMode('list')} size="sm" variant={viewMode === 'list' ? 'default' : 'ghost'} className={cn("rounded-full h-8 w-8 p-2", viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
         <List size={16} />
       </Button>
     </div>
