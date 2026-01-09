@@ -28,15 +28,16 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
   const isMobile = useIsMobile();
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setFilters(prev => ({ ...prev, [name]: value }));
   };
 
   const handleServiceToggle = (serviceId: string) => {
     setFilters(prev => {
-        const newServices = prev.services.includes(serviceId)
-        ? prev.services.filter((id) => id !== serviceId)
+      const newServices = prev.services.includes(serviceId)
+        ? prev.services.filter(id => id !== serviceId)
         : [...prev.services, serviceId];
-        return { ...prev, services: newServices };
+      return { ...prev, services: newServices };
     });
   };
   
