@@ -133,13 +133,11 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             {viewToggle}
         </div>
         
-        <div className="h-full w-full">
+        <div className="h-full w-full pt-20">
             {viewMode === 'map' ? (
             <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             ) : (
-            <div className="pt-20 h-full overflow-y-auto">
-                <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
-            </div>
+            <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             )}
         </div>
         
@@ -151,8 +149,15 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   // Desktop View
   return (
     <div className="flex flex-row h-full">
+      <div className="flex-1 relative h-full">
+        {viewMode === 'map' ? (
+          <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+        ) : (
+          <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+        )}
+      </div>
       <div className="w-96 max-w-sm shrink-0">
-        <Card className="border-0 border-b md:border-b-0 md:border-r rounded-none h-full overflow-y-auto">
+        <Card className="border-0 border-b md:border-b-0 md:border-l rounded-none h-full overflow-y-auto">
             <div className="p-4 space-y-2">
               <Filters
                 services={ALL_SERVICES}
@@ -163,13 +168,6 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
               <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
             </div>
         </Card>
-      </div>
-      <div className="flex-1 relative h-full">
-        {viewMode === 'map' ? (
-          <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
-        ) : (
-          <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
-        )}
       </div>
       <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
     </div>
