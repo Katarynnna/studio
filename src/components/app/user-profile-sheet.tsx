@@ -89,7 +89,6 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                       </SheetTitle>
                       <SheetDescription>{userProfile.description}</SheetDescription>
                     </div>
-                    <Button variant="outline" size="sm">Edit Profile</Button>
                   </div>
                    {userProfile.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 </div>
@@ -125,6 +124,7 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
               
               <TabsContent value="about" className="mt-4">
                 <p className="text-muted-foreground mb-4">{userProfile.about}</p>
+                <Button variant="outline" className="w-full mt-4">Edit Profile</Button>
               </TabsContent>
 
               <TabsContent value="gallery" className="mt-4">
