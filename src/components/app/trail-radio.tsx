@@ -80,6 +80,7 @@ export default function TrailRadio() {
               </div>
             ))}
           </div>
+          <ScrollBar />
         </ScrollArea>
       </CardContent>
       <CardFooter>

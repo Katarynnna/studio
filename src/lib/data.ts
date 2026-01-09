@@ -48,6 +48,10 @@ export const TRAIL_ANGELS: TrailAngel[] = [
       { id: 'r-1-2', author: 'Trail Mix', rating: 5, comment: 'Amazing stay! The chili is real.', date: '2023-06-02' },
     ],
     availability: [new Date('2024-07-20'), new Date('2024-07-21'), new Date('2024-08-01')],
+    verified: true,
+    lastActivity: '2 hours ago',
+    responseRate: 95,
+    hiking: false,
   },
   {
     id: 'ta-2',
@@ -66,6 +70,10 @@ export const TRAIL_ANGELS: TrailAngel[] = [
       { id: 'r-2-1', author: 'Pacer', rating: 5, comment: 'Dave is awesome. Super clean place and a great guy to talk to.', date: '2023-08-15' },
     ],
     availability: Array.from({ length: 10 }, (_, i) => new Date(2024, 6, 25 + i)),
+    verified: true,
+    lastActivity: 'Online now',
+    responseRate: 100,
+    hiking: false,
   },
   {
     id: 'ta-3',
@@ -86,6 +94,10 @@ export const TRAIL_ANGELS: TrailAngel[] = [
       { id: 'r-3-2', author: 'Nemo', rating: 5, comment: 'Incredibly organized and welcoming.', date: '2023-04-22' },
     ],
     availability: [],
+    verified: true,
+    lastActivity: '1 day ago',
+    responseRate: 80,
+    hiking: true,
   },
   {
     id: 'ta-4',
@@ -103,6 +115,10 @@ export const TRAIL_ANGELS: TrailAngel[] = [
       { id: 'r-4-1', author: 'Mudfoot', rating: 4, comment: 'Great spot to camp, and Annie is super friendly.', date: '2023-05-14' },
     ],
     availability: Array.from({ length: 30 }, (_, i) => new Date(2024, 7, 1 + i)),
+    verified: false,
+    lastActivity: '3 days ago',
+    responseRate: 70,
+    hiking: false,
   },
     {
     id: 'ta-5',
@@ -122,6 +138,10 @@ export const TRAIL_ANGELS: TrailAngel[] = [
       { id: 'r-5-2', author: 'Rocky', rating: 5, comment: 'Felt like staying with a friend. Great food, great company.', date: '2023-07-25' },
     ],
     availability: [new Date('2024-07-28'), new Date('2024-07-29'), new Date('2024-08-05'), new Date('2024-08-06'), new Date('2024-08-10')],
+    verified: true,
+    lastActivity: 'Active this week',
+    responseRate: 98,
+    hiking: false,
   },
 ];
 

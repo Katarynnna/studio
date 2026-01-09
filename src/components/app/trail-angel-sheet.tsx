@@ -22,7 +22,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,6 +32,10 @@ import {
   Calendar as CalendarIcon,
   Star,
   Mail,
+  CheckCircle2,
+  Clock,
+  MessageCircle,
+  Footprints,
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -67,8 +71,20 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
         <ScrollArea className="h-full">
           <div className="p-6">
             <SheetHeader className="space-y-2 text-left">
-              <SheetTitle className="text-3xl font-headline">{angel.name}</SheetTitle>
-              <SheetDescription>{angel.location}</SheetDescription>
+              <div className="flex items-center gap-4">
+                 <Avatar className="w-20 h-20">
+                  <AvatarImage src={angel.gallery[0]} alt={angel.name} />
+                  <AvatarFallback>{angel.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className="space-y-1.5">
+                  <SheetTitle className="text-3xl font-headline flex items-center gap-2">
+                    {angel.name}
+                    {angel.verified && <CheckCircle2 className="w-6 h-6 text-blue-500" title="Verified Angel" />}
+                  </SheetTitle>
+                  <SheetDescription>{angel.location}</SheetDescription>
+                   {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
+                </div>
+              </div>
               <div className="flex flex-wrap gap-2 pt-2">
                 {angel.badges.map((badge) => (
                   <Badge key={badge} variant="secondary">
@@ -78,8 +94,21 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                 {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
               </div>
             </SheetHeader>
-            <Separator className="my-6" />
-            <Tabs defaultValue="about">
+
+            <div className="grid grid-cols-2 gap-4 my-6 text-sm">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Clock className="w-4 h-4" />
+                  <span>Last active: {angel.lastActivity}</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <MessageCircle className="w-4 h-4" />
+                  <span>{angel.responseRate}% response rate</span>
+                </div>
+            </div>
+
+            <Separator />
+            
+            <Tabs defaultValue="about" className="mt-6">
               <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1" />About</TabsTrigger>
                 <TabsTrigger value="availability"><CalendarIcon className="w-4 h-4 mr-1" />Calendar</TabsTrigger>
@@ -98,7 +127,12 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                     </div>
                   ))}
                 </div>
-                <Button className="w-full mt-6"><Mail className="w-4 h-4 mr-2" /> Message {angel.name}</Button>
+                <Button className="w-full mt-6 asChild">
+                  <a href={`mailto:example@example.com?subject=Message for ${angel.name}`}>
+                    <Mail className="w-4 h-4 mr-2" /> Message
+                  </a>
+                </Button>
+
               </TabsContent>
               
               <TabsContent value="availability" className="mt-4">

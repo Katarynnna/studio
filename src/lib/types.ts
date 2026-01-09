@@ -30,6 +30,10 @@ export type TrailAngel = {
   badges: string[];
   reviews: Review[];
   availability: Date[]; // Dates they are available
+  verified: boolean;
+  lastActivity: string;
+  responseRate: number; // Percentage
+  hiking: boolean;
 };
 
 export type RadioMessage = {
