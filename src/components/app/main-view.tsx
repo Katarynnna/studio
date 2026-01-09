@@ -164,7 +164,7 @@ export default function MainView({ setProfileOpen, onSendMessage }: MainViewProp
               <Filters
                 services={ALL_SERVICES}
                 filters={filters}
-                onFilterChange={setFilters}
+                onFilterChange={handleFilterChange}
                 viewToggle={viewToggle}
               />
               <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
