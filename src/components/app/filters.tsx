@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { SlidersHorizontal } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import type { ReactNode } from "react";
 
 export type FilterState = {
   name: string;
@@ -18,9 +19,10 @@ type FiltersProps = {
   services: Service[];
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
+  viewToggle?: ReactNode;
 };
 
-export default function Filters({ services, filters, onFilterChange }: FiltersProps) {
+export default function Filters({ services, filters, onFilterChange, viewToggle }: FiltersProps) {
   const isMobile = useIsMobile();
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,11 +85,12 @@ export default function Filters({ services, filters, onFilterChange }: FiltersPr
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <SlidersHorizontal className="w-6 h-6" />
           <span>Filter Angels</span>
         </CardTitle>
+        {viewToggle}
       </CardHeader>
       <CardContent>
           {content}

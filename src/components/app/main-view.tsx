@@ -21,8 +21,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Switch } from "../ui/switch";
-import { Label } from "../ui/label";
 import { cn } from "@/lib/utils";
 
 const initialFilters: FilterState = {
@@ -94,6 +92,17 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
     }
   };
 
+  const viewToggle = (
+    <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-lg">
+      <Button onClick={() => setViewMode('map')} size="icon" variant={viewMode === 'map' ? 'default' : 'ghost'} className={cn("rounded-full", viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
+        <MapIcon size={16} />
+      </Button>
+        <Button onClick={() => setViewMode('list')} size="icon" variant={viewMode === 'list' ? 'default' : 'ghost'} className={cn("rounded-full", viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
+        <List size={16} />
+      </Button>
+    </div>
+  );
+
   if (!isClient) {
     return null; // Render nothing on the server
   }
@@ -121,15 +130,8 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="absolute top-4 right-4 z-10 flex gap-2">
-            <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-lg">
-              <Button onClick={() => setViewMode('map')} size="icon" variant={viewMode === 'map' ? 'default' : 'ghost'} className={cn("rounded-full", viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
-                <MapIcon size={16} />
-              </Button>
-               <Button onClick={() => setViewMode('list')} size="icon" variant={viewMode === 'list' ? 'default' : 'ghost'} className={cn("rounded-full", viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
-                <List size={16} />
-              </Button>
-            </div>
+        <div className="absolute top-4 right-4 z-10">
+            {viewToggle}
         </div>
         
         {viewMode === 'map' ? (
@@ -156,16 +158,8 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
                 services={ALL_SERVICES}
                 filters={filters}
                 onFilterChange={setFilters}
+                viewToggle={viewToggle}
               />
-               <div className="flex items-center justify-center gap-2 p-1 rounded-full bg-secondary">
-                  <Label htmlFor="view-mode-switch-desktop" className="pl-2 flex items-center gap-1 text-sm"><MapIcon size={16} /> Map</Label>
-                  <Switch
-                      id="view-mode-switch-desktop"
-                      checked={viewMode === "list"}
-                      onCheckedChange={(checked) => setViewMode(checked ? "list" : "map")}
-                  />
-                  <Label htmlFor="view-mode-switch-desktop" className="pr-2 flex items-center gap-1 text-sm"><List size={16} /> List</Label>
-              </div>
               <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
             </div>
           </Card>
