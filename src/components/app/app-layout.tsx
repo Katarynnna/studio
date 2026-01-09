@@ -8,6 +8,41 @@ import UserProfileSheet from "./user-profile-sheet";
 import InboxSheet from "./inbox-sheet";
 import TrailRadioSheet from "./trail-radio-sheet";
 import { type DirectMessage, type TrailAngel } from "@/lib/types";
+import { TRAIL_ANGELS } from "@/lib/data";
+
+const initialMessages: DirectMessage[] = [
+  {
+    id: 'dm-1',
+    senderId: 'ta-1',
+    senderName: 'Bighorn Betty',
+    recipientId: 'user-wired',
+    recipientName: 'You',
+    message: "Hey there! I saw you were asking about water sources. The creek at mile 179 is flowing well. Let me know if you need anything when you get to Wrightwood!",
+    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    read: false,
+  },
+  {
+    id: 'dm-2',
+    senderId: 'user-wired',
+    senderName: 'You',
+    recipientId: 'ta-2',
+    recipientName: 'Cascade Dave',
+    message: "Hi Dave, do you have space for a hiker to stay tomorrow night?",
+    timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+    read: true,
+  },
+  {
+    id: 'dm-3',
+    senderId: 'ta-2',
+    senderName: 'Cascade Dave',
+    recipientId: 'user-wired',
+    recipientName: 'You',
+    message: "You bet! The spare room is all yours. See you then.",
+    timestamp: new Date(Date.now() - 23 * 60 * 60 * 1000).toISOString(),
+    read: true,
+  }
+];
+
 
 type AppLayoutProps = {
   children: ReactNode;
@@ -17,7 +52,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [inboxOpen, setInboxOpen] = useState(false);
   const [trailRadioOpen, setTrailRadioOpen] = useState(false);
-  const [messages, setMessages] = useState<DirectMessage[]>([]);
+  const [messages, setMessages] = useState<DirectMessage[]>(initialMessages);
   
   const hasUnreadMessages = useMemo(() => messages.some(m => !m.read && m.senderId !== 'user-wired'), [messages]);
 
@@ -80,7 +115,9 @@ export default function AppLayout({ children }: AppLayoutProps) {
         onOpenChange={handleInboxOpenChange} 
         messages={messages}
         onSelectAngel={(angelId) => {
-          console.log("Selected angel:", angelId);
+          // This could be used to open a profile or map from the inbox
+          const angel = TRAIL_ANGELS.find(a => a.id === angelId);
+          console.log("Selected angel:", angel?.name);
         }}
       />
       <TrailRadioSheet open={trailRadioOpen} onOpenChange={setTrailRadioOpen} />

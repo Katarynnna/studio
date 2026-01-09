@@ -50,7 +50,7 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
   // Memoize conversation previews
   const conversationPreviews = Object.keys(conversations).map(partnerId => {
     const convo = conversations[partnerId];
-    const latestMessage = convo.messages[0]; // Messages are sorted descending by time
+    const latestMessage = convo.messages.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0];
     const partner = TRAIL_ANGELS.find(a => a.id === partnerId);
     return {
       partnerId: partnerId,
@@ -60,7 +60,7 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
       timestamp: latestMessage.timestamp,
       unreadCount: convo.unreadCount,
     };
-  });
+  }).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   
   const selectedConversation = selectedConversationId ? conversations[selectedConversationId]?.messages : null;
   const partner = selectedConversationId ? TRAIL_ANGELS.find(a => a.id === selectedConversationId) : null;
@@ -92,7 +92,7 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
     <Sheet open={open} onOpenChange={(isOpen) => {
         onOpenChange(isOpen);
         if (!isOpen) {
-            setSelectedConversationId(null); // Reset conversation view on close
+            setTimeout(() => setSelectedConversationId(null), 300); // Reset conversation view on close after animation
         }
     }}>
       <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
@@ -129,17 +129,17 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
                                             <AvatarImage src={convo.partnerAvatar} alt={convo.partnerName} />
                                             <AvatarFallback>{convo.partnerName.charAt(0)}</AvatarFallback>
                                         </Avatar>
-                                        <div className="flex-1">
+                                        <div className="flex-1 overflow-hidden">
                                             <div className="flex justify-between items-center">
-                                                <p className="font-semibold">{convo.partnerName}</p>
-                                                <div className="flex items-center gap-2">
+                                                <p className="font-semibold truncate">{convo.partnerName}</p>
+                                                <div className="flex items-center gap-2 shrink-0">
                                                 <p className="text-xs text-muted-foreground">
                                                     {formatDistanceToNow(new Date(convo.timestamp), { addSuffix: true })}
                                                 </p>
-                                                {convo.unreadCount > 0 && <span className="block h-2 w-2 rounded-full bg-accent" />}
+                                                {convo.unreadCount > 0 && <span className="block h-2 w-2 rounded-full bg-green-500" />}
                                                 </div>
                                             </div>
-                                            <p className="text-sm text-muted-foreground truncate">{convo.latestMessage}</p>
+                                            <p className={cn("text-sm  truncate", convo.unreadCount > 0 ? "text-foreground font-medium" : "text-muted-foreground")}>{convo.latestMessage}</p>
                                         </div>
                                     </div>
                                 </Card>
@@ -154,10 +154,10 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
                                 <Button variant="link" onClick={openAngelProfile}>View {partner.name}'s Profile</Button>
                             </div>
                         }
-                        {selectedConversation?.slice().reverse().map(msg => (
+                        {selectedConversation?.slice().sort((a,b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()).map(msg => (
                             <div key={msg.id} className={cn("flex flex-col gap-2", msg.senderId === 'user-wired' ? "items-end" : "items-start")}>
-                                <div className={cn("max-w-xs rounded-lg p-3", msg.senderId === 'user-wired' ? "bg-primary text-primary-foreground" : "bg-secondary")}>
-                                    <p className="text-sm">{msg.message}</p>
+                                <div className={cn("max-w-[80%] rounded-lg p-3", msg.senderId === 'user-wired' ? "bg-primary text-primary-foreground" : "bg-secondary")}>
+                                    <p className="text-sm break-words">{msg.message}</p>
                                 </div>
                                 <p className="text-xs text-muted-foreground px-1">
                                     {format(new Date(msg.timestamp), "MMM d, h:mm a")}
@@ -174,4 +174,3 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
     </>
   );
 }
-

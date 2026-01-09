@@ -32,7 +32,7 @@ export default function Header({ setProfileOpen, setInboxOpen, setTrailRadioOpen
         </Button>
         <Button variant="ghost" onClick={() => setInboxOpen(true)} size="icon" className="relative">
             {hasUnreadMessages && (
-                <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-accent" />
+                <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-green-500" />
             )}
           <Mail />
           <span className="sr-only md:hidden">Inbox</span>
