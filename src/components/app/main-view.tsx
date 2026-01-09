@@ -9,10 +9,7 @@ import TrailAngelMap from "./trail-angel-map";
 import TrailAngelSheet from "./trail-angel-sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import TrailAngelList from "./trail-angel-list";
-import { List, Map as MapIcon } from "lucide-react";
 
 const initialFilters: FilterState = {
   name: "",
@@ -93,21 +90,12 @@ export default function MainView() {
       <Card className="w-full max-w-sm border-0 border-r rounded-none">
         <ScrollArea className="h-full">
           <div className="p-4 space-y-6">
-            <div className="flex justify-between items-center pr-2">
-              <Label htmlFor="view-mode-switch" className="flex items-center gap-2 text-lg font-semibold">
-                {viewMode === "map" ? <MapIcon /> : <List />}
-                <span>{viewMode === "map" ? "Map View" : "List View"}</span>
-              </Label>
-              <Switch
-                id="view-mode-switch"
-                checked={viewMode === "list"}
-                onCheckedChange={(checked) => setViewMode(checked ? "list" : "map")}
-              />
-            </div>
             <Filters
               services={ALL_SERVICES}
               filters={filters}
               onFilterChange={setFilters}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
             />
             <TrailRadio />
           </div>

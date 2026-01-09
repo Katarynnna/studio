@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Filter } from "lucide-react";
+import { Filter, List, Map as MapIcon } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 
 export type FilterState = {
   name: string;
@@ -18,9 +19,11 @@ type FiltersProps = {
   services: Service[];
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
+  viewMode: "map" | "list";
+  onViewModeChange: (viewMode: "map" | "list") => void;
 };
 
-export default function Filters({ services, filters, onFilterChange }: FiltersProps) {
+export default function Filters({ services, filters, onFilterChange, viewMode, onViewModeChange }: FiltersProps) {
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFilterChange({ ...filters, [e.target.name]: e.target.value });
   };
@@ -39,10 +42,20 @@ export default function Filters({ services, filters, onFilterChange }: FiltersPr
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Filter className="w-6 h-6" />
-          <span>Filter Angels</span>
-        </CardTitle>
+        <div className="flex justify-between items-center">
+            <CardTitle className="flex items-center gap-2">
+              <Filter className="w-6 h-6" />
+              <span>Filter Angels</span>
+            </CardTitle>
+            <div className="flex items-center gap-2">
+                {viewMode === "map" ? <MapIcon size={16} /> : <List size={16} />}
+                <Switch
+                    id="view-mode-switch"
+                    checked={viewMode === "list"}
+                    onCheckedChange={(checked) => onViewModeChange(checked ? "list" : "map")}
+                />
+            </div>
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
