@@ -110,7 +110,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   // Mobile View
   if (isMobile) {
     return (
-      <div className="h-full relative overflow-y-auto">
+      <div className="h-full relative overflow-hidden">
         <div className="absolute top-4 left-4 z-10">
            <Dialog open={filterDialogOpen} onOpenChange={setFilterDialogOpen}>
             <DialogTrigger asChild>
@@ -134,13 +134,15 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             {viewToggle}
         </div>
         
-        {viewMode === 'map' ? (
-          <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
-        ) : (
-          <div className="pt-20">
-            <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
-          </div>
-        )}
+        <div className="h-full w-full overflow-y-auto">
+            {viewMode === 'map' ? (
+            <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+            ) : (
+            <div className="pt-20">
+                <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+            </div>
+            )}
+        </div>
         
         <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
       </div>
@@ -151,8 +153,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   return (
     <div className="flex flex-row h-full">
       <div className="w-96 max-w-sm shrink-0">
-        <Card className="border-0 border-b md:border-b-0 md:border-r rounded-none h-full">
-          <ScrollArea className="h-full">
+        <Card className="border-0 border-b md:border-b-0 md:border-r rounded-none h-full overflow-y-auto">
             <div className="p-4 space-y-6">
               <Filters
                 services={ALL_SERVICES}
@@ -162,7 +163,6 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
               />
               <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
             </div>
-          </ScrollArea>
         </Card>
       </div>
       <div className="flex-1 relative h-full">
