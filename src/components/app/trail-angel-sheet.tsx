@@ -130,11 +130,11 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
             <Separator className="my-6" />
             
             <Tabs defaultValue="about" className="mt-6">
-              <TabsList className="grid w-full grid-cols-4 h-auto sm:h-10 text-xs">
-                <TabsTrigger value="about" className="p-2 sm:p-1"><BadgeInfo className="w-4 h-4 mr-1 hidden sm:inline-flex" />About</TabsTrigger>
-                <TabsTrigger value="availability" className="p-2 sm:p-1"><CalendarIcon className="w-4 h-4 mr-1 hidden sm:inline-flex" />Calendar</TabsTrigger>
-                <TabsTrigger value="gallery" className="p-2 sm:p-1"><GalleryHorizontal className="w-4 h-4 mr-1 hidden sm:inline-flex" />Gallery</TabsTrigger>
-                <TabsTrigger value="reviews" className="p-2 sm:p-1"><Users className="w-4 h-4 mr-1 hidden sm:inline-flex" />Reviews</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-4 h-auto sm:h-10 text-xs p-1">
+                <TabsTrigger value="about" className="p-1 text-xs sm:text-sm"><BadgeInfo className="w-4 h-4 mr-1 hidden sm:inline-flex" />About</TabsTrigger>
+                <TabsTrigger value="availability" className="p-1 text-xs sm:text-sm"><CalendarIcon className="w-4 h-4 mr-1 hidden sm:inline-flex" />Calendar</TabsTrigger>
+                <TabsTrigger value="gallery" className="p-1 text-xs sm:text-sm"><GalleryHorizontal className="w-4 h-4 mr-1 hidden sm:inline-flex" />Gallery</TabsTrigger>
+                <TabsTrigger value="reviews" className="p-1 text-xs sm:text-sm"><Users className="w-4 h-4 mr-1 hidden sm:inline-flex" />Reviews</TabsTrigger>
               </TabsList>
               
               <TabsContent value="about" className="mt-4">
@@ -143,7 +143,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                   <h4 className="font-semibold">Services Offered</h4>
                   {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
+                <div className="flex flex-wrap gap-x-6 gap-y-4">
                   {services.map((service) => (
                     <div key={service.id} className="flex items-center gap-3">
                       <service.icon className="w-5 h-5 text-primary" />
@@ -205,7 +205,9 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                         <p className="font-semibold">{review.author}</p>
                         <span className="text-xs text-muted-foreground">{review.date}</span>
                       </div>
-                      <StarRating rating={review.rating} />
+                       <div className="pt-1">
+                        <StarRating rating={review.rating} />
+                      </div>
                       <p className="text-sm text-muted-foreground pt-1">{review.comment}</p>
                     </div>
                   </div>
