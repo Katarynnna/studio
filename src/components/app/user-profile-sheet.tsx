@@ -63,7 +63,7 @@ function StarRating({ rating }: { rating: number }) {
       {Array.from({ length: 5 }, (_, i) => (
         <Star
           key={i}
-          className={`w-4 h-4 ${
+          className={`w-3 h-3 ${
             i < rating ? "text-accent fill-accent" : "text-muted-foreground"
           }`}
         />
@@ -103,14 +103,7 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
               </div>
                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
                   <div className="flex-1 space-y-2">
-                    <div className="flex flex-wrap gap-2">
-                      {userProfile.badges.map((badge) => (
-                        <Badge key={badge} variant="secondary">
-                          {badge}
-                        </Badge>
-                      ))}
-                    </div>
-                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-sm text-muted-foreground">
+                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground">
                         <div className="flex items-center gap-2">
                             <Clock className="w-4 h-4" />
                             <span>Last active: {userProfile.lastActivity}</span>
@@ -119,6 +112,13 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                             <MessageCircle className="w-4 h-4" />
                             <span>{userProfile.responseRate}% response rate</span>
                         </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {userProfile.badges.map((badge) => (
+                        <Badge key={badge} variant="secondary">
+                          {badge}
+                        </Badge>
+                      ))}
                     </div>
                   </div>
                 <div className="flex gap-2 self-start sm:self-center">
