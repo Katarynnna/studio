@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Filter } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ReactNode } from "react";
+import React from 'react';
 
 export type FilterState = {
   name: string;
@@ -23,6 +24,22 @@ type FiltersProps = {
   viewToggle?: ReactNode;
 };
 
+// Internal component to prevent re-renders of the entire filter list
+const ServiceCheckbox = React.memo(({ service, isChecked, onToggle }: { service: Service, isChecked: boolean, onToggle: (id: string, checked: boolean) => void }) => {
+  return (
+    <div className="flex items-center gap-2">
+      <Checkbox
+        id={`service-${service.id}`}
+        checked={isChecked}
+        onCheckedChange={(checked) => onToggle(service.id, !!checked)}
+      />
+      <Label htmlFor={`service-${service.id}`} className="font-normal">{service.name}</Label>
+    </div>
+  );
+});
+ServiceCheckbox.displayName = 'ServiceCheckbox';
+
+
 export default function Filters({ services, filters, onFilterChange, viewToggle }: FiltersProps) {
   const isMobile = useIsMobile();
 
@@ -30,8 +47,8 @@ export default function Filters({ services, filters, onFilterChange, viewToggle 
     onFilterChange({ ...filters, [e.target.name]: e.target.value });
   };
 
-  const handleServiceChange = (checked: boolean, serviceId: string) => {
-    const newServices = checked
+  const handleServiceToggle = (serviceId: string, isChecked: boolean) => {
+    const newServices = isChecked
       ? [...filters.services, serviceId]
       : filters.services.filter((id) => id !== serviceId);
     onFilterChange({ ...filters, services: newServices });
@@ -66,14 +83,12 @@ export default function Filters({ services, filters, onFilterChange, viewToggle 
           <Label>Services Offered</Label>
           <div className="grid grid-cols-2 gap-2">
             {services.map((service) => (
-              <div key={service.id} className="flex items-center gap-2">
-                <Checkbox
-                  id={`service-${service.id}`}
-                  checked={filters.services.includes(service.id)}
-                  onCheckedChange={(checked) => handleServiceChange(!!checked, service.id)}
-                />
-                <Label htmlFor={`service-${service.id}`} className="font-normal">{service.name}</Label>
-              </div>
+               <ServiceCheckbox 
+                key={service.id}
+                service={service}
+                isChecked={filters.services.includes(service.id)}
+                onToggle={handleServiceToggle}
+              />
             ))}
           </div>
         </div>

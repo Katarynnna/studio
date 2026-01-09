@@ -85,9 +85,9 @@ export default function MainView({ setProfileOpen, onSendMessage }: MainViewProp
     }
   };
 
-  const handleFilterChange = useCallback((newFilters: FilterState) => {
+  const handleFilterChange = (newFilters: FilterState) => {
     setFilters(newFilters);
-  }, []);
+  };
 
   const viewToggle = (
     <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-inner">
