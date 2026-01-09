@@ -36,17 +36,21 @@ const Polyline = (props: google.maps.PolylineOptions) => {
 
   useEffect(() => {
     if (map) {
-      const poly = new google.maps.Polyline({
+      if (polyline) {
+        polyline.setMap(null);
+      }
+      
+      const newPolyline = new google.maps.Polyline({
         ...props,
         map: map,
       });
-      setPolyline(poly);
+      setPolyline(newPolyline);
 
       return () => {
-        poly.setMap(null);
+        newPolyline.setMap(null);
       };
     }
-  }, [map, props]);
+  }, [map, props.path, props.strokeColor]); // Re-run when path or color changes
 
   return null;
 };
