@@ -8,14 +8,12 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogFooter,
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import type { TrailAngel } from "@/lib/types";
 import { submitDirectMessage } from "@/lib/actions";
@@ -66,26 +64,17 @@ export default function SendMessageDialog({ angel, children, open, onOpenChange 
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Message {angel.name}</DialogTitle>
-          <DialogDescription>
-            Your message will be sent to {angel.name}'s inbox.
-          </DialogDescription>
         </DialogHeader>
         <form action={formAction}>
             <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="message" className="text-right">
-                        Message
-                    </Label>
-                    <Textarea
-                        id="message"
-                        name="message"
-                        value={textareaValue}
-                        onChange={(e) => setTextareaValue(e.target.value)}
-                        placeholder={`Hi ${angel.name}, I'm hiking the trail and was wondering...`}
-                        className="col-span-3"
-                        required
-                    />
-                </div>
+                <Textarea
+                    id="message"
+                    name="message"
+                    value={textareaValue}
+                    onChange={(e) => setTextareaValue(e.target.value)}
+                    placeholder={`Hi ${angel.name}, I'm hiking the trail and was wondering...`}
+                    required
+                />
             </div>
             <DialogFooter>
                 <DialogClose asChild>
