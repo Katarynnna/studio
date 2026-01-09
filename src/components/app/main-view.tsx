@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -22,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
+import { cn } from "@/lib/utils";
 
 const initialFilters: FilterState = {
   name: "",
@@ -100,7 +102,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   if (isMobile) {
     return (
       <div className="h-full relative">
-        <div className="absolute top-4 left-4 z-10 flex gap-2">
+        <div className="absolute top-4 left-4 z-10">
            <Dialog open={filterDialogOpen} onOpenChange={setFilterDialogOpen}>
             <DialogTrigger asChild>
               <Button size="icon" variant="secondary" className="shadow-lg">
@@ -118,21 +120,24 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
               />
             </DialogContent>
           </Dialog>
-           <div className="flex items-center gap-2 p-2 rounded-full bg-secondary shadow-lg">
-              <MapIcon size={16} />
-              <Switch
-                  id="view-mode-switch-mobile"
-                  checked={viewMode === "list"}
-                  onCheckedChange={(checked) => setViewMode(checked ? "list" : "map")}
-              />
-              <List size={16} />
-          </div>
+        </div>
+        <div className="absolute top-4 right-4 z-10 flex gap-2">
+            <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-lg">
+              <Button onClick={() => setViewMode('map')} size="icon" variant={viewMode === 'map' ? 'default' : 'ghost'} className={cn("rounded-full", viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
+                <MapIcon size={16} />
+              </Button>
+               <Button onClick={() => setViewMode('list')} size="icon" variant={viewMode === 'list' ? 'default' : 'ghost'} className={cn("rounded-full", viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
+                <List size={16} />
+              </Button>
+            </div>
         </div>
         
         {viewMode === 'map' ? (
           <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         ) : (
-          <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+          <div className="pt-20">
+            <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+          </div>
         )}
         
         <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />

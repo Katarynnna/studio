@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { TrailAngel } from "@/lib/types";
@@ -15,7 +16,7 @@ type TrailAngelListProps = {
 export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelListProps) {
   return (
     <ScrollArea className="h-full">
-      <div className="p-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-20 md:pt-4">
+      <div className="p-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:pt-4">
         {angels.map((angel) => (
           <Card 
             key={angel.id} 
