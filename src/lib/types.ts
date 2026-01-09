@@ -4,6 +4,7 @@ export type Service = {
   id: string;
   name: string;
   icon: LucideIcon;
+  associatedServices?: string[];
 };
 
 export type Review = {

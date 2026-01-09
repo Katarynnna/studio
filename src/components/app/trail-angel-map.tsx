@@ -4,8 +4,9 @@ import { APIProvider, Map, AdvancedMarker, useMap } from "@vis.gl/react-google-m
 import type { TrailAngel } from "@/lib/types";
 import { TRAILS } from "@/lib/data";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { LocateFixed, Terminal } from "lucide-react";
+import React, { useEffect, useState, useCallback } from "react";
 
 type TrailAngelMapProps = {
   angels: TrailAngel[];
@@ -50,9 +51,37 @@ const Polyline = (props: google.maps.PolylineOptions) => {
         newPolyline.setMap(null);
       };
     }
-  }, [map, props.path, props.strokeColor]); // Re-run when path or color changes
+  }, [map, props.path, props.strokeColor]);
 
   return null;
+};
+
+const MapControls = () => {
+  const map = useMap();
+
+  const centerOnUser = useCallback(() => {
+    if (map && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          map.panTo({ lat: latitude, lng: longitude });
+          map.setZoom(12);
+        },
+        () => {
+          // Handle error
+          alert("Unable to retrieve your location.");
+        }
+      );
+    }
+  }, [map]);
+
+  return (
+     <div className="absolute bottom-4 right-4 z-10">
+      <Button size="icon" onClick={centerOnUser} title="Center on my location">
+        <LocateFixed />
+      </Button>
+    </div>
+  );
 };
 
 
@@ -100,6 +129,7 @@ export default function TrailAngelMap({ angels, onSelectAngel }: TrailAngelMapPr
             <div className="w-6 h-6 rounded-full bg-primary border-2 border-primary-foreground shadow-lg cursor-pointer hover:scale-110 transition-transform"></div>
           </AdvancedMarker>
         ))}
+        <MapControls />
       </Map>
     </APIProvider>
   );

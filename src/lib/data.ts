@@ -6,12 +6,10 @@ import {
   Sofa,
   Tent,
   CookingPot,
-  Utensils,
   Lock,
   Package,
   WashingMachine,
   Wifi,
-  Star,
 } from 'lucide-react';
 import { PCT_TRACK } from './pct-track';
 import { AT_TRACK } from './at-track';
@@ -20,16 +18,14 @@ import { CDT_TRACK } from './cdt-track';
 export const ALL_SERVICES: Service[] = [
   { id: 'rides', name: 'Rides', icon: Car },
   { id: 'bathroom', name: 'Bathroom', icon: Bath },
-  { id: 'private-room', name: 'Private Room', icon: BedDouble },
-  { id: 'bed', name: 'Bed(s)', icon: BedDouble },
+  { id: 'room', name: 'Room', icon: BedDouble, associatedServices: ['private-room', 'bed'] },
   { id: 'couch-floor', name: 'Couch/Floor', icon: Sofa },
   { id: 'camping', name: 'Camping', icon: Tent },
-  { id: 'kitchen', name: 'Kitchen Access', icon: CookingPot },
-  { id: 'meals', name: 'Meals', icon: Utensils },
-  { id: 'secure-storage', name: 'Secure Storage', icon: Lock },
-  { id: 'deliveries', name: 'Address for Deliveries', icon: Package },
+  { id: 'kitchen', name: 'Kitchen', icon: CookingPot, associatedServices: ['kitchen', 'meals'] },
+  { id: 'storage', name: 'Storage', icon: Lock, associatedServices: ['secure-storage'] },
+  { id: 'packages', name: 'Packages', icon: Package, associatedServices: ['deliveries'] },
   { id: 'laundry', name: 'Laundry', icon: WashingMachine },
-  { id: 'wifi', name: 'WiFi/Internet', icon: Wifi },
+  { id: 'wifi', name: 'WiFi', icon: Wifi },
 ];
 
 export const TRAIL_ANGELS: TrailAngel[] = [

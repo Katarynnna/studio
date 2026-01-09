@@ -11,6 +11,7 @@ import { submitRadioMessage } from "@/lib/actions";
 import { RADIO_MESSAGES } from "@/lib/data";
 import type { RadioMessage } from "@/lib/types";
 import { formatDistanceToNow } from "date-fns";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -65,14 +66,21 @@ export default function TrailRadio() {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-3 h-64 overflow-y-auto pr-2">
-          {messages.map((msg) => (
-            <div key={msg.id} className="text-sm">
-              <p className="font-semibold">{msg.author} <span className="text-xs text-muted-foreground font-normal ml-1">{formatDistanceToNow(new Date(msg.timestamp), { addSuffix: true })}</span></p>
-              <p className="text-muted-foreground">{msg.message}</p>
-            </div>
-          ))}
-        </div>
+        <ScrollArea className="h-64 pr-4">
+          <div className="space-y-3">
+            {messages.map((msg) => (
+              <div key={msg.id} className="text-sm">
+                <p>
+                  <a href="#" className="font-semibold hover:underline">{msg.author}</a>
+                  <span className="text-xs text-muted-foreground font-normal ml-1">
+                    {formatDistanceToNow(new Date(msg.timestamp), { addSuffix: true })}
+                  </span>
+                </p>
+                <p className="text-muted-foreground">{msg.message}</p>
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
       </CardContent>
       <CardFooter>
         <form key={formKey} action={formAction} className="w-full space-y-2">

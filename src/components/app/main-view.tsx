@@ -12,8 +12,9 @@ import { Card } from "@/components/ui/card";
 
 const initialFilters: FilterState = {
   name: "",
+  location: "",
   services: [],
-  donationExpected: "any",
+  donationRequired: false,
 };
 
 export default function MainView() {
@@ -34,21 +35,31 @@ export default function MainView() {
       ) {
         return false;
       }
-
-      // Services filter
+      
+      // Location filter
       if (
-        filters.services.length > 0 &&
-        !filters.services.every((serviceId) =>
-          angel.services.includes(serviceId)
-        )
+        filters.location &&
+        !angel.location.toLowerCase().includes(filters.location.toLowerCase())
       ) {
         return false;
       }
 
+      // Services filter
+      if (filters.services.length > 0) {
+        const angelServices = angel.services;
+        const hasAllServices = filters.services.every(serviceId => {
+          const serviceDef = ALL_SERVICES.find(s => s.id === serviceId);
+          if (serviceDef?.associatedServices) {
+            return serviceDef.associatedServices.some(as => angelServices.includes(as));
+          }
+          return angelServices.includes(serviceId);
+        });
+        if (!hasAllServices) return false;
+      }
+
       // Donation filter
-      if (filters.donationExpected !== "any") {
-        const expectsDonation = filters.donationExpected === "yes";
-        if (angel.donationExpected !== expectsDonation) {
+      if (filters.donationRequired) {
+        if (!angel.donationExpected) {
           return false;
         }
       }

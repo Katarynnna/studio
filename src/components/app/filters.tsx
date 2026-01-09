@@ -5,13 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Filter } from "lucide-react";
 
 export type FilterState = {
   name: string;
+  location: string;
   services: string[];
-  donationExpected: "any" | "yes" | "no";
+  donationRequired: boolean;
 };
 
 type FiltersProps = {
@@ -21,8 +21,8 @@ type FiltersProps = {
 };
 
 export default function Filters({ services, filters, onFilterChange }: FiltersProps) {
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onFilterChange({ ...filters, name: e.target.value });
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onFilterChange({ ...filters, [e.target.name]: e.target.value });
   };
 
   const handleServiceChange = (serviceId: string, checked: boolean) => {
@@ -32,8 +32,8 @@ export default function Filters({ services, filters, onFilterChange }: FiltersPr
     onFilterChange({ ...filters, services: newServices });
   };
   
-  const handleDonationChange = (value: "any" | "yes" | "no") => {
-    onFilterChange({ ...filters, donationExpected: value });
+  const handleDonationChange = (checked: boolean) => {
+    onFilterChange({ ...filters, donationRequired: checked });
   };
 
   return (
@@ -45,14 +45,27 @@ export default function Filters({ services, filters, onFilterChange }: FiltersPr
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="name-filter">Name</Label>
-          <Input
-            id="name-filter"
-            placeholder="e.g. Bighorn Betty"
-            value={filters.name}
-            onChange={handleNameChange}
-          />
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="name-filter">Name</Label>
+            <Input
+              id="name-filter"
+              name="name"
+              placeholder="e.g. Bighorn Betty"
+              value={filters.name}
+              onChange={handleTextChange}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="location-filter">Location</Label>
+            <Input
+              id="location-filter"
+              name="location"
+              placeholder="e.g. Wrightwood, CA"
+              value={filters.location}
+              onChange={handleTextChange}
+            />
+          </div>
         </div>
 
         <div className="space-y-2">
@@ -72,25 +85,14 @@ export default function Filters({ services, filters, onFilterChange }: FiltersPr
         </div>
 
         <div className="space-y-2">
-          <Label>Donation Expected</Label>
-          <RadioGroup 
-            value={filters.donationExpected} 
-            onValueChange={handleDonationChange}
-            className="flex space-x-4"
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="any" id="donation-any" />
-              <Label htmlFor="donation-any" className="font-normal">Any</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="yes" id="donation-yes" />
-              <Label htmlFor="donation-yes" className="font-normal">Yes</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="no" id="donation-no" />
-              <Label htmlFor="donation-no" className="font-normal">No</Label>
-            </div>
-          </RadioGroup>
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="donation-check"
+              checked={filters.donationRequired}
+              onCheckedChange={handleDonationChange}
+            />
+            <Label htmlFor="donation-check" className="font-normal">Donation required</Label>
+          </div>
         </div>
       </CardContent>
     </Card>
