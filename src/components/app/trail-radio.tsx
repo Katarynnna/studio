@@ -23,7 +23,7 @@ function SubmitButton() {
 }
 
 type TrailRadioProps = {
-  onSelectAngel: (angel: TrailAngel) => void;
+  onSelectAngel: (angel: TrailAngel | string) => void;
   setProfileOpen?: (open: boolean) => void;
   isSheet?: boolean;
 };
@@ -66,8 +66,8 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen, isSheet }: T
   }, [state, toast, textareaValue]);
 
   const handleAuthorClick = (authorId: string) => {
-    if (authorId === 'user-wired') {
-      setProfileOpen?.(true);
+    if (authorId === 'user-wired' && setProfileOpen) {
+      setProfileOpen(true);
     } else {
       const angel = TRAIL_ANGELS.find(a => a.id === authorId);
       if (angel) {
@@ -76,26 +76,34 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen, isSheet }: T
     }
   };
 
+  const messageList = (
+    <div className="space-y-3">
+      {messages.map((msg) => (
+        <div key={msg.id} className="text-sm">
+          <p>
+            <button onClick={() => handleAuthorClick(msg.authorId)} className="font-semibold hover:underline text-left">
+              {msg.author}
+            </button>
+            <span className="text-xs text-muted-foreground font-normal ml-1">
+              {formatDistanceToNow(new Date(msg.timestamp), { addSuffix: true })}
+            </span>
+          </p>
+          <p className="text-muted-foreground">{msg.message}</p>
+        </div>
+      ))}
+    </div>
+  );
+
   const content = (
       <>
-        <ScrollArea className="h-64 pr-4">
-          <div className="space-y-3">
-            {messages.map((msg) => (
-              <div key={msg.id} className="text-sm">
-                <p>
-                  <button onClick={() => handleAuthorClick(msg.authorId)} className="font-semibold hover:underline text-left">
-                    {msg.author}
-                  </button>
-                  <span className="text-xs text-muted-foreground font-normal ml-1">
-                    {formatDistanceToNow(new Date(msg.timestamp), { addSuffix: true })}
-                  </span>
-                </p>
-                <p className="text-muted-foreground">{msg.message}</p>
-              </div>
-            ))}
-          </div>
-          <ScrollBar />
-        </ScrollArea>
+        {isSheet ? (
+          <div className="h-64 pr-4">{messageList}</div>
+        ) : (
+          <ScrollArea className="h-64 pr-4">
+            {messageList}
+            <ScrollBar />
+          </ScrollArea>
+        )}
          <form key={formKey} action={formAction} className="w-full space-y-2 mt-4">
           <Textarea 
             name="message" 
