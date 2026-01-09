@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import type { TrailAngel } from "@/lib/types";
 import { TRAIL_ANGELS, ALL_SERVICES } from "@/lib/data";
 import Filters, { type FilterState } from "./filters";
@@ -151,17 +151,17 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
         )}
       </div>
       <div className="w-96 max-w-sm shrink-0">
-        <Card className="border-0 border-b md:border-b-0 md:border-l rounded-none h-full overflow-y-auto">
-            <div className="p-4 space-y-4">
-              <Filters
-                services={ALL_SERVICES}
-                filters={filters}
-                setFilters={setFilters}
-                viewToggle={viewToggle}
-              />
-              <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
-            </div>
-        </Card>
+        <div className="h-full overflow-y-auto">
+          <div className="p-4 space-y-4">
+            <Filters
+              services={ALL_SERVICES}
+              filters={filters}
+              setFilters={setFilters}
+              viewToggle={viewToggle}
+            />
+            <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
+          </div>
+        </div>
       </div>
       <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
     </div>
