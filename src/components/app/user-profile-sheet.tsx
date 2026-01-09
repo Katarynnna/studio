@@ -59,11 +59,11 @@ const userProfile = {
 
 function StarRating({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-0.5">
+    <div className="flex gap-0.5 pt-1">
       {Array.from({ length: 5 }, (_, i) => (
         <Star
           key={i}
-          className={`w-3 h-3 ${
+          className={`w-2.5 h-2.5 ${
             i < rating ? "text-accent fill-accent" : "text-muted-foreground"
           }`}
         />
