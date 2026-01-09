@@ -12,6 +12,7 @@ import { useState } from "react";
 import TrailAngelSheet from "./trail-angel-sheet";
 import { ScrollArea } from "../ui/scroll-area";
 import { TRAIL_ANGELS } from "@/lib/data";
+import { Radio } from "lucide-react";
 
 type TrailRadioSheetProps = {
   open: boolean;
@@ -42,10 +43,16 @@ export default function TrailRadioSheet({ open, onOpenChange }: TrailRadioSheetP
     return (
         <>
             <Sheet open={open} onOpenChange={onOpenChange}>
-                <SheetContent className="w-full sm:max-w-lg p-0" side="left">
+                <SheetContent className="w-full sm:max-w-lg p-0">
                     <ScrollArea className="h-full">
-                        <div className="p-4">
-                            <TrailRadio onSelectAngel={handleAuthorClick} />
+                        <div className="p-6">
+                            <SheetHeader className="space-y-2 text-left mb-6">
+                                <SheetTitle className="text-3xl font-headline flex items-center gap-2">
+                                    <Radio className="w-8 h-8" />
+                                    Trail Radio
+                                </SheetTitle>
+                            </SheetHeader>
+                            <TrailRadio onSelectAngel={handleAuthorClick} isSheet={true} />
                         </div>
                     </ScrollArea>
                 </SheetContent>

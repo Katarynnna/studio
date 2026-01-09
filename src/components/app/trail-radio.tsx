@@ -25,10 +25,11 @@ function SubmitButton() {
 type TrailRadioProps = {
   onSelectAngel: (angel: TrailAngel) => void;
   setProfileOpen?: (open: boolean) => void;
+  isSheet?: boolean;
 };
 
 
-export default function TrailRadio({ onSelectAngel, setProfileOpen }: TrailRadioProps) {
+export default function TrailRadio({ onSelectAngel, setProfileOpen, isSheet }: TrailRadioProps) {
   const [messages, setMessages] = useState<RadioMessage[]>(RADIO_MESSAGES);
   const { toast } = useToast();
   
@@ -75,15 +76,8 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen }: TrailRadio
     }
   };
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Radio className="w-6 h-6" />
-          <span>Trail Radio</span>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+  const content = (
+      <>
         <ScrollArea className="h-64 pr-4">
           <div className="space-y-3">
             {messages.map((msg) => (
@@ -102,9 +96,7 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen }: TrailRadio
           </div>
           <ScrollBar />
         </ScrollArea>
-      </CardContent>
-      <CardFooter>
-        <form key={formKey} action={formAction} className="w-full space-y-2">
+         <form key={formKey} action={formAction} className="w-full space-y-2 mt-4">
           <Textarea 
             name="message" 
             placeholder="Post a utility request or trail update..." 
@@ -115,7 +107,24 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen }: TrailRadio
           />
           <SubmitButton />
         </form>
-      </CardFooter>
+      </>
+  );
+
+  if (isSheet) {
+    return <div className="space-y-4">{content}</div>
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Radio className="w-6 h-6" />
+          <span>Trail Radio</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+          {content}
+      </CardContent>
     </Card>
   );
 }

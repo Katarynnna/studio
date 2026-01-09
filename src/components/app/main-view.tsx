@@ -152,21 +152,21 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
                 filters={filters}
                 onFilterChange={setFilters}
               />
+               <div className="flex items-center justify-center gap-2 p-1 rounded-full bg-secondary">
+                  <Label htmlFor="view-mode-switch-desktop" className="pl-2 flex items-center gap-1 text-sm"><MapIcon size={16} /> Map</Label>
+                  <Switch
+                      id="view-mode-switch-desktop"
+                      checked={viewMode === "list"}
+                      onCheckedChange={(checked) => setViewMode(checked ? "list" : "map")}
+                  />
+                  <Label htmlFor="view-mode-switch-desktop" className="pr-2 flex items-center gap-1 text-sm"><List size={16} /> List</Label>
+              </div>
               <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
             </div>
           </Card>
         </ScrollArea>
       </div>
       <div className="flex-1 relative h-full">
-        <div className="absolute top-4 right-4 z-10 flex items-center gap-2 p-1 rounded-full bg-secondary shadow-lg">
-            <Label htmlFor="view-mode-switch-desktop" className="pl-2 flex items-center gap-1 text-sm"><MapIcon size={16} /> Map</Label>
-            <Switch
-                id="view-mode-switch-desktop"
-                checked={viewMode === "list"}
-                onCheckedChange={(checked) => setViewMode(checked ? "list" : "map")}
-            />
-            <Label htmlFor="view-mode-switch-desktop" className="pr-2 flex items-center gap-1 text-sm"><List size={16} /> List</Label>
-        </div>
         {viewMode === 'map' ? (
           <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         ) : (
