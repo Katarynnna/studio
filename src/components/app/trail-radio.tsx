@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useActionState } from "react";
@@ -119,7 +120,24 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen, isSheet }: T
   );
 
   if (isSheet) {
-    return <div className="space-y-4">{content}</div>
+    return (
+        <>
+            <div className="space-y-3 h-64 overflow-y-auto">
+                {messageList}
+            </div>
+            <form key={formKey} action={formAction} className="w-full space-y-2 mt-4">
+                <Textarea 
+                    name="message" 
+                    placeholder="Post a utility request or trail update..." 
+                    required 
+                    minLength={3}
+                    value={textareaValue}
+                    onChange={(e) => setTextareaValue(e.target.value)}
+                />
+                <SubmitButton />
+            </form>
+        </>
+    );
   }
 
   return (
@@ -131,7 +149,20 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen, isSheet }: T
         </CardTitle>
       </CardHeader>
       <CardContent>
-          {content}
+        <ScrollArea className="h-64 pr-4">
+          {messageList}
+        </ScrollArea>
+        <form key={formKey} action={formAction} className="w-full space-y-2 mt-4">
+          <Textarea 
+            name="message" 
+            placeholder="Post a utility request or trail update..." 
+            required 
+            minLength={3}
+            value={textareaValue}
+            onChange={(e) => setTextareaValue(e.target.value)}
+          />
+          <SubmitButton />
+        </form>
       </CardContent>
     </Card>
   );

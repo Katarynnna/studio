@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from 'next/image';
@@ -100,15 +101,27 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                    {userProfile.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 </div>
               </div>
-               <div className="flex justify-between items-center pt-2">
-                <div className="flex flex-wrap gap-2">
-                  {userProfile.badges.map((badge) => (
-                    <Badge key={badge} variant="secondary">
-                      {badge}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="flex gap-2">
+               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
+                  <div className="flex-1 space-y-2">
+                    <div className="flex flex-wrap gap-2">
+                      {userProfile.badges.map((badge) => (
+                        <Badge key={badge} variant="secondary">
+                          {badge}
+                        </Badge>
+                      ))}
+                    </div>
+                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4" />
+                            <span>Last active: {userProfile.lastActivity}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <MessageCircle className="w-4 h-4" />
+                            <span>{userProfile.responseRate}% response rate</span>
+                        </div>
+                    </div>
+                  </div>
+                <div className="flex gap-2 self-start sm:self-center">
                   {userProfile.socials?.twitter && (
                     <Link href={`https://twitter.com/${userProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer">
                       <Button variant="outline" size="icon">
@@ -127,18 +140,7 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
               </div>
             </SheetHeader>
 
-            <div className="grid grid-cols-2 gap-4 my-6 text-sm">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Clock className="w-4 h-4" />
-                  <span>Last active: {userProfile.lastActivity}</span>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <MessageCircle className="w-4 h-4" />
-                  <span>{userProfile.responseRate}% response rate</span>
-                </div>
-            </div>
-
-            <Separator />
+            <Separator className="my-6" />
             
             <Tabs defaultValue="about" className="mt-6">
               <TabsList className="grid w-full grid-cols-3">
