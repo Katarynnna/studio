@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { TrailAngel } from "@/lib/types";
@@ -129,7 +130,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
             <Separator />
             
             <Tabs defaultValue="about" className="mt-6">
-              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto sm:h-10">
+              <TabsList className="grid w-full grid-cols-4 h-auto sm:h-10">
                 <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1" />About</TabsTrigger>
                 <TabsTrigger value="availability"><CalendarIcon className="w-4 h-4 mr-1" />Calendar</TabsTrigger>
                 <TabsTrigger value="gallery"><GalleryHorizontal className="w-4 h-4 mr-1" />Gallery</TabsTrigger>

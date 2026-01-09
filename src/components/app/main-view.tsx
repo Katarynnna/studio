@@ -138,7 +138,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             {viewMode === 'map' ? (
             <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             ) : (
-            <div className="pt-20">
+            <div className="pt-20 h-full overflow-y-auto">
                 <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             </div>
             )}
@@ -154,7 +154,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
     <div className="flex flex-row h-full">
       <div className="w-96 max-w-sm shrink-0">
         <Card className="border-0 border-b md:border-b-0 md:border-r rounded-none h-full overflow-y-auto">
-            <div className="p-4 space-y-6">
+            <div className="p-4 space-y-4">
               <Filters
                 services={ALL_SERVICES}
                 filters={filters}
