@@ -53,7 +53,7 @@ function StarRating({ rating }: { rating: number }) {
       {Array.from({ length: 5 }, (_, i) => (
         <Star
           key={i}
-          className={`w-3 h-3 ${
+          className={`w-2.5 h-2.5 ${
             i < rating ? "text-accent fill-accent" : "text-muted-foreground"
           }`}
         />
@@ -90,13 +90,13 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
               </div>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
                   <div className="flex-1 space-y-2">
-                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-[11px] text-muted-foreground">
                         <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4" />
+                            <Clock className="w-3 h-3" />
                             <span>Last active: {angel.lastActivity}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <MessageCircle className="w-4 h-4" />
+                            <MessageCircle className="w-3 h-3" />
                             <span>{angel.responseRate}% response rate</span>
                         </div>
                     </div>
@@ -106,7 +106,6 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                           {badge}
                         </Badge>
                       ))}
-                       {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
                     </div>
                   </div>
                 <div className="flex gap-2 self-start sm:self-center">
@@ -140,8 +139,11 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
               
               <TabsContent value="about" className="mt-4">
                 <p className="text-muted-foreground mb-4">{angel.about}</p>
-                <h4 className="font-semibold mb-2">Services Offered</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <h4 className="font-semibold">Services Offered</h4>
+                  {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4">
                   {services.map((service) => (
                     <div key={service.id} className="flex items-center gap-3">
                       <service.icon className="w-5 h-5 text-primary" />
@@ -198,13 +200,13 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                     <Avatar>
                       <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    <div>
+                    <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <p className="font-semibold">{review.author}</p>
                         <span className="text-xs text-muted-foreground">{review.date}</span>
                       </div>
                       <StarRating rating={review.rating} />
-                      <p className="text-sm text-muted-foreground mt-1">{review.comment}</p>
+                      <p className="text-sm text-muted-foreground pt-1">{review.comment}</p>
                     </div>
                   </div>
                 ))}
