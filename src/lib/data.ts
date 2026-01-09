@@ -177,12 +177,12 @@ export const TRAILS = {
     pct: {
         name: 'Pacific Crest Trail',
         track: PCT_TRACK,
-        color: '#f28c28' // Orange
+        color: '#286ff2' // Blue
     },
     at: {
         name: 'Appalachian Trail',
         track: AT_TRACK,
-        color: '#28f24b' // Green
+        color: '#286ff2' // Blue
     },
     cdt: {
         name: 'Continental Divide Trail',
