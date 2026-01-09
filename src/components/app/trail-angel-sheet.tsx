@@ -49,11 +49,11 @@ type TrailAngelSheetProps = {
 
 function StarRating({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-0.5 pt-1">
+    <div className="flex gap-0.5 pt-2">
       {Array.from({ length: 5 }, (_, i) => (
         <Star
           key={i}
-          className={`w-2.5 h-2.5 ${
+          className={`w-2 h-2 ${
             i < rating ? "text-accent fill-accent" : "text-muted-foreground"
           }`}
         />
@@ -91,11 +91,11 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
                   <div className="flex-1 space-y-2">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1">
                             <Clock className="w-3 h-3" />
                             <span>Last active: {angel.lastActivity}</span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1">
                             <MessageCircle className="w-3 h-3" />
                             <span>{angel.responseRate}% response rate</span>
                         </div>
@@ -194,7 +194,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                 </Carousel>
               </TabsContent>
 
-              <TabsContent value="reviews" className="mt-4 space-y-4">
+              <TabsContent value="reviews" className="mt-4 space-y-6">
                 {angel.reviews.map((review) => (
                   <div key={review.id} className="flex gap-3">
                     <Avatar>
@@ -203,7 +203,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                     <div className="flex-1 space-y-1">
                       <div className="flex items-center gap-2">
                         <p className="font-semibold">{review.author}</p>
-                        <span className="text-xs text-muted-foreground">{review.date}</span>
+                        <span className="text-xs text-muted-foreground pt-0.5">{review.date}</span>
                       </div>
                       <StarRating rating={review.rating} />
                       <p className="text-sm text-muted-foreground pt-1">{review.comment}</p>
