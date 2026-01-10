@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -96,7 +97,7 @@ const COUNTRIES = [
 
 export default function EditProfilePage() {
   const router = useRouter();
-  const { profile, services, bedCount, socials, address: userAddress, setProfile, setService, setBedCount, setSocials, setAddress, setPosition } = useUserProfileStore();
+  const { trailName, status, badges, about, services, bedCount, socials, address: userAddress, setProfile, setService, setBedCount, setSocials, setAddress, setPosition } = useUserProfileStore();
     
   const [hasBeds, setHasBeds] = useState(services.includes('beds'));
   const { toast } = useToast();
@@ -104,10 +105,10 @@ export default function EditProfilePage() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      trailName: profile.trailName,
-      status: profile.status,
-      badges: Array.isArray(profile.badges) ? profile.badges.join(', ') : '',
-      about: profile.about,
+      trailName: trailName,
+      status: status,
+      badges: Array.isArray(badges) ? badges.join(', ') : '',
+      about: about,
       instagram: socials.instagram,
       twitter: socials.twitter,
       facebook: socials.facebook,
@@ -447,4 +448,5 @@ export default function EditProfilePage() {
     </div>
     </AppLayout>
   );
-}
+
+    
