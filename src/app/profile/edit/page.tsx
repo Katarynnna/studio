@@ -104,7 +104,7 @@ export default function EditProfilePage() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input placeholder="Trail Name" defaultValue={userProfile.name} />
-                  <Select defaultValue="hiking">
+                  <Select>
                     <SelectTrigger id="status">
                       <SelectValue placeholder="Choose your status" />
                     </SelectTrigger>
@@ -120,7 +120,6 @@ export default function EditProfilePage() {
                   <Input 
                     id="badges" 
                     placeholder="Badges e.g. PCT hiker 2024, Trail Angel veteran, Trail magic king" 
-                    defaultValue={Array.isArray(userProfile.badges) ? userProfile.badges.join(', ') : ''} 
                   />
                   <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas.</p>
               </div>
@@ -128,7 +127,6 @@ export default function EditProfilePage() {
               <div>
                 <Textarea
                   id="about"
-                  defaultValue={userProfile.about}
                   placeholder="About me: Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
                   rows={5}
                 />
