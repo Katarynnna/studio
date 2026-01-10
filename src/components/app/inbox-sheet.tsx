@@ -129,11 +129,9 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
                     {!selectedConversationId ? (
                         // Conversation List View
                         messages.length === 0 ? (
-                             <Card className="mt-6">
-                                <CardContent className="flex items-center justify-center h-64 p-6">
-                                    <p className="text-muted-foreground">Your message history will appear here.</p>
-                                </CardContent>
-                            </Card>
+                             <div className="flex items-center justify-center h-64 p-6">
+                                <p className="text-muted-foreground">Your message history will appear here.</p>
+                            </div>
                         ) : (
                             <div className="space-y-4 pt-4">
                                 {conversationPreviews.map(convo => (
@@ -177,7 +175,7 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
                     )}
             </div>
             {selectedConversationId && (
-                <div className="p-6 border-t bg-background shrink-0 sticky bottom-0 -mx-6">
+                <div className="p-6 border-t bg-background shrink-0 sticky bottom-0">
                     <form onSubmit={handleReply} className="flex items-center gap-2">
                         <Textarea 
                             placeholder="Type a message..." 
