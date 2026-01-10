@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 import { useUserProfileStore } from '@/lib/user-profile-store';
+import { ALL_SERVICES } from "@/lib/data";
 
 import {
   Carousel,
@@ -97,6 +98,7 @@ type UserProfileSheetProps = {
 
 export default function UserProfileSheet({ open, onOpenChange }: UserProfileSheetProps) {
   const userProfile = useUserProfileStore((state) => state);
+  const userServices = ALL_SERVICES.filter(s => userProfile.services.includes(s.id));
   
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -167,8 +169,29 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
           
           <TabsContent value="about" className="mt-4">
             <p className="text-muted-foreground mb-4">{userProfile.about}</p>
-              <h4 className="font-semibold mb-2">My Location</h4>
-            <ProfileMap position={userProfile.position} />
+            
+            {userServices.length > 0 && (
+              <>
+                <h4 className="font-semibold mb-2">Services I Can Offer</h4>
+                <div className="flex flex-wrap gap-x-6 gap-y-4 mb-4">
+                  {userServices.map((service) => (
+                    <div key={service.id} className="flex items-center gap-3">
+                      <service.icon className="w-5 h-5 text-primary" />
+                      <span className="text-sm">{service.name} {service.id === 'beds' && userProfile.bedCount > 0 && `(${userProfile.bedCount})`}</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {(userProfile.address.city || userProfile.address.state) && (
+              <>
+                <h4 className="font-semibold mb-2">My Location</h4>
+                <p className="text-sm text-muted-foreground">{userProfile.address.city}, {userProfile.address.state}</p>
+                <ProfileMap position={userProfile.position} />
+              </>
+            )}
+            
             <Button variant="outline" className="w-full mt-4" asChild>
                 <Link href="/profile/edit">Edit Profile</Link>
             </Button>
