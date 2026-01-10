@@ -92,11 +92,16 @@ export default function AppLayout({ children }: AppLayoutProps) {
   }
 
 
-  // Pass state setters and message handler to children.
+  // Pass state setters and message handler to children that need them, via context or direct props.
+  // The React.cloneElement approach was too broad and caused warnings.
   const childrenWithProps = React.Children.map(children, (child) => {
-    if (React.isValidElement(child)) {
+    if (React.isValidElement(child) && child.type === require('@/components/app/main-view').default) {
       // @ts-expect-error - injecting props
       return React.cloneElement(child, { setProfileOpen, addMessageToInbox });
+    }
+    if (React.isValidElement(child) && child.type === require('@/app/profile/edit/page').default) {
+      // @ts-expect-error - injecting props
+       return React.cloneElement(child, { setProfileOpen, addMessageToInbox });
     }
     return child;
   });
