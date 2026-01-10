@@ -2,14 +2,13 @@
 
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { TrailAngel } from "@/lib/types";
 import { TRAIL_ANGELS, ALL_SERVICES } from "@/lib/data";
 import Filters, { type FilterState } from "./filters";
 import TrailRadio from "./trail-radio";
 import TrailAngelMap from "./trail-angel-map";
 import TrailAngelSheet from "./trail-angel-sheet";
-import { Card } from "@/components/ui/card";
 import TrailAngelList from "./trail-angel-list";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
@@ -142,15 +141,15 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
 
   // Desktop View
   return (
-    <div className="flex flex-row h-full bg-secondary">
-       <div className="flex-1 relative h-full">
+    <div className="h-full relative">
+       <div className="absolute inset-0">
         {viewMode === 'map' ? (
           <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         ) : (
           <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         )}
       </div>
-      <div className="w-96 max-w-sm shrink-0 h-full overflow-y-auto p-4 space-y-4">
+      <div className="absolute top-0 right-0 h-full w-96 max-w-sm shrink-0 overflow-y-auto p-4 space-y-4">
         <Filters
           services={ALL_SERVICES}
           filters={filters}

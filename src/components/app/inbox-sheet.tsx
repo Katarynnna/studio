@@ -104,8 +104,8 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
             setTimeout(() => setSelectedConversationId(null), 300); // Reset conversation view on close after animation
         }
     }}>
-      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col overflow-y-auto">
-          <SheetHeader className="p-6 pb-2 space-y-2 text-left shrink-0 border-b">
+      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
+          <SheetHeader className="p-6 pb-2 space-y-2 text-left shrink-0">
             <div className="flex items-center gap-2">
                 {selectedConversationId && (
                     <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
