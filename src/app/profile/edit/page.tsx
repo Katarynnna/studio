@@ -100,34 +100,30 @@ export default function EditProfilePage() {
               <CardTitle>Basic Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex items-center gap-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
-                    <div>
-                        <Label htmlFor="trailName">Trail Name</Label>
-                        <Input id="trailName" defaultValue={userProfile.name} />
-                    </div>
-                    <div>
-                        <Label htmlFor="status">Status</Label>
-                        <Select defaultValue="hiking">
-                          <SelectTrigger id="status">
-                            <SelectValue placeholder="Select your status" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="hiking">Currently hiking</SelectItem>
-                            <SelectItem value="available">Available</SelectItem>
-                            <SelectItem value="unavailable">Not available</SelectItem>
-                          </SelectContent>
-                        </Select>
-                    </div>
-                    <div>
-                        <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" placeholder="Your first name" />
-                    </div>
-                    <div>
-                        <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" placeholder="Your last name" />
-                    </div>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                      <Label htmlFor="trailName">Trail Name</Label>
+                      <Input id="trailName" defaultValue={userProfile.name} />
+                  </div>
+                  <div>
+                      <Label htmlFor="status">Status</Label>
+                      <Select defaultValue="hiking">
+                        <SelectTrigger id="status">
+                          <SelectValue placeholder="Select your status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="hiking">Currently hiking</SelectItem>
+                          <SelectItem value="available">Available</SelectItem>
+                          <SelectItem value="unavailable">Not available</SelectItem>
+                        </SelectContent>
+                      </Select>
+                  </div>
+              </div>
+              
+              <div>
+                  <Label htmlFor="badges">Badges</Label>
+                  <Input id="badges" placeholder="PCT hiker 2024, Trail Angel veteran, Trail magic king" defaultValue={Array.isArray(userProfile.badges) ? userProfile.badges.join(', ') : ''} />
+                  <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas.</p>
               </div>
 
               <div>
@@ -138,11 +134,6 @@ export default function EditProfilePage() {
                   placeholder="Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
                   rows={5}
                 />
-              </div>
-               <div>
-                  <Label htmlFor="badges">Badges</Label>
-                  <Input id="badges" placeholder="PCT hiker 2024, Trail Angel veteran, Trail magic king" defaultValue={Array.isArray(userProfile.badges) ? userProfile.badges.join(', ') : ''} />
-                  <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas.</p>
               </div>
             </CardContent>
           </Card>
@@ -251,13 +242,22 @@ export default function EditProfilePage() {
             </CardContent>
           </Card>
           
-          {/* Contact and Social */}
+          {/* Contact */}
           <Card>
              <CardHeader>
-                <CardTitle>Contact & Social Media</CardTitle>
+                <CardTitle>Contact Information</CardTitle>
+                <CardDescription>This information is private and never made public.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <Label htmlFor="firstName">First Name</Label>
+                        <Input id="firstName" placeholder="Your first name" />
+                    </div>
+                    <div>
+                        <Label htmlFor="lastName">Last Name</Label>
+                        <Input id="lastName" placeholder="Your last name" />
+                    </div>
                     <div>
                         <Label htmlFor="phone">Phone Number</Label>
                         <Input id="phone" type="tel" placeholder="Your phone number" />
@@ -278,42 +278,47 @@ export default function EditProfilePage() {
                         <Input type="tel" placeholder="Phone" />
                     </div>
                 </div>
-                <div>
-                    <h3 className="font-semibold mb-4">Social Media & Links</h3>
-                    <div className="space-y-3">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div className="flex items-center gap-2">
-                                <Instagram className="w-5 h-5 text-muted-foreground" />
-                                <Input placeholder="Instagram username" defaultValue={userProfile.socials?.instagram} />
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Twitter className="w-5 h-5 text-muted-foreground" />
-                                <Input placeholder="Twitter / X username" defaultValue={userProfile.socials?.twitter} />
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <FacebookIcon />
-                                <Input placeholder="Facebook profile URL" />
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <TikTokIcon />
-                                <Input placeholder="TikTok username" />
-                            </div>
-                             <div className="flex items-center gap-2">
-                                <Youtube className="w-5 h-5 text-muted-foreground" />
-                                <Input placeholder="YouTube channel URL" />
-                            </div>
-                             <div className="flex items-center gap-2">
-                                <Linkedin className="w-5 h-5 text-muted-foreground" />
-                                <Input placeholder="LinkedIn profile URL" />
-                            </div>
+            </CardContent>
+          </Card>
+          
+          {/* Social Media */}
+          <Card>
+             <CardHeader>
+                <CardTitle>Social Media & Links</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="flex items-center gap-2">
+                            <Instagram className="w-5 h-5 text-muted-foreground" />
+                            <Input placeholder="Instagram username" defaultValue={userProfile.socials?.instagram} />
                         </div>
-                        <div className="flex items-center gap-2 pt-1">
-                            <Mail className="w-5 h-5 text-muted-foreground" />
-                            <Input type="url" placeholder="Website or blog URL" />
+                        <div className="flex items-center gap-2">
+                            <Twitter className="w-5 h-5 text-muted-foreground" />
+                            <Input placeholder="Twitter / X username" defaultValue={userProfile.socials?.twitter} />
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <FacebookIcon />
+                            <Input placeholder="Facebook profile URL" />
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <TikTokIcon />
+                            <Input placeholder="TikTok username" />
+                        </div>
+                         <div className="flex items-center gap-2">
+                            <Youtube className="w-5 h-5 text-muted-foreground" />
+                            <Input placeholder="YouTube channel URL" />
+                        </div>
+                         <div className="flex items-center gap-2">
+                            <Linkedin className="w-5 h-5 text-muted-foreground" />
+                            <Input placeholder="LinkedIn profile URL" />
                         </div>
                     </div>
+                    <div className="flex items-center gap-2 pt-1">
+                        <Mail className="w-5 h-5 text-muted-foreground" />
+                        <Input type="url" placeholder="Website or blog URL" />
+                    </div>
                 </div>
-
             </CardContent>
           </Card>
         </div>
@@ -327,5 +332,3 @@ export default function EditProfilePage() {
     </AppLayout>
   );
 }
-
-    
