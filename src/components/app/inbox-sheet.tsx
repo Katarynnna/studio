@@ -118,12 +118,6 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
              </SheetTitle>
         </SheetHeader>
         
-        {!selectedConversationId && messages.length === 0 && 
-             <div className="px-6">
-                <SheetDescription>You have no new messages.</SheetDescription>
-            </div>
-        }
-        
         <div className="flex-1 flex flex-col overflow-hidden">
             <div className="flex-1 overflow-y-auto px-6">
                     {!selectedConversationId ? (
