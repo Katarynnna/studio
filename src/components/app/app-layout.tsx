@@ -115,6 +115,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
         open={inboxOpen} 
         onOpenChange={handleInboxOpenChange} 
         messages={messages}
+        addMessageToInbox={addMessageToInbox}
         onSelectAngel={(angelId) => {
           // This could be used to open a profile or map from the inbox
           const angel = TRAIL_ANGELS.find(a => a.id === angelId);

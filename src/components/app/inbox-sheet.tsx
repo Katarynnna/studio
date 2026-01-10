@@ -105,7 +105,7 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
         }
     }}>
       <SheetContent className="w-full sm:max-w-lg flex flex-col p-0 overflow-y-auto">
-        <div className="flex items-center gap-2 p-6 pb-0">
+        <SheetHeader className="p-6 pb-0 flex-row items-center gap-2">
             {selectedConversationId && (
                 <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
                     <ArrowLeft />
@@ -116,20 +116,20 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
                     <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
                 ) : 'Inbox'}
              </SheetTitle>
-        </div>
+        </SheetHeader>
         
         {!selectedConversationId && messages.length === 0 && 
-            <SheetHeader className="p-6">
+             <div className="p-6">
                 <SheetDescription>You have no new messages.</SheetDescription>
-            </SheetHeader>
+            </div>
         }
         
-        <div className="flex-1 flex flex-col overflow-hidden px-6">
-            <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 overflow-y-auto px-6">
                     {!selectedConversationId ? (
                         // Conversation List View
                         messages.length === 0 ? (
-                            <Card>
+                             <Card className="mt-6">
                                 <CardContent className="flex items-center justify-center h-64 p-6">
                                     <p className="text-muted-foreground">Your message history will appear here.</p>
                                 </CardContent>
@@ -177,7 +177,7 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
                     )}
             </div>
             {selectedConversationId && (
-                <div className="py-4 border-t bg-background shrink-0 sticky bottom-0 -mx-6 px-6">
+                <div className="p-6 border-t bg-background shrink-0 sticky bottom-0 -mx-6">
                     <form onSubmit={handleReply} className="flex items-center gap-2">
                         <Textarea 
                             placeholder="Type a message..." 
