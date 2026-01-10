@@ -105,17 +105,19 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
         }
     }}>
       <SheetContent className="w-full sm:max-w-lg flex flex-col p-0 overflow-y-auto">
-        <SheetHeader className="p-6 flex-row items-center gap-2">
-            {selectedConversationId && (
-                <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
-                    <ArrowLeft />
-                </Button>
-            )}
-             <SheetTitle className="text-3xl font-headline flex items-center gap-2">
-                {selectedConversationId ? (
-                    <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
-                ) : 'Inbox'}
-             </SheetTitle>
+        <SheetHeader className="p-6">
+            <div className="flex flex-row items-center gap-2">
+                {selectedConversationId && (
+                    <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
+                        <ArrowLeft />
+                    </Button>
+                )}
+                 <SheetTitle className="text-3xl font-headline flex items-center gap-2">
+                    {selectedConversationId ? (
+                        <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
+                    ) : 'Inbox'}
+                 </SheetTitle>
+            </div>
         </SheetHeader>
         
         <div className="flex-1 flex flex-col overflow-hidden">
