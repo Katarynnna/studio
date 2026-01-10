@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import {
@@ -26,6 +25,10 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -51,6 +54,18 @@ import { userProfile } from '@/components/app/user-profile-sheet';
 import AppLayout from '@/components/app/app-layout';
 import TrailAngelMap from '@/components/app/trail-angel-map';
 import { TRAIL_ANGELS, ALL_SERVICES } from '@/lib/data';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { toast } from '@/hooks/use-toast';
+
+const profileFormSchema = z.object({
+  trailName: z.string().min(1, { message: "Trail Name is required." }),
+  status: z.string().optional(),
+  badges: z.string().optional(),
+  about: z.string().optional(),
+});
+
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
+
 
 // Mockup for icons not in lucide-react
 const FacebookIcon = () => (
@@ -64,6 +79,23 @@ const TikTokIcon = () => (
 export default function EditProfilePage() {
   const [hasBeds, setHasBeds] = useState(false);
     
+  const form = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileFormSchema),
+    defaultValues: {
+      trailName: userProfile.name,
+      about: userProfile.about,
+      badges: Array.isArray(userProfile.badges) ? userProfile.badges.join(', ') : '',
+    },
+  });
+
+  function onSubmit(data: ProfileFormValues) {
+    toast({
+      title: "Profile Saved!",
+      description: "Your changes have been saved successfully.",
+    });
+    console.log(data);
+  }
+
   const serviceIcons = {
     'beds': Bed,
     'laundry': WashingMachine,
@@ -84,6 +116,8 @@ export default function EditProfilePage() {
   return (
     <AppLayout>
     <div className="bg-background">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       <div className="container mx-auto max-w-5xl py-8 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
             <Link href="/" className='flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4'>
@@ -104,33 +138,80 @@ export default function EditProfilePage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Input placeholder="Trail Name" defaultValue={userProfile.name} />
-                  <Select>
-                    <SelectTrigger id="status">
-                      <SelectValue placeholder="Choose your status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="hiking">Currently hiking</SelectItem>
-                      <SelectItem value="available">Available</SelectItem>
-                      <SelectItem value="unavailable">Not available</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormField
+                    control={form.control}
+                    name="trailName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="Trail Name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Choose your status" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="hiking">Currently hiking</SelectItem>
+                            <SelectItem value="available">Available</SelectItem>
+                            <SelectItem value="unavailable">Not available</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
               </div>
               
               <div>
-                  <Input 
-                    id="badges" 
-                    placeholder="e.g. PCT hiker 2024, Trail Angel veteran, Trail magic king" 
+                  <FormField
+                    control={form.control}
+                    name="badges"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                           <Input 
+                              id="badges" 
+                              placeholder="e.g. PCT hiker 2024, Trail Angel veteran, Trail magic king"
+                              {...field}
+                            />
+                        </FormControl>
+                         <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas</p>
+                         <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                  <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas</p>
+                 
               </div>
 
               <div>
-                <Textarea
-                  id="about"
-                  placeholder="Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
-                  rows={5}
-                />
+                <FormField
+                    control={form.control}
+                    name="about"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Textarea
+                            id="about"
+                            placeholder="Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
+                            rows={5}
+                            {...field}
+                          />
+                        </FormControl>
+                         <FormMessage />
+                      </FormItem>
+                    )}
+                  />
               </div>
             </CardContent>
           </Card>
@@ -325,10 +406,14 @@ export default function EditProfilePage() {
 
         <div className="mt-8 flex justify-end gap-2">
           <Button variant="ghost">Cancel</Button>
-          <Button>Save Changes</Button>
+          <Button type="submit">Save Changes</Button>
         </div>
       </div>
+      </form>
+      </Form>
     </div>
     </AppLayout>
   );
 }
+
+    
