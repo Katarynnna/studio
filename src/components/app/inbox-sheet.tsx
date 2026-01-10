@@ -16,7 +16,7 @@ import type { DirectMessage, TrailAngel } from "@/lib/types";
 import { format, formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { TRAIL_ANGELS } from "@/lib/data";
-import { userProfile } from "../app/user-profile-sheet";
+import { useUserProfileStore } from '@/lib/user-profile-store';
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import TrailAngelSheet from "./trail-angel-sheet";
@@ -34,6 +34,7 @@ type InboxSheetProps = {
 export default function InboxSheet({ open, onOpenChange, messages, addMessageToInbox }: InboxSheetProps) {
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
   const [reply, setReply] = useState('');
+  const userProfile = useUserProfileStore();
 
   // Group messages by conversation partner
   const conversations = messages.reduce((acc, msg) => {
