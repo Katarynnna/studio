@@ -102,9 +102,9 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
             <span>Filter Angels</span>
             </CardTitle>
             {areFiltersActive && (
-                <Button variant="ghost" size="sm" onClick={clearFilters} className="flex items-center gap-1">
+                <Button variant="ghost" size="icon" onClick={clearFilters} className="h-6 w-6">
                     <X className="w-4 h-4"/>
-                    Clear
+                    <span className="sr-only">Clear filters</span>
                 </Button>
             )}
         </div>
