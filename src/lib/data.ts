@@ -1,8 +1,9 @@
+
 import type { TrailAngel, Service, RadioMessage } from './types';
 import {
   Car,
   Bath,
-  BedDouble,
+  Bed,
   Sofa,
   Tent,
   CookingPot,
@@ -17,13 +18,13 @@ import { CDT_TRACK } from './cdt-track';
 
 export const ALL_SERVICES: Service[] = [
   { id: 'rides', name: 'Rides', icon: Car },
-  { id: 'bathroom', name: 'Bathroom', icon: Bath },
-  { id: 'room', name: 'Room', icon: BedDouble, associatedServices: ['private-room', 'bed'] },
+  { id: 'showers', name: 'Showers', icon: Bath },
+  { id: 'beds', name: 'Beds', icon: Bed, associatedServices: ['private-room', 'bed'] },
   { id: 'couch-floor', name: 'Couch/Floor', icon: Sofa },
   { id: 'camping', name: 'Camping', icon: Tent },
-  { id: 'kitchen', name: 'Kitchen', icon: CookingPot, associatedServices: ['kitchen', 'meals'] },
+  { id: 'food', name: 'Food / Meals', icon: CookingPot, associatedServices: ['kitchen', 'meals'] },
   { id: 'storage', name: 'Storage', icon: Lock, associatedServices: ['secure-storage'] },
-  { id: 'packages', name: 'Packages', icon: Package, associatedServices: ['deliveries'] },
+  { id: 'mail-drop', name: 'Mail drop', icon: Package, associatedServices: ['deliveries'] },
   { id: 'laundry', name: 'Laundry', icon: WashingMachine },
   { id: 'wifi', name: 'WiFi', icon: Wifi },
 ];
@@ -42,7 +43,7 @@ export const TRAIL_ANGELS: TrailAngel[] = [
       'https://picsum.photos/seed/102/600/400',
       'https://picsum.photos/seed/103/600/400',
     ],
-    badges: ['PCT Veteran', '15+ Years of Service'],
+    badges: 'PCT Veteran, 15+ Years of Service',
     reviews: [
       { id: 'r-1-1', author: 'Guthook', rating: 5, comment: 'Betty is a legend. Her hospitality is unmatched.', date: '2023-05-10' },
       { id: 'r-1-2', author: 'Trail Mix', rating: 5, comment: 'Amazing stay! The chili is real.', date: '2023-06-02' },
@@ -69,7 +70,7 @@ export const TRAIL_ANGELS: TrailAngel[] = [
       'https://picsum.photos/seed/104/600/400',
       'https://picsum.photos/seed/105/600/400',
     ],
-    badges: ['Bridge of the Gods Guardian'],
+    badges: 'Bridge of the Gods Guardian',
     reviews: [
       { id: 'r-2-1', author: 'Pacer', rating: 5, comment: 'Dave is awesome. Super clean place and a great guy to talk to.', date: '2023-08-15' },
     ],
@@ -95,7 +96,7 @@ export const TRAIL_ANGELS: TrailAngel[] = [
       'https://picsum.photos/seed/107/600/400',
       'https://picsum.photos/seed/108/600/400',
     ],
-    badges: ['PCT Kickoff Hosts'],
+    badges: 'PCT Kickoff Hosts',
     reviews: [
       { id: 'r-3-1', author: 'Every Hiker Ever', rating: 5, comment: 'The best way to start the PCT. They have everything figured out.', date: '2023-04-20' },
       { id: 'r-3-2', author: 'Nemo', rating: 5, comment: 'Incredibly organized and welcoming.', date: '2023-04-22' },
@@ -117,7 +118,7 @@ export const TRAIL_ANGELS: TrailAngel[] = [
     gallery: [
       'https://picsum.photos/seed/109/600/400',
     ],
-    badges: ['Trail Days Local'],
+    badges: 'Trail Days Local',
     reviews: [
       { id: 'r-4-1', author: 'Mudfoot', rating: 4, comment: 'Great spot to camp, and Annie is super friendly.', date: '2023-05-14' },
     ],
@@ -142,7 +143,7 @@ export const TRAIL_ANGELS: TrailAngel[] = [
       'https://picsum.photos/seed/110/600/400',
       'https://picsum.photos/seed/111/600/400',
     ],
-    badges: ['10k+ Feet Club', 'Mountaineer'],
+    badges: '10k+ Feet Club, Mountaineer',
     reviews: [
       { id: 'r-5-1', author: 'Switchback', rating: 5, comment: 'Chris knows his stuff! The room was perfect and his advice was invaluable for the Collegiates.', date: '2023-07-22' },
       { id: 'r-5-2', author: 'Rocky', rating: 5, comment: 'Felt like staying with a friend. Great food, great company.', date: '2023-07-25' },
@@ -204,3 +205,5 @@ export const TRAILS = {
         color: '#286ff2' // Blue
     }
 }
+
+    

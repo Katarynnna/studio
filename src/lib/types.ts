@@ -1,4 +1,5 @@
 
+
 import type { LucideIcon } from 'lucide-react';
 
 export type Service = {
@@ -28,7 +29,7 @@ export type TrailAngel = {
   donationExpected: boolean;
   about: string;
   gallery: string[]; // Array of image URLs
-  badges: string[];
+  badges: string;
   reviews: Review[];
   availability: Date[]; // Dates they are available
   verified: boolean;
@@ -59,3 +60,5 @@ export type DirectMessage = {
   timestamp: string;
   read: boolean;
 };
+
+    

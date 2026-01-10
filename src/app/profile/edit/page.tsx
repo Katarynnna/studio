@@ -6,8 +6,6 @@ import {
   Bed,
   Car,
   CookingPot,
-  Footprints,
-  Instagram,
   Lock,
   Mail,
   Package,
@@ -16,16 +14,17 @@ import {
   Sofa,
   Tent,
   Trash2,
-  Twitter,
   UploadCloud,
   Wifi,
   WashingMachine,
   Youtube,
   Linkedin,
+  Twitter,
+  Instagram,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -50,7 +49,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { userProfile } from '@/components/app/user-profile-sheet';
 import AppLayout from '@/components/app/app-layout';
 import TrailAngelMap from '@/components/app/trail-angel-map';
-import { TRAIL_ANGELS } from '@/lib/data';
+import { TRAIL_ANGELS, ALL_SERVICES } from '@/lib/data';
 
 // Mockup for icons not in lucide-react
 const FacebookIcon = () => (
@@ -62,6 +61,22 @@ const TikTokIcon = () => (
 
 
 export default function EditProfilePage() {
+  const [hasBeds, setHasBeds] = useState(false);
+    
+  const serviceIcons = {
+    'beds': Bed,
+    'laundry': WashingMachine,
+    'wifi': Wifi,
+    'showers': Bath,
+    'storage': Lock,
+    'mail-drop': Package,
+    'food': CookingPot,
+    'rides': Car,
+    'camping': Tent,
+    'couch-floor': Sofa,
+  };
+
+  const servicesWithoutBeds = ALL_SERVICES.filter(s => s.id !== 'beds');
     
   return (
     <AppLayout>
@@ -86,12 +101,6 @@ export default function EditProfilePage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-center gap-6">
-                <div className="relative">
-                  <Avatar className="w-24 h-24">
-                    <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
-                    <AvatarFallback>{userProfile.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
                     <div>
                         <Label htmlFor="trailName">Trail Name</Label>
@@ -122,13 +131,18 @@ export default function EditProfilePage() {
               </div>
 
               <div>
-                <Label htmlFor="about">About</Label>
+                <Label htmlFor="about">About me</Label>
                 <Textarea
                   id="about"
                   defaultValue={userProfile.about}
                   placeholder="Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
                   rows={5}
                 />
+              </div>
+               <div>
+                  <Label htmlFor="badges">Badges</Label>
+                  <Input id="badges" placeholder="PCT hiker 2024, Trail Angel veteran, Trail magic king" defaultValue={Array.isArray(userProfile.badges) ? userProfile.badges.join(', ') : ''} />
+                  <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas.</p>
               </div>
             </CardContent>
           </Card>
@@ -162,8 +176,7 @@ export default function EditProfilePage() {
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
-                     {index !== 0 && <Button size="sm" variant="secondary" className="absolute bottom-2 left-1/2 -translate-x-1/2 h-7 w-auto px-2 opacity-0 group-hover:opacity-100 transition-opacity text-xs">Use as Avatar</Button>}
-                     {index === 0 && <div className="absolute top-1 left-1 bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full flex items-center gap-1">Avatar</div>}
+                     <Button size="sm" variant="secondary" className="absolute bottom-2 left-1/2 -translate-x-1/2 h-7 w-auto px-2 opacity-0 group-hover:opacity-100 transition-opacity text-xs">Use as Avatar</Button>
                   </div>
                 ))}
                 <div className="border-2 border-dashed rounded-lg flex items-center justify-center aspect-square">
@@ -182,28 +195,27 @@ export default function EditProfilePage() {
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <div className="flex items-center justify-between p-3 border rounded-lg col-span-2 sm:col-span-1">
-                        <Label htmlFor="beds-switch" className="flex items-center gap-2 font-normal"><Bed/> Beds</Label>
-                        <div className="flex items-center gap-2">
-                            <Input id="beds-count" type="number" min="1" max="99" defaultValue="1" className="w-14 h-8 text-center" />
-                            <Switch id="beds-switch" />
+                        <div className='flex items-center gap-2'>
+                           <Checkbox id="beds-checkbox" checked={hasBeds} onCheckedChange={(checked) => setHasBeds(Boolean(checked))} />
+                           <Label htmlFor="beds-checkbox" className="font-normal flex items-center gap-1.5">
+                             <Bed className="w-5 h-5 text-primary" /> Beds
+                           </Label>
                         </div>
+                        {hasBeds && (
+                          <Input id="beds-count" type="number" min="1" max="99" defaultValue="1" className="w-14 h-8 text-center" />
+                        )}
                     </div>
-                    {[
-                        {id: 'laundry', label: 'Laundry', icon: WashingMachine},
-                        {id: 'wifi', label: 'WiFi', icon: Wifi},
-                        {id: 'showers', label: 'Showers', icon: Bath},
-                        {id: 'storage', label: 'Storage', icon: Lock},
-                        {id: 'packages', label: 'Packages', icon: Package},
-                        {id: 'food', label: 'Food / Meals', icon: CookingPot},
-                        {id: 'rides', label: 'Rides / Shuttle', icon: Car},
-                        {id: 'camping', label: 'Camping', icon: Tent},
-                        {id: 'couch-floor', label: 'Couch/Floor', icon: Sofa},
-                    ].map(service => (
+                    {servicesWithoutBeds.map(service => {
+                       const Icon = serviceIcons[service.id as keyof typeof serviceIcons] || Car;
+                       return (
                         <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
                             <Checkbox id={service.id} />
-                            <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5"><service.icon className="w-4 h-4 text-muted-foreground"/> {service.label}</Label>
+                            <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5">
+                              <Icon className="w-5 h-5 text-primary"/> {service.name}
+                            </Label>
                         </div>
-                    ))}
+                       )
+                    })}
                 </div>
                 
                 <Separator />

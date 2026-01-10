@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { TrailAngel } from "@/lib/types";
@@ -108,6 +109,10 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
   const services = ALL_SERVICES.filter((s) => angel.services.includes(s.id));
   const galleryImages = PlaceHolderImages.slice(0, angel.gallery.length);
 
+  const angelBadges = typeof angel.badges === 'string' 
+    ? angel.badges.split(',').map(b => b.trim()).filter(Boolean) 
+    : [];
+
   return (
     <Sheet open={!!angel} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
@@ -139,7 +144,7 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
                     {angel.hiking && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
-                    {angel.badges.map((badge) => (
+                    {angelBadges.map((badge) => (
                       <Badge key={badge} variant="secondary">
                         {badge}
                       </Badge>
@@ -256,3 +261,5 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
     </Sheet>
   );
 }
+
+    
