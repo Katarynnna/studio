@@ -4,13 +4,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
+import { useUserProfileStore } from '@/lib/user-profile-store';
 
 import {
   Carousel,
@@ -40,27 +40,6 @@ import {
   Terminal,
 } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from '../ui/alert';
-
-export const userProfile = {
-  name: '',
-  description: "PCT Class of '24",
-  avatar: "https://picsum.photos/seed/123/200/200",
-  about: "Just a hiker trying to make it from Mexico to Canada. I love meeting new people and sharing trail stories. Always on the lookout for good coffee and a place to charge my power bank.",
-  hiking: true,
-  badges: ['Thru-Hiker', 'Triple Crowner Aspirant'],
-  lastActivity: 'Active now',
-  responseRate: 98,
-  gallery: PlaceHolderImages.slice(0, 3),
-  reviews: [
-      { id: 'r-1-1', author: 'Bighorn Betty', rating: 5, comment: 'Wired was a respectful and tidy guest. A joy to host!', date: '2023-05-10' },
-      { id: 'r-1-2', author: 'Cascade Dave', rating: 5, comment: 'Great conversation. Left the place cleaner than they found it.', date: '2023-08-02' },
-  ],
-  socials: {
-    twitter: 'wiredhiker',
-    instagram: 'wiredpct24',
-  },
-  position: { lat: 34.2, lng: -117.8 }
-};
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -117,20 +96,22 @@ type UserProfileSheetProps = {
 };
 
 export default function UserProfileSheet({ open, onOpenChange }: UserProfileSheetProps) {
+  const userProfile = useUserProfileStore((state) => state);
+  
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
         <SheetHeader>
             <div className="flex items-center gap-4">
                 <Avatar className="w-20 h-20">
-                <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
-                <AvatarFallback>{userProfile.name ? userProfile.name.charAt(0) : 'U'}</AvatarFallback>
+                <AvatarImage src={userProfile.avatar} alt={userProfile.trailName} />
+                <AvatarFallback>{userProfile.trailName ? userProfile.trailName.charAt(0) : 'U'}</AvatarFallback>
               </Avatar>
               <div className="space-y-1.5 flex-1">
                 <div className="flex justify-between items-start">
                   <div>
                     <SheetTitle className="text-3xl font-headline flex items-center gap-2">
-                      {userProfile.name || 'Trail Name'}
+                      {userProfile.trailName || 'Trail Name'}
                     </SheetTitle>
                     <SheetDescription>{userProfile.description}</SheetDescription>
                   </div>
@@ -194,28 +175,34 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
           </TabsContent>
 
           <TabsContent value="gallery" className="mt-4">
-            <Carousel className="w-full">
-              <CarouselContent>
-                {userProfile.gallery.map((img, index) => (
-                  <CarouselItem key={index}>
-                      <Card>
-                        <CardContent className="flex aspect-video items-center justify-center p-0">
-                            <Image
-                              src={img.imageUrl}
-                              alt={img.description}
-                              width={600}
-                              height={400}
-                              data-ai-hint={img.imageHint}
-                              className="rounded-lg object-cover"
-                            />
-                        </CardContent>
-                      </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="-left-4" />
-              <CarouselNext className="-right-4" />
-            </Carousel>
+             {userProfile.gallery.length === 0 ? (
+              <div className="text-center text-muted-foreground py-12">
+                <p>No photos yet. Add some from the edit profile page!</p>
+              </div>
+            ) : (
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {userProfile.gallery.map((img, index) => (
+                    <CarouselItem key={index}>
+                        <Card>
+                          <CardContent className="flex aspect-video items-center justify-center p-0">
+                              <Image
+                                src={img.imageUrl}
+                                alt={img.description}
+                                width={600}
+                                height={400}
+                                data-ai-hint={img.imageHint}
+                                className="rounded-lg object-cover"
+                              />
+                          </CardContent>
+                        </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="-left-4" />
+                <CarouselNext className="-right-4" />
+              </Carousel>
+            )}
           </TabsContent>
 
           <TabsContent value="reviews" className="mt-4 space-y-6">
@@ -241,5 +228,3 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
     </Sheet>
   );
 }
-
-    

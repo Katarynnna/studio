@@ -51,18 +51,25 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { userProfile } from '@/components/app/user-profile-sheet';
 import AppLayout from '@/components/app/app-layout';
 import TrailAngelMap from '@/components/app/trail-angel-map';
 import { TRAIL_ANGELS, ALL_SERVICES } from '@/lib/data';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
+import { useUserProfileStore } from '@/lib/user-profile-store';
 
 const profileFormSchema = z.object({
   trailName: z.string().min(1, { message: "Trail Name is required." }),
   status: z.string().optional(),
   badges: z.string().optional(),
   about: z.string().optional(),
+  instagram: z.string().optional(),
+  twitter: z.string().optional(),
+  facebook: z.string().optional(),
+  tiktok: z.string().optional(),
+  youtube: z.string().optional(),
+  linkedin: z.string().optional(),
+  website: z.string().optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -79,6 +86,8 @@ const TikTokIcon = () => (
 
 export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: { setProfileOpen?: (open: boolean) => void; addMessageToInbox?: (...args: any[]) => void }) {
   const [hasBeds, setHasBeds] = useState(false);
+  const { toast } = useToast();
+  const { setProfile, setService, setBedCount, setSocials } = useUserProfileStore();
     
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
@@ -87,15 +96,27 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
         status: "",
         badges: "",
         about: "",
+        instagram: "",
+        twitter: "",
+        facebook: "",
+        tiktok: "",
+        youtube: "",
+        linkedin: "",
+        website: "",
     },
   });
 
   function onSubmit(data: ProfileFormValues) {
+    const { instagram, twitter, facebook, tiktok, youtube, linkedin, website, ...profileData } = data;
+    const badges = data.badges ? data.badges.split(',').map(b => b.trim()) : [];
+    
+    setProfile({ ...profileData, badges });
+    setSocials({ instagram, twitter, facebook, tiktok, youtube, linkedin, website });
+    
     toast({
       title: "Profile Saved!",
       description: "Your changes have been saved successfully.",
     });
-    console.log(data);
   }
 
   const serviceIcons = {
@@ -255,20 +276,23 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                            return (
                              <div key={service.id} className="flex items-center justify-between p-3 border rounded-lg col-span-2 sm:col-span-1">
                                  <div className='flex items-center gap-2'>
-                                    <Checkbox id="beds-checkbox" checked={hasBeds} onCheckedChange={(checked) => setHasBeds(Boolean(checked))} />
+                                    <Checkbox id="beds-checkbox" onCheckedChange={(checked) => {
+                                        setHasBeds(Boolean(checked));
+                                        setService('beds', Boolean(checked));
+                                    }} />
                                     <Label htmlFor="beds-checkbox" className="font-normal flex items-center gap-1.5">
                                       <Bed className="w-5 h-5 text-primary" /> Beds
                                     </Label>
                                  </div>
                                  {hasBeds && (
-                                   <Input id="beds-count" type="number" min="1" max="99" placeholder="1" className="w-14 h-8 text-center" />
+                                   <Input id="beds-count" type="number" min="1" max="99" placeholder="1" className="w-14 h-8 text-center" onChange={e => setBedCount(parseInt(e.target.value) || 0)} />
                                  )}
                              </div>
                            )
                        }
                        return (
                         <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
-                            <Checkbox id={service.id} />
+                            <Checkbox id={service.id} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
                             <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5">
                               <Icon className="w-5 h-5 text-primary"/> {service.name}
                             </Label>
@@ -279,7 +303,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                        const Icon = serviceIcons[service.id as keyof typeof serviceIcons] || Car;
                        return (
                         <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
-                            <Checkbox id={service.id} />
+                            <Checkbox id={service.id} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
                             <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5">
                               <Icon className="w-5 h-5 text-primary"/> {service.name}
                             </Label>
@@ -358,32 +382,46 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="flex items-center gap-2">
                             <Instagram className="w-5 h-5 text-muted-foreground" />
-                            <Input placeholder="Instagram username" />
+                            <FormField control={form.control} name="instagram" render={({ field }) => (
+                              <Input placeholder="Instagram username" {...field} />
+                            )} />
                         </div>
                         <div className="flex items-center gap-2">
                             <Twitter className="w-5 h-5 text-muted-foreground" />
-                            <Input placeholder="Twitter / X username" />
+                            <FormField control={form.control} name="twitter" render={({ field }) => (
+                              <Input placeholder="Twitter / X username" {...field} />
+                            )} />
                         </div>
                         <div className="flex items-center gap-2">
                             <FacebookIcon />
-                            <Input placeholder="Facebook profile URL" />
+                            <FormField control={form.control} name="facebook" render={({ field }) => (
+                              <Input placeholder="Facebook profile URL" {...field} />
+                            )} />
                         </div>
                         <div className="flex items-center gap-2">
                             <TikTokIcon />
-                            <Input placeholder="TikTok username" />
+                            <FormField control={form.control} name="tiktok" render={({ field }) => (
+                              <Input placeholder="TikTok username" {...field} />
+                            )} />
                         </div>
                          <div className="flex items-center gap-2">
                             <Youtube className="w-5 h-5 text-muted-foreground" />
-                            <Input placeholder="YouTube channel URL" />
+                            <FormField control={form.control} name="youtube" render={({ field }) => (
+                              <Input placeholder="YouTube channel URL" {...field} />
+                            )} />
                         </div>
                          <div className="flex items-center gap-2">
                             <Linkedin className="w-5 h-5 text-muted-foreground" />
-                            <Input placeholder="LinkedIn profile URL" />
+                             <FormField control={form.control} name="linkedin" render={({ field }) => (
+                              <Input placeholder="LinkedIn profile URL" {...field} />
+                            )} />
                         </div>
                     </div>
                     <div className="flex items-center gap-2 pt-1">
                         <Mail className="w-5 h-5 text-muted-foreground" />
-                        <Input type="url" placeholder="Website or blog URL" />
+                        <FormField control={form.control} name="website" render={({ field }) => (
+                           <Input type="url" placeholder="Website or blog URL" {...field} />
+                        )} />
                     </div>
                 </div>
             </CardContent>
