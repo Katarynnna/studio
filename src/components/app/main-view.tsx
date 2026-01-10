@@ -150,18 +150,14 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
           <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         )}
       </div>
-      <div className="w-96 max-w-sm shrink-0">
-        <div className="h-full overflow-y-auto">
-          <div className="p-4 space-y-4">
-            <Filters
-              services={ALL_SERVICES}
-              filters={filters}
-              setFilters={setFilters}
-              viewToggle={viewToggle}
-            />
-            <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
-          </div>
-        </div>
+      <div className="w-96 max-w-sm shrink-0 h-full overflow-y-auto p-4 space-y-4">
+        <Filters
+          services={ALL_SERVICES}
+          filters={filters}
+          setFilters={setFilters}
+          viewToggle={viewToggle}
+        />
+        <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
       </div>
       <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
     </div>
