@@ -44,12 +44,13 @@ type UserProfileState = {
     email: string;
   };
   emergencyContacts: { name: string; relationship: string; phone: string }[];
-  setProfile: (data: Partial<UserProfileState>) => void;
+  setProfile: (data: Partial<Omit<UserProfileState, 'address' | 'position'>>) => void;
   setService: (service: string, checked: boolean) => void;
   setBedCount: (count: number) => void;
   setAddress: (address: Partial<UserProfileState['address']>) => void;
   setContact: (contact: Partial<UserProfileState['contact']>) => void;
   setSocials: (socials: Partial<UserProfileState['socials']>) => void;
+  setPosition: (position: { lat: number; lng: number }) => void;
 };
 
 const useUserProfileStore = create<UserProfileState>((set, get) => ({
@@ -100,11 +101,23 @@ const useUserProfileStore = create<UserProfileState>((set, get) => ({
 
   setBedCount: (count) => set({ bedCount: count }),
 
-  setAddress: (address) => set(state => ({ address: { ...state.address, ...address }})),
+  setAddress: (address) => {
+    set(state => ({ 
+      address: { ...state.address, ...address }
+    }));
+    // When address changes, you might want to geocode it to update position.
+    // This is a placeholder for that logic.
+    // For now, let's set a mock position update.
+    if (address.city?.toLowerCase() === 'wrightwood') {
+        get().setPosition({ lat: 34.363, lng: -117.633 });
+    }
+  },
   
   setContact: (contact) => set(state => ({ contact: { ...state.contact, ...contact }})),
   
   setSocials: (socials) => set(state => ({ socials: { ...state.socials, ...socials }})),
+
+  setPosition: (position) => set({ position }),
 }));
 
 export { useUserProfileStore };

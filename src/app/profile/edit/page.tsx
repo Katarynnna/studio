@@ -87,7 +87,7 @@ const TikTokIcon = () => (
 export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: { setProfileOpen?: (open: boolean) => void; addMessageToInbox?: (...args: any[]) => void }) {
   const [hasBeds, setHasBeds] = useState(false);
   const { toast } = useToast();
-  const { setProfile, setService, setBedCount, setSocials } = useUserProfileStore();
+  const { setProfile, setService, setBedCount, setSocials, setAddress, address: userAddress, setPosition } = useUserProfileStore();
     
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
@@ -167,7 +167,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input placeholder="Trail Name" {...field} />
+                          <Input placeholder="Trail Name" {...field} className="focus-visible:ring-primary" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -180,7 +180,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                       <FormItem>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger>
+                            <SelectTrigger className="focus:ring-primary">
                               <SelectValue placeholder="Choose your status" />
                             </SelectTrigger>
                           </FormControl>
@@ -207,6 +207,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                               id="badges" 
                               placeholder="PCT Hiker 2024, Trail Angel Veteran, Trail Magic King, Thru-Hiker..."
                               {...field}
+                              className="focus-visible:ring-primary"
                             />
                         </FormControl>
                          <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas</p>
@@ -229,6 +230,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                             placeholder="Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
                             rows={5}
                             {...field}
+                             className="focus-visible:ring-primary"
                           />
                         </FormControl>
                          <FormMessage />
@@ -256,7 +258,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
 
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
                 <div className="border-2 border-dashed rounded-lg flex items-center justify-center aspect-square">
-                    <Button variant="ghost" size="icon"><Plus className="text-muted-foreground"/></Button>
+                    <Button variant="ghost" size="icon" type="button"><Plus className="text-muted-foreground"/></Button>
                 </div>
               </div>
             </CardContent>
@@ -285,7 +287,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                                     </Label>
                                  </div>
                                  {hasBeds && (
-                                   <Input id="beds-count" type="number" min="1" max="99" placeholder="1" className="w-14 h-8 text-center" onChange={e => setBedCount(parseInt(e.target.value) || 0)} />
+                                   <Input id="beds-count" type="number" min="1" max="99" placeholder="1" className="w-14 h-8 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:ring-primary" onChange={e => setBedCount(parseInt(e.target.value) || 0)} />
                                  )}
                              </div>
                            )
@@ -321,22 +323,22 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                             <TrailAngelMap angels={TRAIL_ANGELS.slice(0,1)} onSelectAngel={() => {}} />
                         </div>
                         <div className="space-y-4">
-                            <Input placeholder="Address Line 1" />
-                            <Input placeholder="Address Line 2" />
-                            <Input placeholder="City" />
+                            <Input placeholder="Address Line 1" value={userAddress.line1} onChange={e => setAddress({ line1: e.target.value })} className="focus-visible:ring-primary"/>
+                            <Input placeholder="Address Line 2" value={userAddress.line2} onChange={e => setAddress({ line2: e.target.value })} className="focus-visible:ring-primary"/>
+                            <Input placeholder="City" value={userAddress.city} onChange={e => setAddress({ city: e.target.value })} className="focus-visible:ring-primary"/>
                             <div className="flex gap-4">
-                                <Input placeholder="State" />
-                                <Input placeholder="ZIP Code" />
+                                <Input placeholder="State" value={userAddress.state} onChange={e => setAddress({ state: e.target.value })} className="focus-visible:ring-primary"/>
+                                <Input placeholder="ZIP Code" value={userAddress.zip} onChange={e => setAddress({ zip: e.target.value })} className="focus-visible:ring-primary"/>
                             </div>
-                            <Select>
-                                <SelectTrigger><SelectValue placeholder="Select Country" /></SelectTrigger>
+                            <Select value={userAddress.country} onValueChange={value => setAddress({ country: value })}>
+                                <SelectTrigger className="focus:ring-primary"><SelectValue placeholder="Select Country" /></SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="usa">United States</SelectItem>
                                     <SelectItem value="canada">Canada</SelectItem>
                                 </SelectContent>
                             </Select>
                             <div className="flex items-center gap-2">
-                                <Checkbox id="private-residence" />
+                                <Checkbox id="private-residence" checked={userAddress.isPrivate} onCheckedChange={checked => setAddress({ isPrivate: Boolean(checked) })} />
                                 <Label htmlFor="private-residence" className="text-sm font-normal text-muted-foreground">This is my private residence. Only show approximate location on the map.</Label>
                             </div>
                         </div>
@@ -353,20 +355,20 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Input id="firstName" placeholder="First Name" />
-                    <Input id="lastName" placeholder="Last Name" />
-                    <Input id="phone" type="tel" placeholder="Phone Number" />
-                    <Input id="email" type="email" placeholder="Email" />
+                    <Input id="firstName" placeholder="First Name" className="focus-visible:ring-primary" />
+                    <Input id="lastName" placeholder="Last Name" className="focus-visible:ring-primary" />
+                    <Input id="phone" type="tel" placeholder="Phone Number" className="focus-visible:ring-primary" />
+                    <Input id="email" type="email" placeholder="Email" className="focus-visible:ring-primary" />
                 </div>
                  <div>
                     <h3 className="font-semibold mb-4 flex items-center justify-between">
                         Emergency Contacts 
-                        <Button variant="ghost" size="sm"><Plus className="w-4 h-4 mr-1"/> Add</Button>
+                        <Button variant="ghost" size="sm" type="button"><Plus className="w-4 h-4 mr-1"/> Add</Button>
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 border rounded-lg">
-                        <Input placeholder="Name" />
-                        <Input placeholder="Relationship" />
-                        <Input type="tel" placeholder="Phone" />
+                        <Input placeholder="Name" className="focus-visible:ring-primary" />
+                        <Input placeholder="Relationship" className="focus-visible:ring-primary" />
+                        <Input type="tel" placeholder="Phone" className="focus-visible:ring-primary" />
                     </div>
                 </div>
             </CardContent>
@@ -383,44 +385,44 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                         <div className="flex items-center gap-2">
                             <Instagram className="w-5 h-5 text-muted-foreground" />
                             <FormField control={form.control} name="instagram" render={({ field }) => (
-                              <Input placeholder="Instagram username" {...field} />
+                              <Input placeholder="Instagram username" {...field} className="focus-visible:ring-primary" />
                             )} />
                         </div>
                         <div className="flex items-center gap-2">
                             <Twitter className="w-5 h-5 text-muted-foreground" />
                             <FormField control={form.control} name="twitter" render={({ field }) => (
-                              <Input placeholder="Twitter / X username" {...field} />
+                              <Input placeholder="Twitter / X username" {...field} className="focus-visible:ring-primary" />
                             )} />
                         </div>
                         <div className="flex items-center gap-2">
                             <FacebookIcon />
                             <FormField control={form.control} name="facebook" render={({ field }) => (
-                              <Input placeholder="Facebook profile URL" {...field} />
+                              <Input placeholder="Facebook profile URL" {...field} className="focus-visible:ring-primary" />
                             )} />
                         </div>
                         <div className="flex items-center gap-2">
                             <TikTokIcon />
                             <FormField control={form.control} name="tiktok" render={({ field }) => (
-                              <Input placeholder="TikTok username" {...field} />
+                              <Input placeholder="TikTok username" {...field} className="focus-visible:ring-primary" />
                             )} />
                         </div>
                          <div className="flex items-center gap-2">
                             <Youtube className="w-5 h-5 text-muted-foreground" />
                             <FormField control={form.control} name="youtube" render={({ field }) => (
-                              <Input placeholder="YouTube channel URL" {...field} />
+                              <Input placeholder="YouTube channel URL" {...field} className="focus-visible:ring-primary" />
                             )} />
                         </div>
                          <div className="flex items-center gap-2">
                             <Linkedin className="w-5 h-5 text-muted-foreground" />
                              <FormField control={form.control} name="linkedin" render={({ field }) => (
-                              <Input placeholder="LinkedIn profile URL" {...field} />
+                              <Input placeholder="LinkedIn profile URL" {...field} className="focus-visible:ring-primary" />
                             )} />
                         </div>
                     </div>
                     <div className="flex items-center gap-2 pt-1">
                         <Mail className="w-5 h-5 text-muted-foreground" />
                         <FormField control={form.control} name="website" render={({ field }) => (
-                           <Input type="url" placeholder="Website or blog URL" {...field} />
+                           <Input type="url" placeholder="Website or blog URL" {...field} className="focus-visible:ring-primary" />
                         )} />
                     </div>
                 </div>
@@ -429,7 +431,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
         </div>
 
         <div className="mt-8 flex justify-end gap-2">
-          <Button variant="ghost">Cancel</Button>
+          <Button variant="ghost" type="button">Cancel</Button>
           <Button type="submit">Save Changes</Button>
         </div>
       </div>
