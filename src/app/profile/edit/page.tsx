@@ -56,7 +56,7 @@ import AppLayout from '@/components/app/app-layout';
 import TrailAngelMap from '@/components/app/trail-angel-map';
 import { TRAIL_ANGELS, ALL_SERVICES } from '@/lib/data';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { toast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 const profileFormSchema = z.object({
   trailName: z.string().min(1, { message: "Trail Name is required." }),
@@ -178,7 +178,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                         <FormControl>
                            <Input 
                               id="badges" 
-                              placeholder="e.g. PCT hiker 2024, Trail Angel veteran, Trail magic king"
+                              placeholder="e.g. PCT Hiker 2024, Trail Angel Veteran, Trail Magic King, Thru-Hiker..."
                               {...field}
                             />
                         </FormControl>
