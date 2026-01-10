@@ -2,11 +2,10 @@
 "use client";
 
 import type { Service } from "@/lib/types";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ReactNode, Dispatch, SetStateAction } from "react";
@@ -16,12 +15,6 @@ export type FilterState = {
   name: string;
   location: string;
   services: string[];
-};
-
-const initialFilters: FilterState = {
-    name: "",
-    location: "",
-    services: [],
 };
 
 type FiltersProps = {
@@ -48,12 +41,6 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
     });
   };
 
-  const clearFilters = () => {
-    setFilters(initialFilters);
-  }
-
-  const areFiltersActive = filters.name !== "" || filters.location !== "" || filters.services.length > 0;
-  
   const content = (
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -105,13 +92,6 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
       <CardContent>
           {content}
       </CardContent>
-      {areFiltersActive && (
-        <CardFooter>
-            <Button variant="outline" onClick={clearFilters} className="w-full">
-                Clear Filters
-            </Button>
-        </CardFooter>
-      )}
     </Card>
   );
 }
