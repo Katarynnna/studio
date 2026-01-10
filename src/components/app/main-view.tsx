@@ -151,7 +151,7 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
           <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         )}
       </div>
-      <div className="w-96 max-w-sm shrink-0 border-l">
+      <div className="w-96 max-w-sm shrink-0 border-l bg-main-background" style={{ backgroundColor: 'hsl(var(--main-background))' }}>
         <div className="p-4 space-y-4">
           <Filters
             services={ALL_SERVICES}
