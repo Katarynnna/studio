@@ -84,7 +84,7 @@ const FacebookIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
 );
 const TikTokIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground"><path d="M12 12a4 4 0 1 0 4 4V8a8 8 0 1 0-8 8"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground"><path d="M12 12a4 4 0 1 0 4 4V8a8 8 0 1 0-8 8"></path></svg>
 );
 
 const COUNTRIES = [
@@ -192,7 +192,6 @@ export default function EditProfilePage() {
                     name="trailName"
                     render={({ field }) => (
                       <FormItem>
-                         <FormLabel>Trail Name</FormLabel>
                         <FormControl>
                           <Input placeholder="Your trail name" {...field} />
                         </FormControl>
@@ -205,7 +204,6 @@ export default function EditProfilePage() {
                     name="status"
                     render={({ field }) => (
                       <FormItem>
-                         <FormLabel>Status</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
@@ -230,7 +228,6 @@ export default function EditProfilePage() {
                     name="badges"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Badges</FormLabel>
                         <FormControl>
                            <Input 
                               id="badges" 
@@ -252,7 +249,6 @@ export default function EditProfilePage() {
                     name="about"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>About Me</FormLabel>
                         <FormControl>
                           <Textarea
                             id="about"
@@ -380,16 +376,16 @@ export default function EditProfilePage() {
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormField control={form.control} name="firstName" render={({ field }) => (
-                        <FormItem><FormLabel>First Name</FormLabel><FormControl><Input placeholder="First Name" {...field} /></FormControl><FormMessage /></FormItem>
+                        <FormItem><FormControl><Input placeholder="First Name" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="lastName" render={({ field }) => (
-                        <FormItem><FormLabel>Last Name</FormLabel><FormControl><Input placeholder="Last Name" {...field} /></FormControl><FormMessage /></FormItem>
+                        <FormItem><FormControl><Input placeholder="Last Name" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="phone" render={({ field }) => (
-                        <FormItem><FormLabel>Phone</FormLabel><FormControl><Input type="tel" placeholder="Phone Number" {...field} /></FormControl><FormMessage /></FormItem>
+                        <FormItem><FormControl><Input type="tel" placeholder="Phone Number" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="email" render={({ field }) => (
-                        <FormItem><FormLabel>Email</FormLabel><FormControl><Input type="email" placeholder="Email" {...field} /></FormControl><FormMessage /></FormItem>
+                        <FormItem><FormControl><Input type="email" placeholder="Email" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                 </div>
                  <div>
@@ -473,5 +469,7 @@ export default function EditProfilePage() {
     </AppLayout>
   );
 }
+
+    
 
     
