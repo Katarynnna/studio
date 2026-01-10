@@ -5,7 +5,7 @@ import type { TrailAngel } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Footprints, CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Footprints } from "lucide-react";
 
 type TrailAngelListProps = {
   angels: TrailAngel[];
@@ -14,7 +14,7 @@ type TrailAngelListProps = {
 
 export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelListProps) {
   return (
-      <div className="p-4 grid gap-4 sm:grid-cols-2 pt-20 md:pt-4">
+      <div className="p-4 grid gap-4 sm:grid-cols-2">
         {angels.map((angel) => (
           <Card 
             key={angel.id} 
@@ -27,7 +27,7 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
                   <AvatarImage src={angel.gallery[0]} alt={angel.name} />
                   <AvatarFallback>{angel.name.charAt(0)}</AvatarFallback>
                 </Avatar>
-                <div className="flex-1 space-y-1">
+                <div className="flex-1">
                   <CardTitle className="flex items-center justify-between">
                     <span className="text-xl font-headline">{angel.name}</span>
                     {angel.verified && <CheckCircle2 className="w-5 h-5 text-blue-500" title="Verified Angel" />}
@@ -52,4 +52,3 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
       </div>
   );
 }
-
