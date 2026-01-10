@@ -105,7 +105,7 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
         }
     }}>
       <SheetContent className="w-full sm:max-w-lg flex flex-col p-0 overflow-y-auto">
-        <SheetHeader className="p-6">
+        <SheetHeader className="p-6 pb-0">
             <div className="flex flex-row items-center gap-2">
                 {selectedConversationId && (
                     <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
@@ -125,8 +125,8 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
                     {!selectedConversationId ? (
                         // Conversation List View
                         messages.length === 0 ? (
-                             <div className="flex items-center justify-center h-64">
-                                <p className="text-muted-foreground">Your message history will appear here.</p>
+                             <div className="flex items-center justify-center h-64 text-muted-foreground">
+                                <p>Your message history will appear here.</p>
                             </div>
                         ) : (
                             <div className="space-y-4 pt-4">
