@@ -103,7 +103,7 @@ export default function EditProfilePage() {
   const router = useRouter();
   const { 
     trailName, status, badges, about, services, bedCount, socials, address: userAddress, contact,
-    setProfile, setService, setBedCount, setSocials, setAddress, setContact, setPosition 
+    setProfile, setService, setBedCount, setAddress, setContact, setSocials, setPosition 
   } = useUserProfileStore();
     
   const [hasBeds, setHasBeds] = useState(services.includes('beds'));
@@ -112,21 +112,21 @@ export default function EditProfilePage() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      trailName: trailName,
-      status: status,
+      trailName: trailName || '',
+      status: status || '',
       badges: Array.isArray(badges) ? badges.join(', ') : '',
-      about: about,
-      instagram: socials.instagram,
-      twitter: socials.twitter,
-      facebook: socials.facebook,
-      tiktok: socials.tiktok,
-      youtube: socials.youtube,
-      linkedin: socials.linkedin,
-      website: socials.website,
-      firstName: contact.firstName,
-      lastName: contact.lastName,
-      phone: contact.phone,
-      email: contact.email,
+      about: about || '',
+      instagram: socials.instagram || '',
+      twitter: socials.twitter || '',
+      facebook: socials.facebook || '',
+      tiktok: socials.tiktok || '',
+      youtube: socials.youtube || '',
+      linkedin: socials.linkedin || '',
+      website: socials.website || '',
+      firstName: contact.firstName || '',
+      lastName: contact.lastName || '',
+      phone: contact.phone || '',
+      email: contact.email || '',
     },
   });
 
