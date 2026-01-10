@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/sheet";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Mail, ArrowLeft } from "lucide-react";
-import type { DirectMessage, TrailAngel } from "@/lib/types";
+import { Mail, ArrowLeft, Send } from "lucide-react";
+import type { DirectMessage } from "@/lib/types";
 import { format, formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { TRAIL_ANGELS } from "@/lib/data";
@@ -20,19 +20,21 @@ import { userProfile } from "../app/user-profile-sheet";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import TrailAngelSheet from "./trail-angel-sheet";
-
+import { Textarea } from "../ui/textarea";
 
 type InboxSheetProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   messages: DirectMessage[];
   onSelectAngel: (angelId: string) => void;
+  addMessageToInbox: (angelId: string, message: string) => void;
 };
 
 
 // Main component for the Inbox
-export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel }: InboxSheetProps) {
+export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel, addMessageToInbox }: InboxSheetProps) {
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
+  const [reply, setReply] = useState('');
 
   // Group messages by conversation partner
   const conversations = messages.reduce((acc, msg) => {
@@ -85,6 +87,14 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
       onOpenChange(true);
     }
   }
+  
+  const handleReply = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (reply.trim() && selectedConversationId) {
+          addMessageToInbox(selectedConversationId, reply.trim());
+          setReply('');
+      }
+  }
 
 
   return (
@@ -96,7 +106,7 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
         }
     }}>
       <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
-          <SheetHeader className="p-6 pb-0 space-y-2 text-left shrink-0">
+          <SheetHeader className="p-6 pb-2 space-y-2 text-left shrink-0 border-b">
             <div className="flex items-center gap-4">
                 {selectedConversationId && (
                     <Button variant="ghost" size="icon" onClick={handleBack} className="-ml-2">
@@ -104,73 +114,93 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
                     </Button>
                 )}
                  <SheetTitle className="text-3xl font-headline flex items-center gap-2">
-                    {selectedConversationId ? partner?.name : 'Inbox'}
+                    {selectedConversationId ? (
+                        <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
+                    ) : 'Inbox'}
                  </SheetTitle>
             </div>
-            {!selectedConversationId && messages.length === 0 && <SheetDescription>You have no new messages.</SheetDescription>}
+            {!selectedConversationId && messages.length === 0 && <SheetDescription className="pb-4">You have no new messages.</SheetDescription>}
           </SheetHeader>
         
-        <ScrollArea className="flex-1">
-            <div className="p-6">
-                {!selectedConversationId ? (
-                    // Conversation List View
-                    messages.length === 0 ? (
-                        <Card>
-                            <CardContent className="flex items-center justify-center h-64 p-6">
-                                <p className="text-muted-foreground">Your message history will appear here.</p>
-                            </CardContent>
-                        </Card>
-                    ) : (
-                        <div className="space-y-4">
-                            {conversationPreviews.map(convo => (
-                                <Card key={convo.partnerId} className="p-4 cursor-pointer hover:bg-secondary" onClick={() => setSelectedConversationId(convo.partnerId)}>
-                                    <div className="flex items-start gap-4">
-                                        <Avatar className="w-12 h-12">
-                                            <AvatarImage src={convo.partnerAvatar} alt={convo.partnerName} />
-                                            <AvatarFallback>{convo.partnerName.charAt(0)}</AvatarFallback>
-                                        </Avatar>
-                                        <div className="flex-1 overflow-hidden">
-                                            <div className="flex justify-between items-center">
-                                                <p className="font-semibold truncate">{convo.partnerName}</p>
-                                                <div className="flex items-center gap-2 shrink-0">
-                                                <p className="text-xs text-muted-foreground">
-                                                    {formatDistanceToNow(new Date(convo.timestamp), { addSuffix: true })}
-                                                </p>
-                                                {convo.unreadCount > 0 && <span className="block h-2 w-2 rounded-full bg-green-500" />}
+        <div className="flex-1 flex flex-col overflow-hidden">
+            <ScrollArea className="flex-1">
+                <div className="p-6">
+                    {!selectedConversationId ? (
+                        // Conversation List View
+                        messages.length === 0 ? (
+                            <Card>
+                                <CardContent className="flex items-center justify-center h-64 p-6">
+                                    <p className="text-muted-foreground">Your message history will appear here.</p>
+                                </CardContent>
+                            </Card>
+                        ) : (
+                            <div className="space-y-4">
+                                {conversationPreviews.map(convo => (
+                                    <Card key={convo.partnerId} className="p-4 cursor-pointer hover:bg-secondary" onClick={() => setSelectedConversationId(convo.partnerId)}>
+                                        <div className="flex items-start gap-4">
+                                            <Avatar className="w-12 h-12">
+                                                <AvatarImage src={convo.partnerAvatar} alt={convo.partnerName} />
+                                                <AvatarFallback>{convo.partnerName.charAt(0)}</AvatarFallback>
+                                            </Avatar>
+                                            <div className="flex-1 overflow-hidden">
+                                                <div className="flex justify-between items-center">
+                                                    <p className="font-semibold truncate">{convo.partnerName}</p>
+                                                    <div className="flex items-center gap-2 shrink-0">
+                                                    <p className="text-xs text-muted-foreground">
+                                                        {formatDistanceToNow(new Date(convo.timestamp), { addSuffix: true })}
+                                                    </p>
+                                                    {convo.unreadCount > 0 && <span className="block h-2 w-2 rounded-full bg-accent" />}
+                                                    </div>
                                                 </div>
+                                                <p className={cn("text-sm  truncate", convo.unreadCount > 0 ? "text-foreground font-medium" : "text-muted-foreground")}>{convo.latestMessage}</p>
                                             </div>
-                                            <p className={cn("text-sm  truncate", convo.unreadCount > 0 ? "text-foreground font-medium" : "text-muted-foreground")}>{convo.latestMessage}</p>
                                         </div>
+                                    </Card>
+                                ))}
+                            </div>
+                        )
+                    ) : (
+                        // Detailed Conversation View
+                        <div className="space-y-4">
+                            {selectedConversation?.slice().sort((a,b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()).map(msg => (
+                                <div key={msg.id} className={cn("flex flex-col gap-2 w-full", msg.senderId === 'user-wired' ? "items-end" : "items-start")}>
+                                    <div className={cn("max-w-[80%] rounded-lg p-3", msg.senderId === 'user-wired' ? "bg-primary text-primary-foreground" : "bg-secondary")}>
+                                        <p className="text-sm whitespace-pre-wrap break-words">{msg.message}</p>
                                     </div>
-                                </Card>
+                                    <p className="text-xs text-muted-foreground px-1">
+                                        {format(new Date(msg.timestamp), "MMM d, h:mm a")}
+                                    </p>
+                                </div>
                             ))}
                         </div>
-                    )
-                ) : (
-                    // Detailed Conversation View
-                    <div className="space-y-4">
-                        {partner && 
-                            <div className="flex justify-center mb-4">
-                                <Button variant="link" onClick={openAngelProfile}>View {partner.name}'s Profile</Button>
-                            </div>
-                        }
-                        {selectedConversation?.slice().sort((a,b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()).map(msg => (
-                            <div key={msg.id} className={cn("flex flex-col gap-2", msg.senderId === 'user-wired' ? "items-end" : "items-start")}>
-                                <div className={cn("max-w-[80%] rounded-lg p-3", msg.senderId === 'user-wired' ? "bg-primary text-primary-foreground" : "bg-secondary")}>
-                                    <p className="text-sm break-words">{msg.message}</p>
-                                </div>
-                                <p className="text-xs text-muted-foreground px-1">
-                                    {format(new Date(msg.timestamp), "MMM d, h:mm a")}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </ScrollArea>
+                    )}
+                </div>
+            </ScrollArea>
+            {selectedConversationId && (
+                <div className="p-4 border-t bg-background shrink-0">
+                    <form onSubmit={handleReply} className="flex items-center gap-2">
+                        <Textarea 
+                            placeholder="Type a message..." 
+                            className="flex-1"
+                            value={reply}
+                            onChange={e => setReply(e.target.value)}
+                            onKeyDown={e => {
+                                if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    handleReply(e);
+                                }
+                            }}
+                        />
+                        <Button type="submit" size="icon" disabled={!reply.trim()}>
+                            <Send />
+                        </Button>
+                    </form>
+                </div>
+            )}
+        </div>
       </SheetContent>
     </Sheet>
-    {partner && <TrailAngelSheet angel={isAngelSheetOpen ? partner : null} onOpenChange={onAngelSheetChange} />}
+    {partner && <TrailAngelSheet angel={isAngelSheetOpen ? partner : null} onOpenChange={onAngelSheetChange} addMessageToInbox={addMessageToInbox} />}
     </>
   );
 }

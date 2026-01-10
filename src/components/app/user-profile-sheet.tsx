@@ -10,6 +10,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
+
 import {
   Carousel,
   CarouselContent,
@@ -35,8 +37,10 @@ import {
   Footprints,
   Twitter,
   Instagram,
+  Terminal,
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Alert, AlertTitle, AlertDescription } from '../ui/alert';
 
 export const userProfile = {
   name: 'Wired',
@@ -56,6 +60,7 @@ export const userProfile = {
     twitter: 'wiredhiker',
     instagram: 'wiredpct24',
   },
+  position: { lat: 34.2, lng: -117.8 }
 };
 
 function StarRating({ rating }: { rating: number }) {
@@ -71,6 +76,40 @@ function StarRating({ rating }: { rating: number }) {
       ))}
     </div>
   );
+}
+
+const MissingApiKey = () => (
+    <Alert variant="destructive" className="my-4">
+      <Terminal className="h-4 w-4" />
+      <AlertTitle>Google Maps API Key is Missing</AlertTitle>
+      <AlertDescription>
+        To display the map, please add your Google Maps API key to your environment variables.
+      </AlertDescription>
+    </Alert>
+);
+
+
+const ProfileMap = ({ position }: { position: { lat: number; lng: number }}) => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+    if (!apiKey) return <MissingApiKey />;
+
+    return (
+        <div className='aspect-video w-full rounded-lg overflow-hidden my-4 border'>
+            <APIProvider apiKey={apiKey}>
+                <Map
+                    defaultCenter={position}
+                    defaultZoom={9}
+                    mapId="profile_map"
+                    disableDefaultUI={true}
+                    gestureHandling="none"
+                >
+                    <AdvancedMarker position={position}>
+                         <div className="w-6 h-6 rounded-full bg-blue-500 border-2 border-white shadow-lg"></div>
+                    </AdvancedMarker>
+                </Map>
+            </APIProvider>
+        </div>
+    )
 }
 
 type UserProfileSheetProps = {
@@ -152,6 +191,8 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
               
               <TabsContent value="about" className="mt-4">
                 <p className="text-muted-foreground mb-4">{userProfile.about}</p>
+                 <h4 className="font-semibold mb-2">My Location</h4>
+                <ProfileMap position={userProfile.position} />
                 <Button variant="outline" className="w-full mt-4">Edit Profile</Button>
               </TabsContent>
 
