@@ -122,7 +122,7 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
               <div className="space-y-1.5">
                 <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                   {angel.name}
-                  {angel.verified && <CheckCircle2 className="w-6 h-6 text-blue-500" title="Verified Angel" />}
+                  {angel.verified && <CheckCircle2 className="w-6 h-6 text-primary" title="Verified Angel" />}
                 </SheetTitle>
                 <SheetDescription>{angel.location}</SheetDescription>
               </div>

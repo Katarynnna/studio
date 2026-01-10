@@ -30,7 +30,7 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
                 <div className="flex-1 ml-4">
                   <CardTitle className="flex items-center justify-between">
                     <span className="text-xl font-headline">{angel.name}</span>
-                    {angel.verified && <CheckCircle2 className="w-5 h-5 text-blue-500" title="Verified Angel" />}
+                    {angel.verified && <CheckCircle2 className="w-5 h-5 text-primary" title="Verified Angel" />}
                   </CardTitle>
                   <CardDescription>{angel.location}</CardDescription>
                 </div>
