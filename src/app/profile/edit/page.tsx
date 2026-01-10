@@ -84,7 +84,7 @@ const FacebookIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
 );
 const TikTokIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground"><path d="M12 12a4 4 0 1 0 4 4V8a8 8 0 1 0-8 8"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground"><path d="M12 12a4 4 0 1 0 4 4V8a8 8 0 1 0-8 8"></path></svg>
 );
 
 const COUNTRIES = [
@@ -142,7 +142,7 @@ export default function EditProfilePage() {
       title: "Profile Saved!",
       description: "Your changes have been saved successfully.",
     });
-    router.push('/');
+    router.back();
   }
 
   const serviceIcons = {
@@ -169,10 +169,10 @@ export default function EditProfilePage() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       <div className="container mx-auto max-w-5xl py-8 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-            <Link href="/" className='flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4'>
+            <button type="button" onClick={() => router.back()} className='flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4'>
                 <ArrowLeft className="w-4 h-4" />
-                Back to map
-            </Link>
+                Back to profile
+            </button>
           <h1 className="text-4xl font-bold font-headline">Edit Profile</h1>
           <p className="text-muted-foreground">
             Remember to save your changes at the bottom of the page.
@@ -463,7 +463,7 @@ export default function EditProfilePage() {
         </div>
 
         <div className="mt-8 flex justify-end gap-2">
-          <Button variant="ghost" type="button" onClick={() => router.push('/')}>Cancel</Button>
+          <Button variant="ghost" type="button" onClick={() => router.back()}>Cancel</Button>
           <Button type="submit">Save Changes</Button>
         </div>
       </div>
@@ -473,3 +473,5 @@ export default function EditProfilePage() {
     </AppLayout>
   );
 }
+
+    
