@@ -12,7 +12,7 @@ import TrailAngelSheet from "./trail-angel-sheet";
 import TrailAngelList from "./trail-angel-list";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { Filter, List, Map as MapIcon } from "lucide-react";
+import { Filter, List, Map as MapIcon, X } from "lucide-react";
 import {
   Dialog,
   DialogContent,
