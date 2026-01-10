@@ -13,7 +13,6 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar } from "@/components/ui/calendar";
 import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
@@ -44,6 +43,7 @@ import {
 import SendMessageDialog from "./send-message-dialog";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import StaticCalendar from "./static-calendar";
 
 type TrailAngelSheetProps = {
   angel: TrailAngel | null;
@@ -204,13 +204,8 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
             
             <TabsContent value="availability" className="mt-4">
               <p className="text-sm text-muted-foreground mb-2">Highlighted dates show when {angel.name} is available.</p>
-              <div className="flex justify-center rounded-md border">
-                <Calendar
-                  mode="multiple"
-                  selected={angel.availability}
-                  defaultMonth={angel.availability[0] || new Date()}
-                  className="my-4"
-                />
+              <div className="flex justify-center rounded-md border p-4">
+                <StaticCalendar availableDates={angel.availability} />
               </div>
             </TabsContent>
 
