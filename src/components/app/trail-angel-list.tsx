@@ -33,13 +33,13 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
                     {angel.verified && <CheckCircle2 className="w-5 h-5 text-blue-500" title="Verified Angel" />}
                   </CardTitle>
                   <CardDescription>{angel.location}</CardDescription>
-                   {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 </div>
               </div>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground line-clamp-2 h-10">{angel.about}</p>
               <div className="flex flex-wrap gap-1 mt-2">
+                {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 {angel.badges.map((badge) => (
                   <Badge key={badge} variant="secondary" className="text-xs">
                     {badge}

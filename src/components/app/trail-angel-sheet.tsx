@@ -125,7 +125,6 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
                   {angel.verified && <CheckCircle2 className="w-6 h-6 text-blue-500" title="Verified Angel" />}
                 </SheetTitle>
                 <SheetDescription>{angel.location}</SheetDescription>
-                  {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
               </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
@@ -141,6 +140,7 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
                       </div>
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
+                    {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                     {angel.badges.map((badge) => (
                       <Badge key={badge} variant="secondary">
                         {badge}

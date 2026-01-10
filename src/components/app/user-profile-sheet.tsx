@@ -135,7 +135,6 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                     <SheetDescription>{userProfile.description}</SheetDescription>
                   </div>
                 </div>
-                  {userProfile.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
               </div>
             </div>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
@@ -151,6 +150,7 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                       </div>
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
+                    {userProfile.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                     {userProfile.badges.map((badge) => (
                       <Badge key={badge} variant="secondary">
                         {badge}
