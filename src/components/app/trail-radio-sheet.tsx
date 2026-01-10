@@ -44,14 +44,14 @@ export default function TrailRadioSheet({ open, onOpenChange }: TrailRadioSheetP
     return (
         <>
             <Sheet open={open} onOpenChange={onOpenChange}>
-                <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col overflow-y-auto">
-                    <SheetHeader className="p-6 pb-4 space-y-2 text-left shrink-0 border-b">
+                <SheetContent className="w-full sm:max-w-lg p-6 flex flex-col overflow-hidden">
+                    <SheetHeader className="pb-4 space-y-2 text-left shrink-0 border-b -mx-6 px-6">
                         <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                             <Radio className="w-8 h-8" />
                             Trail Radio
                         </SheetTitle>
                     </SheetHeader>
-                    <div className="p-6 pt-4">
+                    <div className="flex-1 overflow-y-auto -mx-6 px-6 pt-4">
                         <TrailRadio onSelectAngel={handleAuthorClick} isSheet={true} />
                     </div>
                 </SheetContent>

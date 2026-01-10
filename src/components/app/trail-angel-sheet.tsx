@@ -112,9 +112,8 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
 
   return (
     <Sheet open={!!angel} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col overflow-y-auto">
-        <div className="p-6">
-          <SheetHeader className="space-y-2 text-left">
+      <SheetContent className="w-full sm:max-w-lg p-6 flex flex-col">
+        <SheetHeader className="space-y-2 text-left">
             <div className="flex items-center gap-4">
                 <Avatar className="w-20 h-20">
                 <AvatarImage src={angel.gallery[0]} alt={angel.name} />
@@ -168,99 +167,102 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
             </div>
           </SheetHeader>
           
-          <Separator className="my-6" />
+          <Separator className="my-6 -mx-6 w-auto" />
           
-          <Tabs defaultValue="about" className="mt-6">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1 hidden sm:inline-flex" />About</TabsTrigger>
-              <TabsTrigger value="availability"><CalendarIcon className="w-4 h-4 mr-1 hidden sm:inline-flex" />Calendar</TabsTrigger>
-              <TabsTrigger value="gallery"><GalleryHorizontal className="w-4 h-4 mr-1 hidden sm:inline-flex" />Gallery</TabsTrigger>
-              <TabsTrigger value="reviews"><Users className="w-4 h-4 mr-1 hidden sm:inline-flex" />Reviews</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="about" className="mt-4">
-              <p className="text-muted-foreground mb-4">{angel.about}</p>
-              
-              <div className="flex items-center gap-2 my-4">
-                <h4 className="font-semibold">Services Offered</h4>
-                {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
-              </div>
-              <div className="flex flex-wrap gap-x-6 gap-y-4">
-                {services.map((service) => (
-                  <div key={service.id} className="flex items-center gap-3">
-                    <service.icon className="w-5 h-5 text-primary" />
-                    <span className="text-sm">{service.name}</span>
+          <div className="flex-1 overflow-y-auto -mx-6">
+            <div className="px-6">
+              <Tabs defaultValue="about" className="mt-0">
+                <TabsList className="grid w-full grid-cols-4">
+                  <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1 hidden sm:inline-flex" />About</TabsTrigger>
+                  <TabsTrigger value="availability"><CalendarIcon className="w-4 h-4 mr-1 hidden sm:inline-flex" />Calendar</TabsTrigger>
+                  <TabsTrigger value="gallery"><GalleryHorizontal className="w-4 h-4 mr-1 hidden sm:inline-flex" />Gallery</TabsTrigger>
+                  <TabsTrigger value="reviews"><Users className="w-4 h-4 mr-1 hidden sm:inline-flex" />Reviews</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="about" className="mt-4">
+                  <p className="text-muted-foreground mb-4">{angel.about}</p>
+                  
+                  <div className="flex items-center gap-2 my-4">
+                    <h4 className="font-semibold">Services Offered</h4>
+                    {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
                   </div>
-                ))}
-              </div>
+                  <div className="flex flex-wrap gap-x-6 gap-y-4">
+                    {services.map((service) => (
+                      <div key={service.id} className="flex items-center gap-3">
+                        <service.icon className="w-5 h-5 text-primary" />
+                        <span className="text-sm">{service.name}</span>
+                      </div>
+                    ))}
+                  </div>
 
-              <h4 className="font-semibold mt-6 mb-2">Location</h4>
-              <ProfileMap position={angel.position} />
+                  <h4 className="font-semibold mt-6 mb-2">Location</h4>
+                  <ProfileMap position={angel.position} />
 
-              <SendMessageDialog angel={angel} open={dialogOpen} onOpenChange={setDialogOpen} addMessageToInbox={addMessageToInbox}>
-                  <Button className="w-full mt-6">
-                      Message
-                  </Button>
-              </SendMessageDialog>
+                  <SendMessageDialog angel={angel} open={dialogOpen} onOpenChange={setDialogOpen} addMessageToInbox={addMessageToInbox}>
+                      <Button className="w-full mt-6">
+                          Message
+                      </Button>
+                  </SendMessageDialog>
 
-            </TabsContent>
-            
-            <TabsContent value="availability" className="mt-4">
-              <p className="text-sm text-muted-foreground mb-2">Highlighted dates show when {angel.name} is available.</p>
-              <div className="flex justify-center rounded-md border">
-                <Calendar
-                  mode="multiple"
-                  selected={angel.availability}
-                  defaultMonth={angel.availability[0] || new Date()}
-                  className="my-4"
-                />
-              </div>
-            </TabsContent>
+                </TabsContent>
+                
+                <TabsContent value="availability" className="mt-4">
+                  <p className="text-sm text-muted-foreground mb-2">Highlighted dates show when {angel.name} is available.</p>
+                  <div className="flex justify-center rounded-md border">
+                    <Calendar
+                      mode="multiple"
+                      selected={angel.availability}
+                      defaultMonth={angel.availability[0] || new Date()}
+                      className="my-4"
+                    />
+                  </div>
+                </TabsContent>
 
-            <TabsContent value="gallery" className="mt-4">
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {galleryImages.map((img, index) => (
-                    <CarouselItem key={index}>
-                        <Card>
-                          <CardContent className="flex aspect-video items-center justify-center p-0">
-                              <Image
-                                src={img.imageUrl}
-                                alt={img.description}
-                                width={600}
-                                height={400}
-                                data-ai-hint={img.imageHint}
-                                className="rounded-lg object-cover"
-                              />
-                          </CardContent>
-                        </Card>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="-left-4" />
-                <CarouselNext className="-right-4" />
-              </Carousel>
-            </TabsContent>
+                <TabsContent value="gallery" className="mt-4">
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {galleryImages.map((img, index) => (
+                        <CarouselItem key={index}>
+                            <Card>
+                              <CardContent className="flex aspect-video items-center justify-center p-0">
+                                  <Image
+                                    src={img.imageUrl}
+                                    alt={img.description}
+                                    width={600}
+                                    height={400}
+                                    data-ai-hint={img.imageHint}
+                                    className="rounded-lg object-cover"
+                                  />
+                              </CardContent>
+                            </Card>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="-left-4" />
+                    <CarouselNext className="-right-4" />
+                  </Carousel>
+                </TabsContent>
 
-            <TabsContent value="reviews" className="mt-4 space-y-6">
-              {angel.reviews.map((review) => (
-                <div key={review.id} className="flex gap-3">
-                  <Avatar>
-                    <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 space-y-1">
-                    <div className="flex items-center gap-2">
-                      <p className="font-semibold">{review.author}</p>
-                      <span className="text-xs text-muted-foreground pt-0.5">{review.date}</span>
+                <TabsContent value="reviews" className="mt-4 space-y-6">
+                  {angel.reviews.map((review) => (
+                    <div key={review.id} className="flex gap-3">
+                      <Avatar>
+                        <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold">{review.author}</p>
+                          <span className="text-xs text-muted-foreground pt-0.5">{review.date}</span>
+                        </div>
+                        <StarRating rating={review.rating} />
+                        <p className="text-sm text-muted-foreground pt-2">{review.comment}</p>
+                      </div>
                     </div>
-                    <StarRating rating={review.rating} />
-                    <p className="text-sm text-muted-foreground pt-2">{review.comment}</p>
-                  </div>
-                </div>
-              ))}
-            </TabsContent>
-          </Tabs>
-        </div>
+                  ))}
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
       </SheetContent>
     </Sheet>
   );
