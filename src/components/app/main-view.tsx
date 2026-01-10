@@ -144,14 +144,14 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
   // Desktop View
   return (
     <div className="grid grid-cols-1 md:grid-cols-[1fr_384px] h-full overflow-hidden">
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1">
         {viewMode === 'map' ? (
           <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         ) : (
           <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         )}
       </div>
-      <div className="w-96 max-w-sm shrink-0 border-l overflow-y-auto">
+      <div className="w-96 max-w-sm shrink-0 border-l">
         <div className="p-4 space-y-4">
           <Filters
             services={ALL_SERVICES}
