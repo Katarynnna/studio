@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import type { TrailAngel } from "@/lib/types";
@@ -94,7 +92,7 @@ const ProfileMap = ({ position }: { position: { lat: number; lng: number }}) => 
                     gestureHandling="none"
                 >
                     <AdvancedMarker position={position}>
-                         <div className="w-6 h-6 rounded-full bg-blue-500 border-2 border-white shadow-lg"></div>
+                         <div className="w-6 h-6 rounded-full bg-primary border-2 border-white shadow-lg"></div>
                     </AdvancedMarker>
                 </Map>
             </APIProvider>
@@ -212,7 +210,6 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
                   selected={angel.availability}
                   defaultMonth={angel.availability[0] || new Date()}
                   className="my-4"
-                  classNames={{ day: 'text-sm' }}
                 />
               </div>
             </TabsContent>
