@@ -14,15 +14,15 @@ type TrailAngelListProps = {
 
 export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelListProps) {
   return (
-      <div className="p-4 grid gap-4 sm:grid-cols-2">
+      <div className="p-4 grid gap-4 grid-cols-1 sm:grid-cols-2">
         {angels.map((angel) => (
           <Card 
             key={angel.id} 
             className="cursor-pointer hover:border-primary transition-colors"
             onClick={() => onSelectAngel(angel)}
           >
-            <CardHeader className="p-0">
-              <div className="flex items-start gap-2">
+            <CardHeader className="p-4">
+              <div className="flex items-start gap-3">
                 <Avatar className="w-16 h-16">
                   <AvatarImage src={angel.gallery[0]} alt={angel.name} />
                   <AvatarFallback>{angel.name.charAt(0)}</AvatarFallback>
@@ -36,8 +36,8 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground line-clamp-3 h-14">{angel.about}</p>
+            <CardContent className="pt-0 p-4">
+              <p className="text-sm text-muted-foreground line-clamp-3 h-[3.75rem]">{angel.about}</p>
               <div className="flex flex-wrap gap-1 mt-4">
                 {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 {angel.badges.map((badge) => (
