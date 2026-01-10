@@ -64,7 +64,7 @@ export default function StaticCalendar({ availableDates }: StaticCalendarProps) 
               key={day.toString()}
               className={cn(
                 "w-full aspect-square flex items-center justify-center rounded-md text-sm",
-                isAvailable ? "text-primary font-bold" : "text-muted-foreground/50"
+                isAvailable ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground/50"
               )}
             >
               {getDate(day)}
