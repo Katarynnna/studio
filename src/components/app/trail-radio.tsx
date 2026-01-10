@@ -12,7 +12,7 @@ import { submitRadioMessage } from "@/lib/actions";
 import { RADIO_MESSAGES, TRAIL_ANGELS } from "@/lib/data";
 import type { RadioMessage, TrailAngel } from "@/lib/types";
 import { formatDistanceToNow } from "date-fns";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -127,6 +127,7 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen, isSheet }: T
       <CardContent>
         <ScrollArea className="h-64 pr-4">
           {messageList}
+          <ScrollBar className="w-1" />
         </ScrollArea>
         <form key={formKey} action={formAction} className="w-full space-y-2 mt-4">
           <Textarea 
