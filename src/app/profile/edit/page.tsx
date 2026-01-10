@@ -4,7 +4,6 @@
 import {
   ArrowLeft,
   Bed,
-  Bike,
   Camera,
   Car,
   CookingPot,
@@ -13,7 +12,6 @@ import {
   Instagram,
   Lock,
   Mail,
-  MapPin,
   Package,
   Plus,
   ShowerHead,
@@ -23,9 +21,9 @@ import {
   Trash2,
   Twitter,
   UploadCloud,
-  User,
-  WashingMachine,
   Wifi,
+  WashingMachine,
+  Calendar as CalendarIcon,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -110,7 +108,7 @@ export default function EditProfilePage() {
                     </div>
                     <div>
                         <Label htmlFor="status">Role</Label>
-                         <div className="flex items-center gap-2 p-2 border rounded-md bg-secondary text-secondary-foreground">
+                         <div className="flex items-center gap-2 p-2 border rounded-md bg-secondary text-secondary-foreground h-10">
                             <Star className="w-4 h-4 text-accent fill-accent" />
                             <span>Trail Angel</span>
                         </div>
@@ -155,6 +153,7 @@ export default function EditProfilePage() {
                                 !userProfile.availability && "text-muted-foreground"
                                 )}
                             >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
                                 Not set
                             </Button>
                             </PopoverTrigger>
