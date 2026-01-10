@@ -82,6 +82,12 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
     
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
+    defaultValues: {
+        trailName: "",
+        status: "",
+        badges: "",
+        about: "",
+    },
   });
 
   function onSubmit(data: ProfileFormValues) {
@@ -178,7 +184,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                         <FormControl>
                            <Input 
                               id="badges" 
-                              placeholder="e.g. PCT Hiker 2024, Trail Angel Veteran, Trail Magic King, Thru-Hiker..."
+                              placeholder="PCT Hiker 2024, Trail Angel Veteran, Trail Magic King, Thru-Hiker..."
                               {...field}
                             />
                         </FormControl>
@@ -228,22 +234,6 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
               </div>
 
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
-                {userProfile.gallery.map((img, index) => (
-                  <div key={index} className="relative group aspect-square">
-                    <Image
-                      src={img.imageUrl}
-                      alt={`Gallery image ${index + 1}`}
-                      fill
-                      className="rounded-lg object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                      <Button size="icon" variant="destructive" className="h-8 w-8">
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                     <Button size="sm" variant="secondary" className="absolute bottom-2 left-1/2 -translate-x-1/2 h-7 w-auto px-2 opacity-0 group-hover:opacity-100 transition-opacity text-xs">Use as Avatar</Button>
-                  </div>
-                ))}
                 <div className="border-2 border-dashed rounded-lg flex items-center justify-center aspect-square">
                     <Button variant="ghost" size="icon"><Plus className="text-muted-foreground"/></Button>
                 </div>
