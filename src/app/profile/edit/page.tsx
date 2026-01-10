@@ -76,7 +76,9 @@ export default function EditProfilePage() {
     'couch-floor': Sofa,
   };
 
-  const servicesWithoutBeds = ALL_SERVICES.filter(s => s.id !== 'beds');
+  const primaryServices = ['beds', 'couch-floor', 'camping'];
+  const primaryServiceObjects = ALL_SERVICES.filter(s => primaryServices.includes(s.id));
+  const otherServiceObjects = ALL_SERVICES.filter(s => !primaryServices.includes(s.id));
     
   return (
     <AppLayout>
@@ -101,37 +103,33 @@ export default function EditProfilePage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                      <Label htmlFor="trailName">Trail Name</Label>
-                      <Input id="trailName" defaultValue={userProfile.name} />
-                  </div>
-                  <div>
-                      <Label htmlFor="status">Status</Label>
-                      <Select defaultValue="hiking">
-                        <SelectTrigger id="status">
-                          <SelectValue placeholder="Select your status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="hiking">Currently hiking</SelectItem>
-                          <SelectItem value="available">Available</SelectItem>
-                          <SelectItem value="unavailable">Not available</SelectItem>
-                        </SelectContent>
-                      </Select>
-                  </div>
+                  <Input placeholder="Trail Name" defaultValue={userProfile.name} />
+                  <Select defaultValue="hiking">
+                    <SelectTrigger id="status">
+                      <SelectValue placeholder="Choose your status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="hiking">Currently hiking</SelectItem>
+                      <SelectItem value="available">Available</SelectItem>
+                      <SelectItem value="unavailable">Not available</SelectItem>
+                    </SelectContent>
+                  </Select>
               </div>
               
               <div>
-                  <Label htmlFor="badges">Badges</Label>
-                  <Input id="badges" placeholder="PCT hiker 2024, Trail Angel veteran, Trail magic king" defaultValue={Array.isArray(userProfile.badges) ? userProfile.badges.join(', ') : ''} />
+                  <Input 
+                    id="badges" 
+                    placeholder="Badges e.g. PCT hiker 2024, Trail Angel veteran, Trail magic king" 
+                    defaultValue={Array.isArray(userProfile.badges) ? userProfile.badges.join(', ') : ''} 
+                  />
                   <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas.</p>
               </div>
 
               <div>
-                <Label htmlFor="about">About me</Label>
                 <Textarea
                   id="about"
                   defaultValue={userProfile.about}
-                  placeholder="Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
+                  placeholder="About me: Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
                   rows={5}
                 />
               </div>
@@ -185,18 +183,33 @@ export default function EditProfilePage() {
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    <div className="flex items-center justify-between p-3 border rounded-lg col-span-2 sm:col-span-1">
-                        <div className='flex items-center gap-2'>
-                           <Checkbox id="beds-checkbox" checked={hasBeds} onCheckedChange={(checked) => setHasBeds(Boolean(checked))} />
-                           <Label htmlFor="beds-checkbox" className="font-normal flex items-center gap-1.5">
-                             <Bed className="w-5 h-5 text-primary" /> Beds
-                           </Label>
+                    {primaryServiceObjects.map(service => {
+                       const Icon = serviceIcons[service.id as keyof typeof serviceIcons] || Car;
+                       if (service.id === 'beds') {
+                           return (
+                             <div key={service.id} className="flex items-center justify-between p-3 border rounded-lg col-span-2 sm:col-span-1">
+                                 <div className='flex items-center gap-2'>
+                                    <Checkbox id="beds-checkbox" checked={hasBeds} onCheckedChange={(checked) => setHasBeds(Boolean(checked))} />
+                                    <Label htmlFor="beds-checkbox" className="font-normal flex items-center gap-1.5">
+                                      <Bed className="w-5 h-5 text-primary" /> Beds
+                                    </Label>
+                                 </div>
+                                 {hasBeds && (
+                                   <Input id="beds-count" type="number" min="1" max="99" placeholder="1" className="w-14 h-8 text-center" />
+                                 )}
+                             </div>
+                           )
+                       }
+                       return (
+                        <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                            <Checkbox id={service.id} />
+                            <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5">
+                              <Icon className="w-5 h-5 text-primary"/> {service.name}
+                            </Label>
                         </div>
-                        {hasBeds && (
-                          <Input id="beds-count" type="number" min="1" max="99" defaultValue="1" className="w-14 h-8 text-center" />
-                        )}
-                    </div>
-                    {servicesWithoutBeds.map(service => {
+                       )
+                    })}
+                    {otherServiceObjects.map(service => {
                        const Icon = serviceIcons[service.id as keyof typeof serviceIcons] || Car;
                        return (
                         <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
@@ -250,22 +263,10 @@ export default function EditProfilePage() {
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" placeholder="Your first name" />
-                    </div>
-                    <div>
-                        <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" placeholder="Your last name" />
-                    </div>
-                    <div>
-                        <Label htmlFor="phone">Phone Number</Label>
-                        <Input id="phone" type="tel" placeholder="Your phone number" />
-                    </div>
-                    <div>
-                        <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" placeholder="Your email address" />
-                    </div>
+                    <Input id="firstName" placeholder="First Name" />
+                    <Input id="lastName" placeholder="Last Name" />
+                    <Input id="phone" type="tel" placeholder="Phone Number" />
+                    <Input id="email" type="email" placeholder="Email" />
                 </div>
                  <div>
                     <h3 className="font-semibold mb-4 flex items-center justify-between">
