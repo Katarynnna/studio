@@ -15,40 +15,46 @@ type TrailAngelListProps = {
 export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelListProps) {
   return (
       <div className="p-4 grid gap-4 grid-cols-1 md:grid-cols-2">
-        {angels.map((angel) => (
-          <Card 
-            key={angel.id} 
-            className="cursor-pointer hover:border-primary transition-colors flex flex-col"
-            onClick={() => onSelectAngel(angel)}
-          >
-            <CardHeader className="p-4">
-              <div className="flex items-start">
-                <Avatar className="w-16 h-16">
-                  <AvatarImage src={angel.gallery[0]} alt={angel.name} />
-                  <AvatarFallback>{angel.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div className="flex-1 ml-4">
-                  <CardTitle className="flex items-center justify-between">
-                    <span className="text-xl font-headline">{angel.name}</span>
-                    {angel.verified && <CheckCircle2 className="w-5 h-5 text-primary" title="Verified Angel" />}
-                  </CardTitle>
-                  <CardDescription>{angel.location}</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="p-4 -mt-4 flex-1 flex flex-col justify-between">
-              <p className="text-sm text-muted-foreground line-clamp-3 h-[3.75rem]">{angel.about}</p>
-                <div className="flex flex-wrap gap-1 mt-4">
-                    {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
-                    {angel.badges.map((badge) => (
-                      <Badge key={badge} variant="secondary" className="text-xs">
-                        {badge}
-                      </Badge>
-                    ))}
+        {angels.map((angel) => {
+          const angelBadges = typeof angel.badges === 'string' 
+            ? angel.badges.split(',').map(b => b.trim()).filter(Boolean) 
+            : [];
+            
+          return (
+            <Card 
+              key={angel.id} 
+              className="cursor-pointer hover:border-primary transition-colors flex flex-col"
+              onClick={() => onSelectAngel(angel)}
+            >
+              <CardHeader className="p-4">
+                <div className="flex items-start">
+                  <Avatar className="w-16 h-16">
+                    <AvatarImage src={angel.gallery[0]} alt={angel.name} />
+                    <AvatarFallback>{angel.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 ml-4">
+                    <CardTitle className="flex items-center justify-between">
+                      <span className="text-xl font-headline">{angel.name}</span>
+                      {angel.verified && <CheckCircle2 className="w-5 h-5 text-primary" title="Verified Angel" />}
+                    </CardTitle>
+                    <CardDescription>{angel.location}</CardDescription>
                   </div>
-            </CardContent>
-          </Card>
-        ))}
+                </div>
+              </CardHeader>
+              <CardContent className="p-4 -mt-4 flex-1 flex flex-col justify-between">
+                <p className="text-sm text-muted-foreground line-clamp-3 h-[3.75rem]">{angel.about}</p>
+                  <div className="flex flex-wrap gap-1 mt-4">
+                      {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
+                      {angelBadges.map((badge) => (
+                        <Badge key={badge} variant="secondary" className="text-xs">
+                          {badge}
+                        </Badge>
+                      ))}
+                    </div>
+              </CardContent>
+            </Card>
+          )
+        })}
       </div>
   );
 }

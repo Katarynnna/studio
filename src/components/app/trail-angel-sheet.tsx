@@ -261,5 +261,3 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
     </Sheet>
   );
 }
-
-    
