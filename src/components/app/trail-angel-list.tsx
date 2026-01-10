@@ -22,12 +22,12 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
             onClick={() => onSelectAngel(angel)}
           >
             <CardHeader className="p-4">
-              <div className="flex items-start gap-3">
+              <div className="flex items-start">
                 <Avatar className="w-16 h-16">
                   <AvatarImage src={angel.gallery[0]} alt={angel.name} />
                   <AvatarFallback>{angel.name.charAt(0)}</AvatarFallback>
                 </Avatar>
-                <div className="flex-1">
+                <div className="flex-1 ml-4">
                   <CardTitle className="flex items-center justify-between">
                     <span className="text-xl font-headline">{angel.name}</span>
                     {angel.verified && <CheckCircle2 className="w-5 h-5 text-blue-500" title="Verified Angel" />}
