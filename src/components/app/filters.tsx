@@ -2,12 +2,12 @@
 "use client";
 
 import type { Service } from "@/lib/types";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Filter, X } from "lucide-react";
+import { Filter } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ReactNode, Dispatch, SetStateAction } from "react";
 import React from 'react';
@@ -96,23 +96,22 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <div className="flex items-center gap-2">
-            <CardTitle className="flex items-center gap-2">
-            <Filter className="w-6 h-6" />
-            <span>Filter Angels</span>
-            </CardTitle>
-            {areFiltersActive && (
-                <Button variant="ghost" size="icon" onClick={clearFilters} className="h-6 w-6">
-                    <X className="w-4 h-4"/>
-                    <span className="sr-only">Clear filters</span>
-                </Button>
-            )}
-        </div>
+        <CardTitle className="flex items-center gap-2">
+          <Filter className="w-6 h-6" />
+          <span>Filter Angels</span>
+        </CardTitle>
         {viewToggle}
       </CardHeader>
       <CardContent>
           {content}
       </CardContent>
+      {areFiltersActive && (
+        <CardFooter>
+            <Button variant="outline" onClick={clearFilters} className="w-full">
+                Clear Filters
+            </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 }
