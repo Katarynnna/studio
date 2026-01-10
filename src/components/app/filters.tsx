@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Filter } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Filter, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ReactNode, Dispatch, SetStateAction } from "react";
 import React from 'react';
@@ -15,6 +16,12 @@ export type FilterState = {
   name: string;
   location: string;
   services: string[];
+};
+
+const initialFilters: FilterState = {
+    name: "",
+    location: "",
+    services: [],
 };
 
 type FiltersProps = {
@@ -40,30 +47,28 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
       return { ...prev, services: newServices };
     });
   };
+
+  const clearFilters = () => {
+    setFilters(initialFilters);
+  }
+
+  const areFiltersActive = filters.name !== "" || filters.location !== "" || filters.services.length > 0;
   
   const content = (
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="name-filter">Name</Label>
-            <Input
-              id="name-filter"
-              name="name"
-              placeholder="e.g. Bighorn Betty"
-              value={filters.name}
-              onChange={handleTextChange}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="location-filter">Location</Label>
-            <Input
-              id="location-filter"
-              name="location"
-              placeholder="e.g. Wrightwood, CA"
-              value={filters.location}
-              onChange={handleTextChange}
-            />
-          </div>
+          <Input
+            name="name"
+            placeholder="Name"
+            value={filters.name}
+            onChange={handleTextChange}
+          />
+          <Input
+            name="location"
+            placeholder="Location"
+            value={filters.location}
+            onChange={handleTextChange}
+          />
         </div>
 
         <div className="space-y-2">
@@ -91,10 +96,18 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center gap-2">
-          <Filter className="w-6 h-6" />
-          <span>Filter Angels</span>
-        </CardTitle>
+        <div className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2">
+            <Filter className="w-6 h-6" />
+            <span>Filter Angels</span>
+            </CardTitle>
+            {areFiltersActive && (
+                <Button variant="ghost" size="sm" onClick={clearFilters} className="flex items-center gap-1">
+                    <X className="w-4 h-4"/>
+                    Clear
+                </Button>
+            )}
+        </div>
         {viewToggle}
       </CardHeader>
       <CardContent>
