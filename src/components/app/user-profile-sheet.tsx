@@ -188,7 +188,9 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
             <p className="text-muted-foreground mb-4">{userProfile.about}</p>
               <h4 className="font-semibold mb-2">My Location</h4>
             <ProfileMap position={userProfile.position} />
-            <Button variant="outline" className="w-full mt-4">Edit Profile</Button>
+            <Button variant="outline" className="w-full mt-4" asChild>
+                <Link href="/profile/edit">Edit Profile</Link>
+            </Button>
           </TabsContent>
 
           <TabsContent value="gallery" className="mt-4">
@@ -239,3 +241,5 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
     </Sheet>
   );
 }
+
+    
