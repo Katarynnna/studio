@@ -183,9 +183,6 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
               <TabsContent value="about" className="mt-4">
                 <p className="text-muted-foreground mb-4">{angel.about}</p>
                 
-                <h4 className="font-semibold mb-2">Location</h4>
-                <ProfileMap position={angel.position} />
-
                 <div className="flex items-center gap-2 my-4">
                   <h4 className="font-semibold">Services Offered</h4>
                   {angel.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
@@ -198,6 +195,10 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
                     </div>
                   ))}
                 </div>
+
+                <h4 className="font-semibold mt-6 mb-2">Location</h4>
+                <ProfileMap position={angel.position} />
+
                 <SendMessageDialog angel={angel} open={dialogOpen} onOpenChange={setDialogOpen} addMessageToInbox={addMessageToInbox}>
                     <Button className="w-full mt-6">
                        Message

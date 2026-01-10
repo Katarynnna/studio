@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   Sheet,
   SheetContent,
@@ -10,8 +10,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Mail, ArrowLeft, Send } from "lucide-react";
+import { ArrowLeft, Send } from "lucide-react";
 import type { DirectMessage, TrailAngel } from "@/lib/types";
 import { format, formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -73,12 +72,12 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
   
   const [isAngelSheetOpen, setAngelSheetOpen] = useState(false);
 
-  const openAngelProfile = () => {
+  const openAngelProfile = useCallback(() => {
       if (partner) {
         onOpenChange(false);
         setAngelSheetOpen(true);
       }
-  }
+  }, [partner, onOpenChange]);
 
   const onAngelSheetChange = (isOpen: boolean) => {
     setAngelSheetOpen(isOpen);
@@ -106,26 +105,23 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
     }}>
       <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
           <SheetHeader className="p-6 pb-2 space-y-2 text-left shrink-0">
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                    {selectedConversationId && (
-                        <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0">
-                            <ArrowLeft />
-                        </Button>
-                    )}
-                     <SheetTitle className="text-3xl font-headline flex items-center gap-2">
-                        {selectedConversationId ? (
-                            <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
-                        ) : 'Inbox'}
-                     </SheetTitle>
-                </div>
+            <div className="flex items-center gap-2">
+                {selectedConversationId && (
+                    <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
+                        <ArrowLeft />
+                    </Button>
+                )}
+                 <SheetTitle className="text-3xl font-headline flex items-center gap-2">
+                    {selectedConversationId ? (
+                        <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
+                    ) : 'Inbox'}
+                 </SheetTitle>
             </div>
             {!selectedConversationId && messages.length === 0 && <SheetDescription className="pb-4">You have no new messages.</SheetDescription>}
           </SheetHeader>
         
         <div className="flex-1 flex flex-col overflow-hidden">
-            <ScrollArea className="flex-1">
-                <div className="p-6">
+            <div className="flex-1 overflow-y-auto p-6">
                     {!selectedConversationId ? (
                         // Conversation List View
                         messages.length === 0 ? (
@@ -175,8 +171,7 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
                             ))}
                         </div>
                     )}
-                </div>
-            </ScrollArea>
+            </div>
             {selectedConversationId && (
                 <div className="p-4 border-t bg-background shrink-0">
                     <form onSubmit={handleReply} className="flex items-center gap-2">
