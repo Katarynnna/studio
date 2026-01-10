@@ -119,8 +119,8 @@ type UserProfileSheetProps = {
 export default function UserProfileSheet({ open, onOpenChange }: UserProfileSheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg p-6 flex flex-col">
-        <SheetHeader className="space-y-2 text-left shrink-0">
+      <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
+        <SheetHeader>
             <div className="flex items-center gap-4">
                 <Avatar className="w-20 h-20">
                 <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
@@ -176,69 +176,65 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
               </div>
             </div>
         </SheetHeader>
-        <Separator className="my-6 -mx-6 w-auto" />
-        <div className='overflow-y-auto flex-1 -mx-6'>
-          <div className="px-6">
-            <Tabs defaultValue="about" className="mt-0">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1" />About</TabsTrigger>
-                <TabsTrigger value="gallery"><GalleryHorizontal className="w-4 h-4 mr-1" />Gallery</TabsTrigger>
-                <TabsTrigger value="reviews"><Users className="w-4 h-4 mr-1" />Reviews</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="about" className="mt-4">
-                <p className="text-muted-foreground mb-4">{userProfile.about}</p>
-                  <h4 className="font-semibold mb-2">My Location</h4>
-                <ProfileMap position={userProfile.position} />
-                <Button variant="outline" className="w-full mt-4">Edit Profile</Button>
-              </TabsContent>
+        <div className='-mx-6'><Separator className="my-6" /></div>
+        <Tabs defaultValue="about">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1" />About</TabsTrigger>
+            <TabsTrigger value="gallery"><GalleryHorizontal className="w-4 h-4 mr-1" />Gallery</TabsTrigger>
+            <TabsTrigger value="reviews"><Users className="w-4 h-4 mr-1" />Reviews</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="about" className="mt-4">
+            <p className="text-muted-foreground mb-4">{userProfile.about}</p>
+              <h4 className="font-semibold mb-2">My Location</h4>
+            <ProfileMap position={userProfile.position} />
+            <Button variant="outline" className="w-full mt-4">Edit Profile</Button>
+          </TabsContent>
 
-              <TabsContent value="gallery" className="mt-4">
-                <Carousel className="w-full">
-                  <CarouselContent>
-                    {userProfile.gallery.map((img, index) => (
-                      <CarouselItem key={index}>
-                          <Card>
-                            <CardContent className="flex aspect-video items-center justify-center p-0">
-                                <Image
-                                  src={img.imageUrl}
-                                  alt={img.description}
-                                  width={600}
-                                  height={400}
-                                  data-ai-hint={img.imageHint}
-                                  className="rounded-lg object-cover"
-                                />
-                            </CardContent>
-                          </Card>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="-left-4" />
-                  <CarouselNext className="-right-4" />
-                </Carousel>
-              </TabsContent>
-
-              <TabsContent value="reviews" className="mt-4 space-y-6">
-                <h3 className="font-semibold text-lg">Reviews from Trail Angels</h3>
-                {userProfile.reviews.map((review) => (
-                  <div key={review.id} className="flex gap-3">
-                    <Avatar>
-                      <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center gap-2">
-                        <p className="font-semibold">{review.author}</p>
-                        <span className="text-xs text-muted-foreground pt-0.5">{review.date}</span>
-                      </div>
-                      <StarRating rating={review.rating} />
-                      <p className="text-sm text-muted-foreground pt-2">{review.comment}</p>
-                    </div>
-                  </div>
+          <TabsContent value="gallery" className="mt-4">
+            <Carousel className="w-full">
+              <CarouselContent>
+                {userProfile.gallery.map((img, index) => (
+                  <CarouselItem key={index}>
+                      <Card>
+                        <CardContent className="flex aspect-video items-center justify-center p-0">
+                            <Image
+                              src={img.imageUrl}
+                              alt={img.description}
+                              width={600}
+                              height={400}
+                              data-ai-hint={img.imageHint}
+                              className="rounded-lg object-cover"
+                            />
+                        </CardContent>
+                      </Card>
+                  </CarouselItem>
                 ))}
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>
+              </CarouselContent>
+              <CarouselPrevious className="-left-4" />
+              <CarouselNext className="-right-4" />
+            </Carousel>
+          </TabsContent>
+
+          <TabsContent value="reviews" className="mt-4 space-y-6">
+            <h3 className="font-semibold text-lg">Reviews from Trail Angels</h3>
+            {userProfile.reviews.map((review) => (
+              <div key={review.id} className="flex gap-3">
+                <Avatar>
+                  <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className="flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold">{review.author}</p>
+                    <span className="text-xs text-muted-foreground pt-0.5">{review.date}</span>
+                  </div>
+                  <StarRating rating={review.rating} />
+                  <p className="text-sm text-muted-foreground pt-2">{review.comment}</p>
+                </div>
+              </div>
+            ))}
+          </TabsContent>
+        </Tabs>
       </SheetContent>
     </Sheet>
   );

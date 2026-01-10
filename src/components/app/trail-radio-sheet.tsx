@@ -14,6 +14,7 @@ import { useState } from "react";
 import TrailAngelSheet from "./trail-angel-sheet";
 import { TRAIL_ANGELS } from "@/lib/data";
 import { Radio } from "lucide-react";
+import { Separator } from "../ui/separator";
 
 type TrailRadioSheetProps = {
   open: boolean;
@@ -44,16 +45,15 @@ export default function TrailRadioSheet({ open, onOpenChange }: TrailRadioSheetP
     return (
         <>
             <Sheet open={open} onOpenChange={onOpenChange}>
-                <SheetContent className="w-full sm:max-w-lg p-6 flex flex-col overflow-hidden">
-                    <SheetHeader className="pb-4 space-y-2 text-left shrink-0 border-b -mx-6 px-6">
+                <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
+                    <SheetHeader>
                         <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                             <Radio className="w-8 h-8" />
                             Trail Radio
                         </SheetTitle>
                     </SheetHeader>
-                    <div className="flex-1 overflow-y-auto -mx-6 px-6 pt-4">
-                        <TrailRadio onSelectAngel={handleAuthorClick} isSheet={true} />
-                    </div>
+                    <div className="-mx-6"><Separator className="my-6"/></div>
+                    <TrailRadio onSelectAngel={handleAuthorClick} isSheet={true} />
                 </SheetContent>
             </Sheet>
             <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
