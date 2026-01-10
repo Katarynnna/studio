@@ -109,7 +109,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
         setTrailRadioOpen={setTrailRadioOpen} 
         hasUnreadMessages={hasUnreadMessages}
       />
-      <main className="flex-1" style={{ backgroundColor: 'hsl(var(--main-background))' }}>{childrenWithProps}</main>
+      <main className="flex-1 bg-background">{childrenWithProps}</main>
       <UserProfileSheet open={profileOpen} onOpenChange={setProfileOpen} />
       <InboxSheet 
         open={inboxOpen} 
