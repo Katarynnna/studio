@@ -112,8 +112,8 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
 
   return (
     <Sheet open={!!angel} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
-        <div className="relative flex-1 overflow-y-auto p-6">
+      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col overflow-y-auto">
+        <div className="p-6">
           <SheetHeader className="space-y-2 text-left">
             <div className="flex items-center gap-4">
                 <Avatar className="w-20 h-20">

@@ -142,7 +142,7 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
 
   // Desktop View
   return (
-    <div className="flex flex-row h-full">
+    <div className="flex flex-row h-full bg-secondary">
        <div className="flex-1 relative h-full">
         {viewMode === 'map' ? (
           <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />

@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import type { TrailAngel } from "@/lib/types";
@@ -43,17 +44,15 @@ export default function TrailRadioSheet({ open, onOpenChange }: TrailRadioSheetP
     return (
         <>
             <Sheet open={open} onOpenChange={onOpenChange}>
-                <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
-                    <SheetHeader className="p-6 pb-4 space-y-2 text-left shrink-0">
+                <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col overflow-y-auto">
+                    <SheetHeader className="p-6 pb-4 space-y-2 text-left shrink-0 border-b">
                         <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                             <Radio className="w-8 h-8" />
                             Trail Radio
                         </SheetTitle>
                     </SheetHeader>
-                    <div className="relative flex-1 overflow-y-auto">
-                        <div className="p-6 pt-0">
-                            <TrailRadio onSelectAngel={handleAuthorClick} isSheet={true} />
-                        </div>
+                    <div className="p-6 pt-4">
+                        <TrailRadio onSelectAngel={handleAuthorClick} isSheet={true} />
                     </div>
                 </SheetContent>
             </Sheet>

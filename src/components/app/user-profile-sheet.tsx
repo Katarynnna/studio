@@ -119,9 +119,9 @@ type UserProfileSheetProps = {
 export default function UserProfileSheet({ open, onOpenChange }: UserProfileSheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
-        <div className="relative flex-1 overflow-y-auto p-6">
-          <SheetHeader className="p-0 space-y-2 text-left">
+      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col overflow-y-auto">
+        <div className="p-6">
+          <SheetHeader className="space-y-2 text-left">
             <div className="flex items-center gap-4">
                 <Avatar className="w-20 h-20">
                 <AvatarImage src={userProfile.avatar} alt={userProfile.name} />

@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useCallback } from "react";
@@ -103,8 +104,8 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
             setTimeout(() => setSelectedConversationId(null), 300); // Reset conversation view on close after animation
         }
     }}>
-      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
-          <SheetHeader className="p-6 pb-4 space-y-2 text-left shrink-0">
+      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col overflow-y-auto">
+          <SheetHeader className="p-6 pb-2 space-y-2 text-left shrink-0 border-b">
             <div className="flex items-center gap-2">
                 {selectedConversationId && (
                     <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
@@ -131,7 +132,7 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
                                 </CardContent>
                             </Card>
                         ) : (
-                            <div className="space-y-4">
+                            <div className="space-y-4 pt-4">
                                 {conversationPreviews.map(convo => (
                                     <Card key={convo.partnerId} className="p-4 cursor-pointer hover:bg-secondary" onClick={() => setSelectedConversationId(convo.partnerId)}>
                                         <div className="flex items-start gap-4">
@@ -158,7 +159,7 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
                         )
                     ) : (
                         // Detailed Conversation View
-                        <div className="space-y-4">
+                        <div className="space-y-4 pt-4">
                             {selectedConversation?.slice().sort((a,b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()).map(msg => (
                                 <div key={msg.id} className={cn("flex flex-col gap-2 w-full", msg.senderId === 'user-wired' ? "items-end" : "items-start")}>
                                     <div className={cn("max-w-[80%] rounded-lg p-3", msg.senderId === 'user-wired' ? "bg-primary text-primary-foreground" : "bg-secondary")}>
