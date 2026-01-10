@@ -76,7 +76,7 @@ const TikTokIcon = () => (
 );
 
 
-export default function EditProfilePage() {
+export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: { setProfileOpen?: (open: boolean) => void; addMessageToInbox?: (...args: any[]) => void }) {
   const [hasBeds, setHasBeds] = useState(false);
     
   const form = useForm<ProfileFormValues>({
@@ -415,5 +415,3 @@ export default function EditProfilePage() {
     </AppLayout>
   );
 }
-
-    
