@@ -63,8 +63,8 @@ export default function StaticCalendar({ availableDates }: StaticCalendarProps) 
             <div
               key={day.toString()}
               className={cn(
-                "w-full aspect-square flex items-center justify-center rounded-md text-sm",
-                isAvailable ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground/50"
+                "w-8 h-8 flex items-center justify-center rounded-md text-sm",
+                isAvailable ? "font-bold text-foreground" : "text-muted-foreground/50"
               )}
             >
               {getDate(day)}
