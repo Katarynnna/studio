@@ -120,9 +120,9 @@ export default function EditProfilePage() {
               <div>
                   <Input 
                     id="badges" 
-                    placeholder="Badges e.g. PCT hiker 2024, Trail Angel veteran, Trail magic king" 
+                    placeholder="Enter badges separated by commas" 
                   />
-                  <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas.</p>
+                  <p className="text-sm text-muted-foreground mt-1">e.g. PCT hiker 2024, Trail Angel veteran, Trail magic king</p>
               </div>
 
               <div>
@@ -291,11 +291,11 @@ export default function EditProfilePage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="flex items-center gap-2">
                             <Instagram className="w-5 h-5 text-muted-foreground" />
-                            <Input placeholder="Instagram username" defaultValue={userProfile.socials?.instagram} />
+                            <Input placeholder="Instagram username" />
                         </div>
                         <div className="flex items-center gap-2">
                             <Twitter className="w-5 h-5 text-muted-foreground" />
-                            <Input placeholder="Twitter / X username" defaultValue={userProfile.socials?.twitter} />
+                            <Input placeholder="Twitter / X username" />
                         </div>
                         <div className="flex items-center gap-2">
                             <FacebookIcon />
