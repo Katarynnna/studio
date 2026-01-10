@@ -35,7 +35,7 @@ export default function StaticCalendar({ availableDates }: StaticCalendarProps) 
   };
 
   return (
-    <div className="w-full max-w-sm">
+    <div className="max-w-sm">
       <div className="flex items-center justify-between mb-4">
         <Button variant="ghost" size="icon" onClick={goToPreviousMonth}>
           <ChevronLeft className="w-5 h-5" />
