@@ -4,26 +4,24 @@
 import {
   ArrowLeft,
   Bed,
-  Camera,
   Car,
   CookingPot,
-  Dog,
   Footprints,
   Instagram,
   Lock,
   Mail,
   Package,
   Plus,
-  ShowerHead,
+  Bath,
   Sofa,
-  Star,
   Tent,
   Trash2,
   Twitter,
   UploadCloud,
   Wifi,
   WashingMachine,
-  Calendar as CalendarIcon,
+  Youtube,
+  Linkedin,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -40,10 +38,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-  RadioGroup,
-  RadioGroupItem,
-} from '@/components/ui/radio-group';
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -55,12 +49,16 @@ import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { userProfile } from '@/components/app/user-profile-sheet';
 import AppLayout from '@/components/app/app-layout';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { format } from 'date-fns';
-import { cn } from '@/lib/utils';
 import TrailAngelMap from '@/components/app/trail-angel-map';
 import { TRAIL_ANGELS } from '@/lib/data';
+
+// Mockup for icons not in lucide-react
+const FacebookIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+);
+const TikTokIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground"><path d="M12 12a4 4 0 1 0 4 4V8a8 8 0 1 0-8 8"></path></svg>
+);
 
 
 export default function EditProfilePage() {
@@ -93,13 +91,6 @@ export default function EditProfilePage() {
                     <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
                     <AvatarFallback>{userProfile.name.charAt(0)}</AvatarFallback>
                   </Avatar>
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="absolute bottom-0 right-0 rounded-full h-8 w-8"
-                  >
-                    <Camera className="w-4 h-4" />
-                  </Button>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
                     <div>
@@ -107,11 +98,17 @@ export default function EditProfilePage() {
                         <Input id="trailName" defaultValue={userProfile.name} />
                     </div>
                     <div>
-                        <Label htmlFor="status">Role</Label>
-                         <div className="flex items-center gap-2 p-2 border rounded-md bg-secondary text-secondary-foreground h-10">
-                            <Star className="w-4 h-4 text-accent fill-accent" />
-                            <span>Trail Angel</span>
-                        </div>
+                        <Label htmlFor="status">Status</Label>
+                        <Select defaultValue="hiking">
+                          <SelectTrigger id="status">
+                            <SelectValue placeholder="Select your status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="hiking">Currently hiking</SelectItem>
+                            <SelectItem value="available">Available</SelectItem>
+                            <SelectItem value="unavailable">Not available</SelectItem>
+                          </SelectContent>
+                        </Select>
                     </div>
                     <div>
                         <Label htmlFor="firstName">First Name</Label>
@@ -123,50 +120,6 @@ export default function EditProfilePage() {
                     </div>
                 </div>
               </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                     <div>
-                        <Label htmlFor="status">Status</Label>
-                        <RadioGroup defaultValue="angel" className="flex items-center gap-4 mt-2">
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="hiking" id="hiking" />
-                            <Label htmlFor="hiking" className="font-normal flex items-center gap-1"><Footprints className="w-4 h-4" /> Hiking</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="angel" id="angel" />
-                            <Label htmlFor="angel" className="font-normal flex items-center gap-1"><Star className="w-4 h-4" /> Angeling</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="off" id="off" />
-                            <Label htmlFor="off" className="font-normal">Off Trail</Label>
-                          </div>
-                        </RadioGroup>
-                    </div>
-                    <div className='col-span-2'>
-                        <Label>Availability</Label>
-                         <Popover>
-                            <PopoverTrigger asChild>
-                            <Button
-                                variant={"outline"}
-                                className={cn(
-                                "w-full justify-start text-left font-normal",
-                                !userProfile.availability && "text-muted-foreground"
-                                )}
-                            >
-                                <CalendarIcon className="mr-2 h-4 w-4" />
-                                Not set
-                            </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                                initialFocus
-                                mode="range"
-                                numberOfMonths={2}
-                            />
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                </div>
 
               <div>
                 <Label htmlFor="about">About</Label>
@@ -208,13 +161,9 @@ export default function EditProfilePage() {
                       <Button size="icon" variant="destructive" className="h-8 w-8">
                         <Trash2 className="w-4 h-4" />
                       </Button>
-                       {index !== 0 && (
-                        <Button size="icon" variant="secondary" className="h-8 w-8">
-                          <Star className="w-4 h-4" />
-                        </Button>
-                      )}
                     </div>
-                    {index === 0 && <div className="absolute top-1 left-1 bg-primary text-primary-foreground text-xs px-1.5 py-0.5 rounded-full flex items-center gap-1"><Star className="w-3 h-3" /> Cover</div>}
+                     {index !== 0 && <Button size="sm" variant="secondary" className="absolute bottom-2 left-1/2 -translate-x-1/2 h-7 w-auto px-2 opacity-0 group-hover:opacity-100 transition-opacity text-xs">Use as Avatar</Button>}
+                     {index === 0 && <div className="absolute top-1 left-1 bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full flex items-center gap-1">Avatar</div>}
                   </div>
                 ))}
                 <div className="border-2 border-dashed rounded-lg flex items-center justify-center aspect-square">
@@ -227,61 +176,36 @@ export default function EditProfilePage() {
           {/* Trail Angel Details */}
           <Card>
             <CardHeader>
-                <CardTitle>Trail Angel Services</CardTitle>
+                <CardTitle>Services</CardTitle>
                 <CardDescription>Select the services you can provide to hikers.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-                <div>
-                    <h3 className="font-semibold mb-4">Sleeping Arrangements</h3>
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between p-3 border rounded-lg">
-                           <Label htmlFor="beds-switch" className="flex items-center gap-2"><Bed/> Beds</Label>
-                           <div className="flex items-center gap-4">
-                                <Select defaultValue="1">
-                                    <SelectTrigger className="w-20"><SelectValue/></SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="1">1</SelectItem>
-                                        <SelectItem value="2">2</SelectItem>
-                                        <SelectItem value="3">3</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                               <Switch id="beds-switch" />
-                           </div>
-                        </div>
-                        <div className="flex items-center justify-between p-3 border rounded-lg">
-                           <Label htmlFor="camping-switch" className="flex items-center gap-2"><Tent/> Camping Spot</Label>
-                           <Switch id="camping-switch" />
-                        </div>
-                        <div className="flex items-center justify-between p-3 border rounded-lg">
-                           <Label htmlFor="couch-switch" className="flex items-center gap-2"><Sofa/> Couch / Floor Space</Label>
-                           <Switch id="couch-switch" />
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div className="flex items-center justify-between p-3 border rounded-lg col-span-2 sm:col-span-1">
+                        <Label htmlFor="beds-switch" className="flex items-center gap-2 font-normal"><Bed/> Beds</Label>
+                        <div className="flex items-center gap-2">
+                            <Input id="beds-count" type="number" min="1" max="99" defaultValue="1" className="w-14 h-8 text-center" />
+                            <Switch id="beds-switch" />
                         </div>
                     </div>
+                    {[
+                        {id: 'laundry', label: 'Laundry', icon: WashingMachine},
+                        {id: 'wifi', label: 'WiFi', icon: Wifi},
+                        {id: 'showers', label: 'Showers', icon: Bath},
+                        {id: 'storage', label: 'Storage', icon: Lock},
+                        {id: 'packages', label: 'Packages', icon: Package},
+                        {id: 'food', label: 'Food / Meals', icon: CookingPot},
+                        {id: 'rides', label: 'Rides / Shuttle', icon: Car},
+                        {id: 'camping', label: 'Camping', icon: Tent},
+                        {id: 'couch-floor', label: 'Couch/Floor', icon: Sofa},
+                    ].map(service => (
+                        <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                            <Checkbox id={service.id} />
+                            <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5"><service.icon className="w-4 h-4 text-muted-foreground"/> {service.label}</Label>
+                        </div>
+                    ))}
                 </div>
                 
-                <Separator />
-
-                <div>
-                    <h3 className="font-semibold mb-4">Facilities & Amenities</h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        {[
-                            {id: 'laundry', label: 'Laundry', icon: WashingMachine},
-                            {id: 'wifi', label: 'WiFi', icon: Wifi},
-                            {id: 'showers', label: 'Showers', icon: ShowerHead},
-                            {id: 'storage', label: 'Secure Storage', icon: Lock},
-                            {id: 'packages', label: 'Packages / Mail Drops', icon: Package},
-                            {id: 'food', label: 'Food / Meals', icon: CookingPot},
-                            {id: 'rides', label: 'Rides / Shuttle', icon: Car},
-                            {id: 'pets', label: 'Pets welcome', icon: Dog},
-                        ].map(service => (
-                            <div key={service.id} className="flex items-center gap-2">
-                                <Checkbox id={service.id} />
-                                <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5"><service.icon className="w-4 h-4 text-muted-foreground"/> {service.label}</Label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
                 <Separator />
 
                  <div>
@@ -345,15 +269,33 @@ export default function EditProfilePage() {
                 <div>
                     <h3 className="font-semibold mb-4">Social Media & Links</h3>
                     <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                            <Instagram className="w-5 h-5 text-muted-foreground" />
-                            <Input placeholder="Instagram username" defaultValue={userProfile.socials?.instagram} />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="flex items-center gap-2">
+                                <Instagram className="w-5 h-5 text-muted-foreground" />
+                                <Input placeholder="Instagram username" defaultValue={userProfile.socials?.instagram} />
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Twitter className="w-5 h-5 text-muted-foreground" />
+                                <Input placeholder="Twitter / X username" defaultValue={userProfile.socials?.twitter} />
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <FacebookIcon />
+                                <Input placeholder="Facebook profile URL" />
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <TikTokIcon />
+                                <Input placeholder="TikTok username" />
+                            </div>
+                             <div className="flex items-center gap-2">
+                                <Youtube className="w-5 h-5 text-muted-foreground" />
+                                <Input placeholder="YouTube channel URL" />
+                            </div>
+                             <div className="flex items-center gap-2">
+                                <Linkedin className="w-5 h-5 text-muted-foreground" />
+                                <Input placeholder="LinkedIn profile URL" />
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <Twitter className="w-5 h-5 text-muted-foreground" />
-                            <Input placeholder="Twitter / X username" defaultValue={userProfile.socials?.twitter} />
-                        </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 pt-1">
                             <Mail className="w-5 h-5 text-muted-foreground" />
                             <Input type="url" placeholder="Website or blog URL" />
                         </div>
@@ -373,3 +315,5 @@ export default function EditProfilePage() {
     </AppLayout>
   );
 }
+
+    
