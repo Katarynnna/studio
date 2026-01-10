@@ -21,6 +21,7 @@ function Calendar({
       className={cn("p-3", className)}
       classNames={{
         day: "text-xs",
+        day_selected: "text-xs",
         ...classNames,
       }}
       {...props}
