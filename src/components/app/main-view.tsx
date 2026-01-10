@@ -143,7 +143,7 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
 
   // Desktop View
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_384px] h-full overflow-hidden">
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_384px] h-full">
       <div className="flex-1 overflow-y-auto">
         {viewMode === 'map' ? (
           <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
