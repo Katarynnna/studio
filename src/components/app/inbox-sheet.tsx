@@ -105,18 +105,20 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
         }
     }}>
       <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
-          <SheetHeader className="p-6 pb-2 space-y-2 text-left shrink-0 border-b">
-            <div className="flex items-center gap-4">
-                {selectedConversationId && (
-                    <Button variant="ghost" size="icon" onClick={handleBack} className="-ml-2">
-                        <ArrowLeft />
-                    </Button>
-                )}
-                 <SheetTitle className="text-3xl font-headline flex items-center gap-2">
-                    {selectedConversationId ? (
-                        <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
-                    ) : 'Inbox'}
-                 </SheetTitle>
+          <SheetHeader className="p-6 pb-2 space-y-2 text-left shrink-0">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    {selectedConversationId && (
+                        <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0">
+                            <ArrowLeft />
+                        </Button>
+                    )}
+                     <SheetTitle className="text-3xl font-headline flex items-center gap-2">
+                        {selectedConversationId ? (
+                            <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
+                        ) : 'Inbox'}
+                     </SheetTitle>
+                </div>
             </div>
             {!selectedConversationId && messages.length === 0 && <SheetDescription className="pb-4">You have no new messages.</SheetDescription>}
           </SheetHeader>
