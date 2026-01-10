@@ -142,21 +142,23 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
   // Desktop View
   if (viewMode === 'list') {
     return (
-      <div className="flex h-full">
-        <div className="flex-1 h-full">
-          <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+        <div className="h-full overflow-y-auto">
+            <div className="flex h-full">
+                <div className="flex-1">
+                    <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+                </div>
+                <div className="w-96 max-w-sm shrink-0 p-4 space-y-4">
+                    <Filters
+                        services={ALL_SERVICES}
+                        filters={filters}
+                        setFilters={setFilters}
+                        viewToggle={viewToggle}
+                    />
+                    <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
+                </div>
+            </div>
+            <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
         </div>
-        <div className="w-96 max-w-sm shrink-0 overflow-y-auto p-4 space-y-4">
-          <Filters
-            services={ALL_SERVICES}
-            filters={filters}
-            setFilters={setFilters}
-            viewToggle={viewToggle}
-          />
-          <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
-        </div>
-        <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
-      </div>
     );
   }
 
