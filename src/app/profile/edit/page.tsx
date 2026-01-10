@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import {
@@ -81,11 +82,6 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
     
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues: {
-      trailName: userProfile.name,
-      about: userProfile.about,
-      badges: Array.isArray(userProfile.badges) ? userProfile.badges.join(', ') : '',
-    },
   });
 
   function onSubmit(data: ProfileFormValues) {
