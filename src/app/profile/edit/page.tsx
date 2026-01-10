@@ -82,27 +82,21 @@ const TikTokIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground"><path d="M12 12a4 4 0 1 0 4 4V8a8 8 0 1 0-8 8"></path></svg>
 );
 
+const COUNTRIES = [
+    { value: "usa", label: "United States" },
+    { value: "canada", label: "Canada" },
+    { value: "mexico", label: "Mexico" },
+    { value: "uk", label: "United Kingdom" },
+    { value: "germany", label: "Germany" },
+    { value: "france", label: "France" },
+    { value: "australia", label: "Australia" },
+    { value: "new-zealand", label: "New Zealand" },
+];
 
-export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: { setProfileOpen?: (open: boolean) => void; addMessageToInbox?: (...args: any[]) => void }) {
+
+export default function EditProfilePage() {
   const router = useRouter();
-  const { profile, services, bedCount, socials, address: userAddress, setProfile, setService, setBedCount, setSocials, setAddress, setPosition } = useUserProfileStore(state => ({
-    profile: {
-      trailName: state.trailName,
-      status: state.status,
-      badges: Array.isArray(state.badges) ? state.badges.join(', ') : state.badges,
-      about: state.about,
-    },
-    services: state.services,
-    bedCount: state.bedCount,
-    socials: state.socials,
-    address: state.address,
-    setProfile: state.setProfile,
-    setService: state.setService,
-    setBedCount: state.setBedCount,
-    setSocials: state.setSocials,
-    setAddress: state.setAddress,
-    setPosition: state.setPosition,
-  }));
+  const { profile, services, bedCount, socials, address: userAddress, setProfile, setService, setBedCount, setSocials, setAddress, setPosition } = useUserProfileStore();
     
   const [hasBeds, setHasBeds] = useState(services.includes('beds'));
   const { toast } = useToast();
@@ -110,17 +104,17 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      trailName: "",
-      status: "",
-      badges: "",
-      about: "",
-      instagram: "",
-      twitter: "",
-      facebook: "",
-      tiktok: "",
-      youtube: "",
-      linkedin: "",
-      website: "",
+      trailName: profile.trailName,
+      status: profile.status,
+      badges: Array.isArray(profile.badges) ? profile.badges.join(', ') : '',
+      about: profile.about,
+      instagram: socials.instagram,
+      twitter: socials.twitter,
+      facebook: socials.facebook,
+      tiktok: socials.tiktok,
+      youtube: socials.youtube,
+      linkedin: socials.linkedin,
+      website: socials.website,
     },
   });
 
@@ -337,22 +331,21 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                             <TrailAngelMap angels={TRAIL_ANGELS.slice(0,1)} onSelectAngel={() => {}} />
                         </div>
                         <div className="space-y-4">
-                            <Input placeholder="Address Line 1" value={userAddress.line1} onChange={e => setAddress({ line1: e.target.value })} />
-                            <Input placeholder="Address Line 2" value={userAddress.line2} onChange={e => setAddress({ line2: e.target.value })} />
-                            <Input placeholder="City" value={userAddress.city} onChange={e => setAddress({ city: e.target.value })} />
+                            <Input placeholder="Address Line 1" value={userAddress.line1} onChange={e => setAddress({ ...userAddress, line1: e.target.value })} />
+                            <Input placeholder="Address Line 2" value={userAddress.line2} onChange={e => setAddress({ ...userAddress, line2: e.target.value })} />
+                            <Input placeholder="City" value={userAddress.city} onChange={e => setAddress({ ...userAddress, city: e.target.value })} />
                             <div className="flex gap-4">
-                                <Input placeholder="State" value={userAddress.state} onChange={e => setAddress({ state: e.target.value })} />
-                                <Input placeholder="ZIP Code" value={userAddress.zip} onChange={e => setAddress({ zip: e.target.value })} />
+                                <Input placeholder="State" value={userAddress.state} onChange={e => setAddress({ ...userAddress, state: e.target.value })} />
+                                <Input placeholder="ZIP Code" value={userAddress.zip} onChange={e => setAddress({ ...userAddress, zip: e.target.value })} />
                             </div>
-                            <Select value={userAddress.country} onValueChange={value => setAddress({ country: value })}>
+                            <Select value={userAddress.country} onValueChange={value => setAddress({ ...userAddress, country: value })}>
                                 <SelectTrigger><SelectValue placeholder="Select Country" /></SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="usa">United States</SelectItem>
-                                    <SelectItem value="canada">Canada</SelectItem>
+                                    {COUNTRIES.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
                                 </SelectContent>
                             </Select>
                             <div className="flex items-center gap-2">
-                                <Checkbox id="private-residence" checked={userAddress.isPrivate} onCheckedChange={checked => setAddress({ isPrivate: Boolean(checked) })} />
+                                <Checkbox id="private-residence" checked={userAddress.isPrivate} onCheckedChange={checked => setAddress({ ...userAddress, isPrivate: Boolean(checked) })} />
                                 <Label htmlFor="private-residence" className="text-sm font-normal text-muted-foreground">This is my private residence. Only show approximate location on the map.</Label>
                             </div>
                         </div>
@@ -455,5 +448,3 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
     </AppLayout>
   );
 }
-
-    
