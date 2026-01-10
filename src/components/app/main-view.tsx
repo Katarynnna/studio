@@ -130,7 +130,7 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
             {viewMode === 'map' ? (
             <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             ) : (
-            <div className="pt-20">
+            <div className="pt-10">
               <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             </div>
             )}
@@ -144,25 +144,25 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
   // Desktop View
   return (
     <div className="grid grid-cols-1 md:grid-cols-[1fr_384px] h-full overflow-hidden">
-        <div className="flex-1 overflow-y-auto">
-            {viewMode === 'map' ? (
-            <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
-            ) : (
-            <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
-            )}
+      <div className="flex-1 overflow-y-auto">
+        {viewMode === 'map' ? (
+          <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+        ) : (
+          <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+        )}
+      </div>
+      <div className="w-96 max-w-sm shrink-0 border-l overflow-y-auto">
+        <div className="p-4 space-y-4">
+          <Filters
+            services={ALL_SERVICES}
+            filters={filters}
+            setFilters={setFilters}
+            viewToggle={viewToggle}
+          />
+          <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
         </div>
-        <div className="w-96 max-w-sm shrink-0 border-l overflow-y-auto">
-            <div className="p-4 space-y-4">
-                <Filters
-                    services={ALL_SERVICES}
-                    filters={filters}
-                    setFilters={setFilters}
-                    viewToggle={viewToggle}
-                />
-                <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
-            </div>
-        </div>
-        <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
+      </div>
+      <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
     </div>
   );
 }

@@ -22,7 +22,7 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
             onClick={() => onSelectAngel(angel)}
           >
             <CardHeader>
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-4">
                 <Avatar className="w-16 h-16">
                   <AvatarImage src={angel.gallery[0]} alt={angel.name} />
                   <AvatarFallback>{angel.name.charAt(0)}</AvatarFallback>
