@@ -42,7 +42,7 @@ import {
 import { Alert, AlertTitle, AlertDescription } from '../ui/alert';
 
 export const userProfile = {
-  name: 'Trail Name',
+  name: '',
   description: "PCT Class of '24",
   avatar: "https://picsum.photos/seed/123/200/200",
   about: "Just a hiker trying to make it from Mexico to Canada. I love meeting new people and sharing trail stories. Always on the lookout for good coffee and a place to charge my power bank.",
@@ -124,13 +124,13 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
             <div className="flex items-center gap-4">
                 <Avatar className="w-20 h-20">
                 <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
-                <AvatarFallback>{userProfile.name.charAt(0)}</AvatarFallback>
+                <AvatarFallback>{userProfile.name ? userProfile.name.charAt(0) : 'U'}</AvatarFallback>
               </Avatar>
               <div className="space-y-1.5 flex-1">
                 <div className="flex justify-between items-start">
                   <div>
                     <SheetTitle className="text-3xl font-headline flex items-center gap-2">
-                      {userProfile.name}
+                      {userProfile.name || 'Trail Name'}
                     </SheetTitle>
                     <SheetDescription>{userProfile.description}</SheetDescription>
                   </div>
