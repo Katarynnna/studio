@@ -93,7 +93,7 @@ export default function EditProfilePage() {
                 <div className="relative">
                   <Avatar className="w-24 h-24">
                     <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
-                    <AvatarFallback>{user-profile.name.charAt(0)}</AvatarFallback>
+                    <AvatarFallback>{userProfile.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                   <Button
                     size="icon"
@@ -374,5 +374,3 @@ export default function EditProfilePage() {
     </AppLayout>
   );
 }
-
-    
