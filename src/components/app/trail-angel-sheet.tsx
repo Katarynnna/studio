@@ -43,7 +43,6 @@ import {
   Instagram,
   Terminal,
 } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import SendMessageDialog from "./send-message-dialog";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
@@ -113,8 +112,8 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
 
   return (
     <Sheet open={!!angel} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg p-0">
-        <ScrollArea className="h-full">
+      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
+        <div className="relative flex-1 overflow-y-auto">
           <div className="p-6">
             <SheetHeader className="space-y-2 text-left">
               <div className="flex items-center gap-4">
@@ -263,7 +262,7 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
               </TabsContent>
             </Tabs>
           </div>
-        </ScrollArea>
+        </div>
       </SheetContent>
     </Sheet>
   );

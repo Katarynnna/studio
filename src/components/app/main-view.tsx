@@ -151,7 +151,7 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
         )}
       </div>
       <div className="w-96 max-w-sm shrink-0">
-        <div className="h-full overflow-y-auto bg-transparent">
+        <div className="h-full overflow-y-auto">
           <div className="p-4 space-y-4">
             <Filters
               services={ALL_SERVICES}

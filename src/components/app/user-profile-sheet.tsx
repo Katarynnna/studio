@@ -39,7 +39,6 @@ import {
   Instagram,
   Terminal,
 } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertTitle, AlertDescription } from '../ui/alert';
 
 export const userProfile = {
@@ -120,8 +119,8 @@ type UserProfileSheetProps = {
 export default function UserProfileSheet({ open, onOpenChange }: UserProfileSheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg p-0">
-        <ScrollArea className="h-full">
+      <SheetContent className="w-full sm:max-w-lg p-0 flex flex-col">
+        <div className="relative flex-1 overflow-y-auto">
           <div className="p-6">
             <SheetHeader className="p-0 space-y-2 text-left">
               <div className="flex items-center gap-4">
@@ -241,7 +240,7 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
               </TabsContent>
             </Tabs>
           </div>
-        </ScrollArea>
+        </div>
       </SheetContent>
     </Sheet>
   );
