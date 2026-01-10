@@ -120,15 +120,15 @@ export default function EditProfilePage() {
               <div>
                   <Input 
                     id="badges" 
-                    placeholder="Enter badges separated by commas" 
+                    placeholder="e.g. PCT hiker 2024, Trail Angel veteran, Trail magic king" 
                   />
-                  <p className="text-sm text-muted-foreground mt-1">e.g. PCT hiker 2024, Trail Angel veteran, Trail magic king</p>
+                  <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas</p>
               </div>
 
               <div>
                 <Textarea
                   id="about"
-                  placeholder="About me: Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
+                  placeholder="Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
                   rows={5}
                 />
               </div>
