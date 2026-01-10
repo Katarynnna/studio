@@ -14,7 +14,7 @@ type TrailAngelListProps = {
 
 export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelListProps) {
   return (
-      <div className="p-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:pt-4 pt-20">
+      <div className="w-full p-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:pt-4 pt-20">
         {angels.map((angel) => (
           <Card 
             key={angel.id} 
