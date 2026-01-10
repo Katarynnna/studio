@@ -102,7 +102,7 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
   // Mobile View
   if (isMobile) {
     return (
-      <div className="h-full relative overflow-hidden">
+      <div className={cn("h-full relative", viewMode === 'map' ? 'overflow-hidden' : 'overflow-y-auto')}>
         <div className="absolute top-4 left-4 z-10">
            <Dialog open={filterDialogOpen} onOpenChange={setFilterDialogOpen}>
             <DialogTrigger asChild>
