@@ -36,7 +36,7 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-0 p-4 flex-1 flex flex-col justify-between">
+            <CardContent className="p-4 -mt-4 flex-1 flex flex-col justify-between">
               <p className="text-sm text-muted-foreground line-clamp-3 h-[3.75rem]">{angel.about}</p>
                 <div className="flex flex-wrap gap-1 mt-4">
                     {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
