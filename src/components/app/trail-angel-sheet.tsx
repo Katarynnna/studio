@@ -140,7 +140,7 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
                       </div>
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
-                    {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
+                    {angel.hiking && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                     {angel.badges.map((badge) => (
                       <Badge key={badge} variant="secondary">
                         {badge}
@@ -212,6 +212,7 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
                   selected={angel.availability}
                   defaultMonth={angel.availability[0] || new Date()}
                   className="my-4"
+                  classNames={{ day: 'text-sm' }}
                 />
               </div>
             </TabsContent>
