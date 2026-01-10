@@ -127,7 +127,7 @@ export default function TrailRadio({ onSelectAngel, setProfileOpen, isSheet }: T
       <CardContent>
         <ScrollArea className="h-64 pr-4">
           {messageList}
-          <ScrollBar className="w-1" />
+          <ScrollBar className="w-[4px]" />
         </ScrollArea>
         <form key={formKey} action={formAction} className="w-full space-y-2 mt-4">
           <Textarea 
