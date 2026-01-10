@@ -104,8 +104,8 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
             setTimeout(() => setSelectedConversationId(null), 300); // Reset conversation view on close after animation
         }
     }}>
-      <SheetContent className="w-full sm:max-w-lg flex flex-col overflow-y-auto">
-          <SheetHeader>
+      <SheetContent className="w-full sm:max-w-lg flex flex-col p-6 overflow-y-auto">
+          <SheetHeader className="pr-0">
             <div className="flex items-center gap-2">
                 {selectedConversationId && (
                     <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
@@ -121,8 +121,8 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
             {!selectedConversationId && messages.length === 0 && <SheetDescription>You have no new messages.</SheetDescription>}
           </SheetHeader>
         
-        <div className="flex-1 flex flex-col overflow-hidden">
-            <div className="flex-1 overflow-y-auto -mx-6 px-6">
+        <div className="flex-1 flex flex-col overflow-hidden -mx-6 px-6">
+            <div className="flex-1 overflow-y-auto">
                     {!selectedConversationId ? (
                         // Conversation List View
                         messages.length === 0 ? (
@@ -174,7 +174,7 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
                     )}
             </div>
             {selectedConversationId && (
-                <div className="py-4 border-t -mx-6 px-6 bg-background shrink-0 sticky bottom-0">
+                <div className="py-4 border-t bg-background shrink-0 sticky bottom-0">
                     <form onSubmit={handleReply} className="flex items-center gap-2">
                         <Textarea 
                             placeholder="Type a message..." 
