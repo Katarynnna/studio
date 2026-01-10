@@ -81,7 +81,4 @@
   body {
     @apply bg-background text-foreground;
   }
-  .rdp-day_selected {
-    font-size: 0.75rem !important;
-  }
 }
