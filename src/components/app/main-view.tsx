@@ -130,7 +130,7 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
             {viewMode === 'map' ? (
             <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             ) : (
-            <div className="pt-10">
+            <div className="pt-16">
               <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             </div>
             )}
