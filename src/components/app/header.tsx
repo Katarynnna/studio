@@ -30,9 +30,9 @@ export default function Header({ setProfileOpen, setInboxOpen, setTrailRadioOpen
             <Radio />
             <span className="sr-only">Trail Radio</span>
         </Button>
-        <Button variant="ghost" onClick={() => setInboxOpen(true)} size="icon" className="relative">
+        <Button variant="ghost" onClick={() => setInboxOpen(true)} size="icon" className="relative group">
             {hasUnreadMessages && (
-                <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-accent z-10" />
+                <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-accent z-10 transition-opacity group-hover:opacity-0" />
             )}
           <Mail />
           <span className="sr-only md:hidden">Inbox</span>

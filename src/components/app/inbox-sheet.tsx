@@ -12,7 +12,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Mail, ArrowLeft, Send } from "lucide-react";
-import type { DirectMessage } from "@/lib/types";
+import type { DirectMessage, TrailAngel } from "@/lib/types";
 import { format, formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { TRAIL_ANGELS } from "@/lib/data";
@@ -26,13 +26,12 @@ type InboxSheetProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   messages: DirectMessage[];
-  onSelectAngel: (angelId: string) => void;
-  addMessageToInbox: (angelId: string, message: string) => void;
+  addMessageToInbox: (angel: TrailAngel, message: string) => void;
 };
 
 
 // Main component for the Inbox
-export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel, addMessageToInbox }: InboxSheetProps) {
+export default function InboxSheet({ open, onOpenChange, messages, addMessageToInbox }: InboxSheetProps) {
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
   const [reply, setReply] = useState('');
 
@@ -90,8 +89,8 @@ export default function InboxSheet({ open, onOpenChange, messages, onSelectAngel
   
   const handleReply = (e: React.FormEvent) => {
       e.preventDefault();
-      if (reply.trim() && selectedConversationId) {
-          addMessageToInbox(selectedConversationId, reply.trim());
+      if (reply.trim() && partner) {
+          addMessageToInbox(partner, reply.trim());
           setReply('');
       }
   }
