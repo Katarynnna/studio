@@ -21,6 +21,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const initialFilters: FilterState = {
   name: "",
@@ -142,24 +143,41 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
   // Desktop View
   return (
     <div className="flex h-full overflow-hidden">
-      <div className="flex-1 overflow-y-auto">
-        {viewMode === 'map' ? (
-          <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
-        ) : (
-          <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
-        )}
-      </div>
-
-      <div className="w-96 max-w-sm shrink-0 p-4 space-y-4 overflow-y-auto border-l">
-        <Filters
-          services={ALL_SERVICES}
-          filters={filters}
-          setFilters={setFilters}
-          viewToggle={viewToggle}
-        />
-        <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
-      </div>
-
+      {viewMode === 'map' ? (
+        <>
+          <div className="flex-1 overflow-y-auto">
+            <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+          </div>
+          <div className="w-96 max-w-sm shrink-0 border-l">
+            <ScrollArea className="h-full">
+              <div className="p-4 space-y-4">
+                <Filters
+                  services={ALL_SERVICES}
+                  filters={filters}
+                  setFilters={setFilters}
+                  viewToggle={viewToggle}
+                />
+                <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
+              </div>
+            </ScrollArea>
+          </div>
+        </>
+      ) : (
+        <ScrollArea className="h-full flex-1">
+          <div className="grid grid-cols-[1fr_minmax(0,384px)]">
+            <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+            <div className="w-96 max-w-sm shrink-0 p-4 space-y-4 border-l">
+              <Filters
+                services={ALL_SERVICES}
+                filters={filters}
+                setFilters={setFilters}
+                viewToggle={viewToggle}
+              />
+              <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
+            </div>
+          </div>
+        </ScrollArea>
+      )}
       <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
     </div>
   );
