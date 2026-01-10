@@ -22,7 +22,7 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
             onClick={() => onSelectAngel(angel)}
           >
             <CardHeader className="p-4">
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-2">
                 <Avatar className="w-16 h-16">
                   <AvatarImage src={angel.gallery[0]} alt={angel.name} />
                   <AvatarFallback>{angel.name.charAt(0)}</AvatarFallback>
@@ -33,19 +33,19 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
                     {angel.verified && <CheckCircle2 className="w-5 h-5 text-blue-500" title="Verified Angel" />}
                   </CardTitle>
                   <CardDescription>{angel.location}</CardDescription>
+                  <div className="flex flex-wrap gap-1 mt-4">
+                    {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
+                    {angel.badges.map((badge) => (
+                      <Badge key={badge} variant="secondary" className="text-xs">
+                        {badge}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="pt-0 p-4">
               <p className="text-sm text-muted-foreground line-clamp-3 h-[3.75rem]">{angel.about}</p>
-              <div className="flex flex-wrap gap-1 mt-4">
-                {angel.hiking && <Badge variant="outline" className="border-blue-500 text-blue-500"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
-                {angel.badges.map((badge) => (
-                  <Badge key={badge} variant="secondary" className="text-xs">
-                    {badge}
-                  </Badge>
-                ))}
-              </div>
             </CardContent>
           </Card>
         ))}
