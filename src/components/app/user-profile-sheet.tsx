@@ -42,7 +42,7 @@ import {
 import { Alert, AlertTitle, AlertDescription } from '../ui/alert';
 
 export const userProfile = {
-  name: 'Wired',
+  name: 'Trail Name',
   description: "PCT Class of '24",
   avatar: "https://picsum.photos/seed/123/200/200",
   about: "Just a hiker trying to make it from Mexico to Canada. I love meeting new people and sharing trail stories. Always on the lookout for good coffee and a place to charge my power bank.",
