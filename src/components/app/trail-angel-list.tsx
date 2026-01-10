@@ -21,7 +21,7 @@ export default function TrailAngelList({ angels, onSelectAngel }: TrailAngelList
             className="cursor-pointer hover:border-primary transition-colors"
             onClick={() => onSelectAngel(angel)}
           >
-            <CardHeader>
+            <CardHeader className="p-0">
               <div className="flex items-start gap-2">
                 <Avatar className="w-16 h-16">
                   <AvatarImage src={angel.gallery[0]} alt={angel.name} />
