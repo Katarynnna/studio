@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { DayPicker } from "react-day-picker"
-import 'react-day-picker/dist/style.css';
 
 import { cn } from "@/lib/utils"
 
@@ -20,8 +19,6 @@ function Calendar({
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
-        day: "text-xs",
-        day_selected: "text-xs",
         ...classNames,
       }}
       {...props}
