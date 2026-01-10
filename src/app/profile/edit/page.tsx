@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import {
@@ -25,6 +23,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -85,24 +84,43 @@ const TikTokIcon = () => (
 
 
 export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: { setProfileOpen?: (open: boolean) => void; addMessageToInbox?: (...args: any[]) => void }) {
-  const [hasBeds, setHasBeds] = useState(false);
+  const router = useRouter();
+  const { profile, services, bedCount, socials, address: userAddress, setProfile, setService, setBedCount, setSocials, setAddress, setPosition } = useUserProfileStore(state => ({
+    profile: {
+      trailName: state.trailName,
+      status: state.status,
+      badges: Array.isArray(state.badges) ? state.badges.join(', ') : state.badges,
+      about: state.about,
+    },
+    services: state.services,
+    bedCount: state.bedCount,
+    socials: state.socials,
+    address: state.address,
+    setProfile: state.setProfile,
+    setService: state.setService,
+    setBedCount: state.setBedCount,
+    setSocials: state.setSocials,
+    setAddress: state.setAddress,
+    setPosition: state.setPosition,
+  }));
+    
+  const [hasBeds, setHasBeds] = useState(services.includes('beds'));
   const { toast } = useToast();
-  const { setProfile, setService, setBedCount, setSocials, setAddress, address: userAddress, setPosition } = useUserProfileStore();
     
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-        trailName: "",
-        status: "",
-        badges: "",
-        about: "",
-        instagram: "",
-        twitter: "",
-        facebook: "",
-        tiktok: "",
-        youtube: "",
-        linkedin: "",
-        website: "",
+      trailName: "",
+      status: "",
+      badges: "",
+      about: "",
+      instagram: "",
+      twitter: "",
+      facebook: "",
+      tiktok: "",
+      youtube: "",
+      linkedin: "",
+      website: "",
     },
   });
 
@@ -117,6 +135,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
       title: "Profile Saved!",
       description: "Your changes have been saved successfully.",
     });
+    router.push('/');
   }
 
   const serviceIcons = {
@@ -167,7 +186,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input placeholder="Trail Name" {...field} className="focus-visible:ring-primary" />
+                          <Input placeholder="Trail Name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -180,7 +199,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                       <FormItem>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger className="focus:ring-primary">
+                            <SelectTrigger>
                               <SelectValue placeholder="Choose your status" />
                             </SelectTrigger>
                           </FormControl>
@@ -207,7 +226,6 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                               id="badges" 
                               placeholder="PCT Hiker 2024, Trail Angel Veteran, Trail Magic King, Thru-Hiker..."
                               {...field}
-                              className="focus-visible:ring-primary"
                             />
                         </FormControl>
                          <p className="text-sm text-muted-foreground mt-1">Enter badges separated by commas</p>
@@ -230,7 +248,6 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                             placeholder="Tell us a little bit about yourself, your hiking experience, or what you offer as a trail angel."
                             rows={5}
                             {...field}
-                             className="focus-visible:ring-primary"
                           />
                         </FormControl>
                          <FormMessage />
@@ -250,16 +267,13 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center text-center mb-6">
+              <div className="border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center text-center mb-6 cursor-pointer hover:bg-secondary">
                 <UploadCloud className="w-12 h-12 text-muted-foreground mb-2" />
                 <p className="font-semibold">Drag & drop or click to add photos</p>
                 <p className="text-sm text-muted-foreground">PNG, JPG, GIF up to 10MB</p>
               </div>
 
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
-                <div className="border-2 border-dashed rounded-lg flex items-center justify-center aspect-square">
-                    <Button variant="ghost" size="icon" type="button"><Plus className="text-muted-foreground"/></Button>
-                </div>
               </div>
             </CardContent>
           </Card>
@@ -278,7 +292,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                            return (
                              <div key={service.id} className="flex items-center justify-between p-3 border rounded-lg col-span-2 sm:col-span-1">
                                  <div className='flex items-center gap-2'>
-                                    <Checkbox id="beds-checkbox" onCheckedChange={(checked) => {
+                                    <Checkbox id="beds-checkbox" checked={hasBeds} onCheckedChange={(checked) => {
                                         setHasBeds(Boolean(checked));
                                         setService('beds', Boolean(checked));
                                     }} />
@@ -287,14 +301,14 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                                     </Label>
                                  </div>
                                  {hasBeds && (
-                                   <Input id="beds-count" type="number" min="1" max="99" placeholder="1" className="w-14 h-8 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:ring-primary" onChange={e => setBedCount(parseInt(e.target.value) || 0)} />
+                                   <Input id="beds-count" type="number" min="1" max="99" placeholder="1" className="w-14 h-8 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" defaultValue={bedCount > 0 ? bedCount : ''} onChange={e => setBedCount(parseInt(e.target.value) || 0)} />
                                  )}
                              </div>
                            )
                        }
                        return (
                         <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
-                            <Checkbox id={service.id} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
+                            <Checkbox id={service.id} checked={services.includes(service.id)} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
                             <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5">
                               <Icon className="w-5 h-5 text-primary"/> {service.name}
                             </Label>
@@ -305,7 +319,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                        const Icon = serviceIcons[service.id as keyof typeof serviceIcons] || Car;
                        return (
                         <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
-                            <Checkbox id={service.id} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
+                            <Checkbox id={service.id} checked={services.includes(service.id)} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
                             <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5">
                               <Icon className="w-5 h-5 text-primary"/> {service.name}
                             </Label>
@@ -323,15 +337,15 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                             <TrailAngelMap angels={TRAIL_ANGELS.slice(0,1)} onSelectAngel={() => {}} />
                         </div>
                         <div className="space-y-4">
-                            <Input placeholder="Address Line 1" value={userAddress.line1} onChange={e => setAddress({ line1: e.target.value })} className="focus-visible:ring-primary"/>
-                            <Input placeholder="Address Line 2" value={userAddress.line2} onChange={e => setAddress({ line2: e.target.value })} className="focus-visible:ring-primary"/>
-                            <Input placeholder="City" value={userAddress.city} onChange={e => setAddress({ city: e.target.value })} className="focus-visible:ring-primary"/>
+                            <Input placeholder="Address Line 1" value={userAddress.line1} onChange={e => setAddress({ line1: e.target.value })} />
+                            <Input placeholder="Address Line 2" value={userAddress.line2} onChange={e => setAddress({ line2: e.target.value })} />
+                            <Input placeholder="City" value={userAddress.city} onChange={e => setAddress({ city: e.target.value })} />
                             <div className="flex gap-4">
-                                <Input placeholder="State" value={userAddress.state} onChange={e => setAddress({ state: e.target.value })} className="focus-visible:ring-primary"/>
-                                <Input placeholder="ZIP Code" value={userAddress.zip} onChange={e => setAddress({ zip: e.target.value })} className="focus-visible:ring-primary"/>
+                                <Input placeholder="State" value={userAddress.state} onChange={e => setAddress({ state: e.target.value })} />
+                                <Input placeholder="ZIP Code" value={userAddress.zip} onChange={e => setAddress({ zip: e.target.value })} />
                             </div>
                             <Select value={userAddress.country} onValueChange={value => setAddress({ country: value })}>
-                                <SelectTrigger className="focus:ring-primary"><SelectValue placeholder="Select Country" /></SelectTrigger>
+                                <SelectTrigger><SelectValue placeholder="Select Country" /></SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="usa">United States</SelectItem>
                                     <SelectItem value="canada">Canada</SelectItem>
@@ -355,10 +369,10 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Input id="firstName" placeholder="First Name" className="focus-visible:ring-primary" />
-                    <Input id="lastName" placeholder="Last Name" className="focus-visible:ring-primary" />
-                    <Input id="phone" type="tel" placeholder="Phone Number" className="focus-visible:ring-primary" />
-                    <Input id="email" type="email" placeholder="Email" className="focus-visible:ring-primary" />
+                    <Input id="firstName" placeholder="First Name" />
+                    <Input id="lastName" placeholder="Last Name" />
+                    <Input id="phone" type="tel" placeholder="Phone Number" />
+                    <Input id="email" type="email" placeholder="Email" />
                 </div>
                  <div>
                     <h3 className="font-semibold mb-4 flex items-center justify-between">
@@ -366,9 +380,9 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                         <Button variant="ghost" size="sm" type="button"><Plus className="w-4 h-4 mr-1"/> Add</Button>
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 border rounded-lg">
-                        <Input placeholder="Name" className="focus-visible:ring-primary" />
-                        <Input placeholder="Relationship" className="focus-visible:ring-primary" />
-                        <Input type="tel" placeholder="Phone" className="focus-visible:ring-primary" />
+                        <Input placeholder="Name" />
+                        <Input placeholder="Relationship" />
+                        <Input type="tel" placeholder="Phone" />
                     </div>
                 </div>
             </CardContent>
@@ -385,44 +399,44 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
                         <div className="flex items-center gap-2">
                             <Instagram className="w-5 h-5 text-muted-foreground" />
                             <FormField control={form.control} name="instagram" render={({ field }) => (
-                              <Input placeholder="Instagram username" {...field} className="focus-visible:ring-primary" />
+                              <Input placeholder="Instagram username" {...field} />
                             )} />
                         </div>
                         <div className="flex items-center gap-2">
                             <Twitter className="w-5 h-5 text-muted-foreground" />
                             <FormField control={form.control} name="twitter" render={({ field }) => (
-                              <Input placeholder="Twitter / X username" {...field} className="focus-visible:ring-primary" />
+                              <Input placeholder="Twitter / X username" {...field} />
                             )} />
                         </div>
                         <div className="flex items-center gap-2">
                             <FacebookIcon />
                             <FormField control={form.control} name="facebook" render={({ field }) => (
-                              <Input placeholder="Facebook profile URL" {...field} className="focus-visible:ring-primary" />
+                              <Input placeholder="Facebook profile URL" {...field} />
                             )} />
                         </div>
                         <div className="flex items-center gap-2">
                             <TikTokIcon />
                             <FormField control={form.control} name="tiktok" render={({ field }) => (
-                              <Input placeholder="TikTok username" {...field} className="focus-visible:ring-primary" />
+                              <Input placeholder="TikTok username" {...field} />
                             )} />
                         </div>
                          <div className="flex items-center gap-2">
                             <Youtube className="w-5 h-5 text-muted-foreground" />
                             <FormField control={form.control} name="youtube" render={({ field }) => (
-                              <Input placeholder="YouTube channel URL" {...field} className="focus-visible:ring-primary" />
+                              <Input placeholder="YouTube channel URL" {...field} />
                             )} />
                         </div>
                          <div className="flex items-center gap-2">
                             <Linkedin className="w-5 h-5 text-muted-foreground" />
                              <FormField control={form.control} name="linkedin" render={({ field }) => (
-                              <Input placeholder="LinkedIn profile URL" {...field} className="focus-visible:ring-primary" />
+                              <Input placeholder="LinkedIn profile URL" {...field} />
                             )} />
                         </div>
                     </div>
                     <div className="flex items-center gap-2 pt-1">
                         <Mail className="w-5 h-5 text-muted-foreground" />
                         <FormField control={form.control} name="website" render={({ field }) => (
-                           <Input type="url" placeholder="Website or blog URL" {...field} className="focus-visible:ring-primary" />
+                           <Input type="url" placeholder="Website or blog URL" {...field} />
                         )} />
                     </div>
                 </div>
@@ -431,7 +445,7 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
         </div>
 
         <div className="mt-8 flex justify-end gap-2">
-          <Button variant="ghost" type="button">Cancel</Button>
+          <Button variant="ghost" type="button" onClick={() => router.push('/')}>Cancel</Button>
           <Button type="submit">Save Changes</Button>
         </div>
       </div>
@@ -441,3 +455,5 @@ export default function EditProfilePage({ setProfileOpen, addMessageToInbox }: {
     </AppLayout>
   );
 }
+
+    
