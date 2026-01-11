@@ -146,9 +146,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         <AvatarFallback>{displayProfile.name ? displayProfile.name.charAt(0) : 'P'}</AvatarFallback>
                     </Avatar>
                      {displayProfile.verified && (
-                        <div className="absolute -bottom-1 -right-1 rounded-full p-0.5 bg-background">
-                            <CheckCircle2 className="w-5 h-5 text-primary fill-primary-foreground" />
-                        </div>
+                        <CheckCircle2 className="absolute -bottom-1 -right-1 w-6 h-6 text-primary fill-background" />
                     )}
                 </div>
                 <div className="space-y-1.5 flex-1">
