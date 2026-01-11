@@ -168,7 +168,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                 </div>
             </div>
             
-             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground pt-2">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground pt-4">
                 {displayProfile.lastActivity && <div className="flex items-center gap-1">
                     <Clock className="w-3 h-3" />
                     <span>Last active: {displayProfile.lastActivity}</span>
@@ -237,7 +237,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               
               {displayProfile.position && (
                   <>
-                    <h4 className="font-semibold mt-6 mb-2">{isCurrentUser ? "My Location" : "Location"}</h4>
+                    <h4 className="font-semibold mt-6">{isCurrentUser ? "My Location" : "Location"}</h4>
                     <ProfileMap position={displayProfile.position} />
                   </>
               )}
@@ -316,3 +316,5 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
     </Sheet>
   );
 }
+
+    
