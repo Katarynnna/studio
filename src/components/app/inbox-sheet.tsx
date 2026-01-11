@@ -106,17 +106,25 @@ export default function InboxSheet({ open, onOpenChange }: InboxSheetProps) {
     }}>
       <SheetContent className="w-full sm:max-w-lg flex flex-col p-0 overflow-y-auto">
         <SheetHeader className="p-6 pb-0">
-            <div className="flex flex-row items-center gap-2">
-                {selectedConversationId && (
-                    <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
-                        <ArrowLeft />
+            <div className="flex flex-row items-center justify-between">
+                <div className="flex items-center gap-2">
+                    {selectedConversationId && (
+                        <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
+                            <ArrowLeft />
+                        </Button>
+                    )}
+                     <SheetTitle className="text-3xl font-headline flex items-center gap-2">
+                        {selectedConversationId ? (
+                            <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
+                        ) : 'Inbox'}
+                     </SheetTitle>
+                </div>
+                 <SheetClose asChild>
+                    <Button variant="ghost" size="icon" className="shrink-0">
+                      <X className="h-5 w-5" />
+                      <span className="sr-only">Close</span>
                     </Button>
-                )}
-                 <SheetTitle className="text-3xl font-headline flex items-center gap-2">
-                    {selectedConversationId ? (
-                        <button onClick={openAngelProfile} className="hover:underline">{partner?.name}</button>
-                    ) : 'Inbox'}
-                 </SheetTitle>
+                  </SheetClose>
             </div>
         </SheetHeader>
         

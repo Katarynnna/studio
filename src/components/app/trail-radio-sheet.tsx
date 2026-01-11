@@ -15,6 +15,7 @@ import ProfileSheet from "./profile-sheet";
 import { TRAIL_ANGELS } from "@/lib/data";
 import { Radio, X } from "lucide-react";
 import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
 
 type TrailRadioSheetProps = {
   open: boolean;
@@ -52,6 +53,12 @@ export default function TrailRadioSheet({ open, onOpenChange }: TrailRadioSheetP
                                 <Radio className="w-8 h-8" />
                                 Trail Radio
                             </span>
+                             <SheetClose asChild>
+                                <Button variant="ghost" size="icon" className="shrink-0">
+                                  <X className="h-5 w-5" />
+                                  <span className="sr-only">Close</span>
+                                </Button>
+                              </SheetClose>
                         </SheetTitle>
                     </SheetHeader>
                     <div className="-mx-6"><Separator className="my-6"/></div>
