@@ -223,7 +223,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               <p className="text-muted-foreground mb-4">{displayProfile.about}</p>
               
               <div className="flex items-center gap-2 my-4">
-                <h4 className="font-semibold">{isCurrentUser ? "Services I Can Offer" : "Services Offered"}</h4>
+                <h4 className="font-semibold">Services Offered</h4>
                 {displayProfile.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
               </div>
               <div className="flex flex-wrap gap-x-6 gap-y-4">
@@ -237,7 +237,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               
               {displayProfile.position && (
                   <>
-                    <h4 className="font-semibold mt-6">{isCurrentUser ? "My Location" : "Location"}</h4>
+                    <h4 className="font-semibold mt-6">Location</h4>
                     <ProfileMap position={displayProfile.position} />
                   </>
               )}
@@ -316,5 +316,3 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
     </Sheet>
   );
 }
-
-    
