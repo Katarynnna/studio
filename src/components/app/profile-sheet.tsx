@@ -170,13 +170,13 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     </div>
                      {hasSocials && (
                         <div className="flex items-center gap-1 pt-2">
-                            {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Instagram className="w-5 h-5" /></Link></Button>}
-                            {displayProfile.socials.twitter && <Button variant="social" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Twitter className="w-5 h-5" /></Link></Button>}
-                            {displayProfile.socials.facebook && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><FacebookIcon /></Link></Button>}
-                            {displayProfile.socials.tiktok && <Button variant="social" size="icon" asChild><Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><TikTokIcon /></Link></Button>}
-                            {displayProfile.socials.youtube && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Youtube className="w-5 h-5" /></Link></Button>}
-                            {displayProfile.socials.linkedin && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Linkedin className="w-5 h-5" /></Link></Button>}
-                            {displayProfile.socials.website && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><LinkIcon className="w-5 h-5" /></Link></Button>}
+                            {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer"><Instagram className="w-5 h-5" /></Link></Button>}
+                            {displayProfile.socials.twitter && <Button variant="social" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer"><Twitter className="w-5 h-5" /></Link></Button>}
+                            {displayProfile.socials.facebook && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer"><FacebookIcon /></Link></Button>}
+                            {displayProfile.socials.tiktok && <Button variant="social" size="icon" asChild><Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer"><TikTokIcon /></Link></Button>}
+                            {displayProfile.socials.youtube && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer"><Youtube className="w-5 h-5" /></Link></Button>}
+                            {displayProfile.socials.linkedin && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin className="w-5 h-5" /></Link></Button>}
+                            {displayProfile.socials.website && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer"><LinkIcon className="w-5 h-5" /></Link></Button>}
                         </div>
                     )}
                 </div>
@@ -199,7 +199,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               {hasServices && (
                 <>
                   <div className="flex items-center gap-2 my-4">
-                    <h4 className="font-semibold">Services Offered</h4>
+                    <h4 className="font-semibold">{isCurrentUser ? "Services I Can Offer" : "Services Offered"}</h4>
                     {displayProfile.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
                   </div>
                   <div className="flex flex-wrap gap-x-6 gap-y-4">
