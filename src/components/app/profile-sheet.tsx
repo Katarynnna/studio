@@ -126,6 +126,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
   
   const profileServices = ALL_SERVICES.filter((s) => displayProfile.services.includes(s.id));
   const hasServices = profileServices.length > 0;
+  const hasSocials = Object.values(displayProfile.socials).some(s => !!s);
   const showCalendar = hasServices && displayProfile.availability.length > 0;
 
   return (
@@ -167,6 +168,17 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                             </Badge>
                         ))}
                     </div>
+                     {hasSocials && (
+                        <div className="flex items-center gap-3 pt-2">
+                            {displayProfile.socials.instagram && <Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Instagram className="w-5 h-5" /></Link>}
+                            {displayProfile.socials.twitter && <Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Twitter className="w-5 h-5" /></Link>}
+                            {displayProfile.socials.facebook && <Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><FacebookIcon /></Link>}
+                            {displayProfile.socials.tiktok && <Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><TikTokIcon /></Link>}
+                            {displayProfile.socials.youtube && <Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Youtube className="w-5 h-5" /></Link>}
+                            {displayProfile.socials.linkedin && <Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Linkedin className="w-5 h-5" /></Link>}
+                            {displayProfile.socials.website && <Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><LinkIcon className="w-5 h-5" /></Link>}
+                        </div>
+                    )}
                 </div>
             </div>
           </SheetHeader>
@@ -184,30 +196,15 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
             <TabsContent value="about" className="mt-4">
               <p className="text-muted-foreground mb-4">{displayProfile.about}</p>
               
-               {Object.values(displayProfile.socials).some(s => !!s) && (
-                <>
-                <h4 className="font-semibold">Socials & Links</h4>
-                <div className="grid grid-cols-2 gap-2 my-4 text-sm">
-                    {displayProfile.socials.instagram && <Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-foreground"><Instagram className="w-4 h-4" /> Instagram</Link>}
-                    {displayProfile.socials.twitter && <Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-foreground"><Twitter className="w-4 h-4" /> Twitter / X</Link>}
-                    {displayProfile.socials.facebook && <Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-foreground"><FacebookIcon /> Facebook</Link>}
-                    {displayProfile.socials.tiktok && <Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-foreground"><TikTokIcon /> TikTok</Link>}
-                    {displayProfile.socials.youtube && <Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-foreground"><Youtube className="w-4 h-4" /> YouTube</Link>}
-                    {displayProfile.socials.linkedin && <Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-foreground"><Linkedin className="w-4 h-4" /> LinkedIn</Link>}
-                    {displayProfile.socials.website && <Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-foreground"><LinkIcon className="w-4 h-4" /> Website</Link>}
-                </div>
-                </>
-              )}
-              
               {hasServices && (
                 <>
                   <div className="flex items-center gap-2 my-4">
-                    <h4 className="font-semibold">{isCurrentUser ? 'Services I Can Offer' : 'Services Offered'}</h4>
+                    <h4 className="font-semibold">Services Offered</h4>
                     {displayProfile.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
                   </div>
                   <div className="flex flex-wrap gap-x-6 gap-y-4">
                     {profileServices.map((service) => (
-                      <div key={service.id} className="flex items-center gap-2">
+                      <div key={service.id} className="flex items-center gap-1.5">
                         <service.icon className="w-5 h-5 text-primary" />
                         <span className="text-sm text-muted-foreground">{service.name} {isCurrentUser && service.id === 'beds' && displayProfile.bedCount && displayProfile.bedCount > 0 ? `(${displayProfile.bedCount})` : ''}</span>
                       </div>
@@ -218,7 +215,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               
               {displayProfile.position && (
                   <>
-                    <h4 className="font-semibold mt-6">My Location</h4>
+                    <h4 className="font-semibold mt-6">Location</h4>
                     <ProfileMap position={displayProfile.position} />
                   </>
               )}

@@ -309,7 +309,7 @@ export default function EditProfilePage() {
                        const isChecked = services.includes(service.id);
                        if (service.id === 'beds') {
                            return (
-                             <div key={service.id} className="flex items-center justify-between p-3 border rounded-lg col-span-2 sm:col-span-1">
+                             <div key={service.id} className="flex items-center justify-between p-3 border rounded-lg col-span-2 sm:col-span-1 min-h-[50px]">
                                  <div className='flex items-center gap-2'>
                                     <Checkbox id="beds-checkbox" checked={hasBeds} onCheckedChange={(checked) => {
                                         const isChecked = Boolean(checked);
@@ -327,7 +327,7 @@ export default function EditProfilePage() {
                            )
                        }
                        return (
-                        <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                        <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg min-h-[50px]">
                             <Checkbox id={service.id} checked={isChecked} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
                             <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5">
                               <Icon className="w-5 h-5 text-primary"/> {service.name}
@@ -338,7 +338,7 @@ export default function EditProfilePage() {
                     {otherServiceObjects.map(service => {
                        const Icon = serviceIcons[service.id as keyof typeof serviceIcons] || Car;
                        return (
-                        <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                        <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg min-h-[50px]">
                             <Checkbox id={service.id} checked={services.includes(service.id)} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
                             <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5">
                               <Icon className="w-5 h-5 text-primary"/> {service.name}

@@ -121,12 +121,13 @@ const useUserProfileStore = create(
     
       setBedCount: (count) => set({ bedCount: count }),
     
-      setAddress: async (address) => {
+      setAddress: (address) => {
         const fullAddress = { ...get().address, ...address };
         set({ address: fullAddress });
-        if (fullAddress.city && fullAddress.state && fullAddress.country) {
-            const newPosition = await geocodeAddress(fullAddress);
-            set({ position: newPosition });
+        if (fullAddress.city && fullAddress.state) {
+            geocodeAddress(fullAddress).then(newPosition => {
+                set({ position: newPosition });
+            });
         }
       },
       
