@@ -22,7 +22,7 @@ export const ALL_SERVICES: Service[] = [
   { id: 'beds', name: 'Beds', icon: Bed, associatedServices: ['private-room', 'bed'] },
   { id: 'couch-floor', name: 'Couch/Floor', icon: Sofa },
   { id: 'camping', name: 'Camping', icon: Tent },
-  { id: 'food', name: 'Food / Meals', icon: CookingPot, associatedServices: ['kitchen', 'meals'] },
+  { id: 'food', name: 'Food', icon: CookingPot, associatedServices: ['kitchen', 'meals'] },
   { id: 'storage', name: 'Storage', icon: Lock, associatedServices: ['secure-storage'] },
   { id: 'mail-drop', name: 'Mail drop', icon: Package, associatedServices: ['deliveries'] },
   { id: 'laundry', name: 'Laundry', icon: WashingMachine },

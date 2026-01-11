@@ -132,14 +132,14 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
   return (
     <Sheet open={!!profile} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-lg flex flex-col overflow-y-auto p-0">
-        <div className="flex-1 overflow-y-auto p-6 pb-24">
-        <SheetHeader>
+        <div className="flex-1 overflow-y-auto p-6">
+        <SheetHeader className="text-left">
             <div className="flex items-start gap-4">
                 <Avatar className="w-20 h-20">
                     <AvatarImage src={displayProfile.avatar} alt={displayProfile.name} />
                     <AvatarFallback>{displayProfile.name ? displayProfile.name.charAt(0) : 'P'}</AvatarFallback>
                 </Avatar>
-                <div className="space-y-1.5 flex-1 text-left">
+                <div className="space-y-1.5 flex-1">
                     <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                       {displayProfile.name}
                       {displayProfile.verified && <CheckCircle2 className="w-6 h-6 text-primary" title="Verified Angel" />}
@@ -149,6 +149,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
             </div>
             
             <div className="flex flex-col items-start gap-y-2 text-xs text-muted-foreground pt-4">
+                 {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 <div className="flex items-center gap-4">
                     {displayProfile.lastActivity && <div className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />
@@ -159,7 +160,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         <span>{displayProfile.responseRate}% response rate</span>
                     </div>}
                 </div>
-                {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
             </div>
 
             <div className="pt-4 space-y-2">
@@ -280,19 +280,19 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               ))}
             </TabsContent>
           </Tabs>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 p-6 bg-background/95 backdrop-blur-sm border-t">
-          {isCurrentUser ? (
-              <Button variant="outline" className="w-full" asChild>
-                <Link href="/profile/edit">Edit Profile</Link>
-              </Button>
-            ) : (
-              <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
-                  <Button className="w-full">
-                      Message
-                  </Button>
-              </SendMessageDialog>
-            )}
+           <div className="mt-6">
+            {isCurrentUser ? (
+                <Button variant="outline" className="w-full" asChild>
+                  <Link href="/profile/edit">Edit Profile</Link>
+                </Button>
+              ) : (
+                <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
+                    <Button className="w-full">
+                        Message
+                    </Button>
+                </SendMessageDialog>
+              )}
+          </div>
         </div>
       </SheetContent>
     </Sheet>
