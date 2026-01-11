@@ -131,7 +131,7 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
                 <div className="flex-1 space-y-2">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground">
+                   <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground">
                       <div className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           <span>Last active: {angel.lastActivity}</span>
