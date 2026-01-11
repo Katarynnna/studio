@@ -12,7 +12,7 @@ import ProfileSheet from "./profile-sheet";
 import TrailAngelList from "./trail-angel-list";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { Filter, List, Map as MapIcon, Trash2 } from "lucide-react";
+import { Filter, List, Map as MapIcon, X, Frown } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -27,6 +27,25 @@ const initialFilters: FilterState = {
   location: "",
   services: [],
 };
+
+const FunnelX = (props: React.ComponentProps<"svg">) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M3 3h18v5l-7 7v6l-4-3v-3l-7-7z" />
+    <path d="m15 3-6 6" />
+  </svg>
+);
+
 
 type MainViewProps = {
   setProfileOpen?: (open: boolean) => void;
@@ -87,13 +106,21 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
     setFilters(initialFilters);
   };
 
+  const hasActiveFilters = filters.name !== '' || filters.location !== '' || filters.services.length > 0;
+
   const viewToggle = (
-    <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-inner">
-      <Button onClick={() => setViewMode('map')} size="sm" variant={viewMode === 'map' ? 'default' : 'ghost'} className={cn("rounded-full h-8 w-8 p-2", viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
-        <MapIcon size={16} />
-      </Button>
+    <div className="flex items-center gap-2">
+      <div className="flex items-center gap-0 p-1 rounded-full bg-secondary shadow-inner">
+        <Button onClick={() => setViewMode('map')} size="sm" variant={viewMode === 'map' ? 'default' : 'ghost'} className={cn("rounded-full h-8 w-8 p-2", viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
+          <MapIcon size={16} />
+        </Button>
         <Button onClick={() => setViewMode('list')} size="sm" variant={viewMode === 'list' ? 'default' : 'ghost'} className={cn("rounded-full h-8 w-8 p-2", viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'text-foreground')}>
-        <List size={16} />
+          <List size={16} />
+        </Button>
+      </div>
+       <Button variant="ghost" size="icon" onClick={clearFilters} disabled={!hasActiveFilters} className="h-9 w-9 rounded-full bg-green-100 text-green-700 hover:bg-green-200 hover:text-green-800 disabled:bg-muted disabled:text-muted-foreground">
+          <FunnelX className="w-5 h-5" />
+          <span className="sr-only">Clear filters</span>
       </Button>
     </div>
   );
@@ -106,7 +133,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   if (isMobile) {
     return (
       <div className={cn("h-full relative", viewMode === 'map' ? 'overflow-hidden' : 'overflow-y-auto')}>
-        <div className="absolute top-4 left-4 z-10">
+        <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
            <Dialog open={filterDialogOpen} onOpenChange={setFilterDialogOpen}>
             <DialogTrigger asChild>
               <Button size="icon" variant="default" className="rounded-full shadow-lg">
@@ -117,8 +144,8 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
               <DialogHeader>
                 <DialogTitle className="flex items-center justify-between">
                     <span className="flex items-center gap-2"><Filter /> Filter</span>
-                    <Button variant="ghost" size="icon" onClick={clearFilters} className="h-8 w-8">
-                        <Trash2 className="w-4 h-4" />
+                     <Button variant="ghost" size="icon" onClick={clearFilters} className="h-8 w-8">
+                        <FunnelX className="w-4 h-4 text-green-600" />
                         <span className="sr-only">Clear filters</span>
                     </Button>
                 </DialogTitle>
@@ -130,6 +157,10 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
               />
             </DialogContent>
           </Dialog>
+           <Button variant="ghost" size="icon" onClick={clearFilters} disabled={!hasActiveFilters} className="h-9 w-9 rounded-full bg-green-100 text-green-700 hover:bg-green-200 hover:text-green-800 disabled:bg-muted disabled:text-muted-foreground">
+              <FunnelX className="w-5 h-5" />
+              <span className="sr-only">Clear filters</span>
+          </Button>
         </div>
         <div className="absolute top-4 right-4 z-10">
             {viewToggle}
@@ -140,7 +171,14 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
             ) : (
             <div className="pt-16">
-              <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+               {filteredAngels.length > 0 ? (
+                <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+              ) : (
+                <div className="text-center pt-20 text-muted-foreground">
+                  <Frown className="w-12 h-12 mx-auto mb-2" />
+                  <p>No trail angels match your filters.</p>
+                </div>
+              )}
             </div>
             )}
         </div>
@@ -157,7 +195,16 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
         {viewMode === 'map' ? (
           <TrailAngelMap angels={filteredAngels} onSelectAngel={handleSelectAngel} />
         ) : (
-          <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+           <div className="h-full overflow-y-auto">
+            {filteredAngels.length > 0 ? (
+              <TrailAngelList angels={filteredAngels} onSelectAngel={handleSelectAngel} />
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
+                 <Frown className="w-16 h-16 mx-auto mb-4" />
+                  <p className="text-lg">No trail angels match your filters.</p>
+              </div>
+            )}
+          </div>
         )}
       </div>
       <div className="w-96 max-w-sm shrink-0 border-l bg-background">
@@ -167,6 +214,8 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             filters={filters}
             setFilters={setFilters}
             viewToggle={viewToggle}
+            hasActiveFilters={hasActiveFilters}
+            clearFilters={clearFilters}
           />
           <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
         </div>

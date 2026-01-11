@@ -6,11 +6,31 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Filter, Trash2 } from "lucide-react";
+import { Filter, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ReactNode, Dispatch, SetStateAction } from "react";
 import React from 'react';
 import { Button } from "../ui/button";
+
+
+const FunnelX = (props: React.ComponentProps<"svg">) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M3 3h18v5l-7 7v6l-4-3v-3l-7-7z" />
+    <path d="m15 3-6 6" />
+  </svg>
+);
+
 
 export type FilterState = {
   name: string;
@@ -23,9 +43,11 @@ type FiltersProps = {
   filters: FilterState;
   setFilters: Dispatch<SetStateAction<FilterState>>;
   viewToggle?: ReactNode;
+  hasActiveFilters?: boolean;
+  clearFilters: () => void;
 };
 
-export default function Filters({ services, filters, setFilters, viewToggle }: FiltersProps) {
+export default function Filters({ services, filters, setFilters, viewToggle, hasActiveFilters, clearFilters }: FiltersProps) {
   const isMobile = useIsMobile();
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,10 +63,6 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
       return { ...prev, services: newServices };
     });
   };
-  
-  const clearFilters = () => {
-    setFilters({ name: '', location: '', services: [] });
-  }
 
   const content = (
       <div className="space-y-4">
@@ -100,10 +118,6 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
       </CardHeader>
       <CardContent className="relative">
           {content}
-          <Button variant="ghost" size="icon" onClick={clearFilters} className="absolute bottom-4 right-2 h-8 w-8">
-              <Trash2 className="w-4 h-4 text-green-600" />
-              <span className="sr-only">Clear filters</span>
-          </Button>
       </CardContent>
     </Card>
   );

@@ -141,8 +141,8 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         <AvatarFallback>{displayProfile.name ? displayProfile.name.charAt(0) : 'P'}</AvatarFallback>
                     </Avatar>
                     {displayProfile.verified && (
-                        <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5">
-                            <CheckCircle2 className="w-6 h-6 text-primary" title="Verified Angel" />
+                        <div className="absolute -bottom-1 -right-1 bg-green-800 rounded-full p-0.5 border-2 border-background">
+                            <CheckCircle2 className="w-5 h-5 text-green-200" title="Verified Angel" />
                         </div>
                     )}
                 </div>
@@ -154,7 +154,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                 </div>
             </div>
             
-            <div className="flex flex-col items-start gap-y-2 text-xs text-muted-foreground">
+             <div className="flex flex-col items-start gap-y-2 text-xs text-muted-foreground">
                  <div className="flex flex-wrap gap-2 pt-1">
                     {displayProfile.badges.map((badge) => (
                         <Badge key={badge} variant="secondary">
@@ -162,6 +162,8 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         </Badge>
                     ))}
                 </div>
+                {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
+
                 <div className="flex items-center gap-4">
                     {displayProfile.lastActivity && <div className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />
@@ -172,7 +174,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         <span>{displayProfile.responseRate}% response rate</span>
                     </div>}
                 </div>
-                {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
             </div>
 
             <div className="space-y-4">
@@ -226,6 +227,19 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     <ProfileMap position={displayProfile.position} />
                   </>
               )}
+              <div className="mt-6">
+                {isCurrentUser ? (
+                    <Button variant="outline" className="w-full" asChild>
+                    <Link href="/profile/edit">Edit Profile</Link>
+                    </Button>
+                ) : (
+                    <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
+                        <Button className="w-full">
+                            Message
+                        </Button>
+                    </SendMessageDialog>
+                )}
+             </div>
             </TabsContent>
             
             {showCalendar && (
@@ -293,19 +307,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               )}
             </TabsContent>
           </Tabs>
-           <div className="mt-6">
-            {isCurrentUser ? (
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="/profile/edit">Edit Profile</Link>
-                </Button>
-              ) : (
-                <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <Button className="w-full">
-                        Message
-                    </Button>
-                </SendMessageDialog>
-              )}
-          </div>
         </div>
       </SheetContent>
     </Sheet>
