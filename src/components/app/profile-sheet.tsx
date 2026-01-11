@@ -41,7 +41,6 @@ import {
   Linkedin,
   Youtube,
   Link as LinkIcon,
-  X,
 } from 'lucide-react';
 import SendMessageDialog from './send-message-dialog';
 import { useState } from 'react';
@@ -129,7 +128,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
   const profileServices = ALL_SERVICES.filter((s) => displayProfile.services.includes(s.id));
   const hasServices = profileServices.length > 0;
   const hasSocials = Object.values(displayProfile.socials).some(s => !!s);
-  const showCalendar = false; // Temporarily disabled
+  const showCalendar = false;
 
   return (
     <Sheet open={!!profile} onOpenChange={onOpenChange}>
@@ -156,7 +155,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                 </div>
             </div>
             
-            <div className="flex flex-col items-start gap-2 text-xs text-muted-foreground">
+            <div className="flex flex-col items-start gap-3 text-xs text-muted-foreground">
               {displayProfile.lastActivity && <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1">
                     <Clock className="w-3 h-3" />
@@ -194,7 +193,9 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
             )}
           </SheetHeader>
           
-          <Tabs defaultValue="about" className="relative mt-6">
+           <Separator className="my-6" />
+          
+          <Tabs defaultValue="about" className="relative">
             <TabsList className={`grid w-full grid-cols-${showCalendar ? '4' : '3'}`}>
               <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1 hidden sm:inline-flex" />About</TabsTrigger>
               {showCalendar && <TabsTrigger value="availability"><CalendarIcon className="w-4 h-4 mr-1 hidden sm:inline-flex" />Calendar</TabsTrigger>}
@@ -228,19 +229,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     <ProfileMap position={displayProfile.position} />
                   </>
               )}
-               <div className="mt-6">
-                {isCurrentUser ? (
-                    <Button variant="outline" className="w-full" asChild>
-                    <Link href="/profile/edit">Edit Profile</Link>
-                    </Button>
-                ) : (
-                    <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
-                        <Button className="w-full">
-                            Message
-                        </Button>
-                    </SendMessageDialog>
-                )}
-             </div>
             </TabsContent>
             
             {showCalendar && (
@@ -299,15 +287,21 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                   </div>
                 </div>
               ))}
-               {!isCurrentUser && (
-                <div className="pt-4">
-                  <Button variant="outline" className="w-full">
-                    Add a Review
-                  </Button>
-                </div>
-              )}
             </TabsContent>
           </Tabs>
+        </div>
+        <div className="p-6 pt-0">
+          {isCurrentUser ? (
+              <Button variant="outline" className="w-full" asChild>
+              <Link href="/profile/edit">Edit Profile</Link>
+              </Button>
+          ) : (
+              <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
+                  <Button className="w-full">
+                      Message
+                  </Button>
+              </SendMessageDialog>
+          )}
         </div>
       </SheetContent>
     </Sheet>

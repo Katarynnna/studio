@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Filter, X } from "lucide-react";
+import { Filter, Trash2, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ReactNode, Dispatch, SetStateAction } from "react";
 import React from 'react';
@@ -90,7 +90,7 @@ export default function Filters({ services, filters, setFilters, viewToggle, has
   }
   
   const clearFilterButton = (
-    <Button variant="ghost" size="icon" onClick={clearFilters} disabled={!hasActiveFilters} className="h-9 w-9 rounded-full bg-green-100 text-green-700 hover:bg-green-200 hover:text-green-800 disabled:bg-muted disabled:text-muted-foreground">
+    <Button variant="ghost" size="icon" onClick={clearFilters} disabled={!hasActiveFilters} className="rounded-full bg-green-100 text-green-700 hover:bg-green-200 hover:text-green-800 disabled:bg-muted disabled:text-muted-foreground">
         <FunnelXIcon className="w-5 h-5" />
         <span className="sr-only">Clear filters</span>
     </Button>
