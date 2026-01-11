@@ -156,7 +156,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     <SheetDescription>{displayProfile.location}</SheetDescription>
                 </div>
               </div>
-              <SheetClose>
+              <SheetClose className="p-1 text-muted-foreground hover:text-foreground">
                 <X className="h-4 w-4" />
                 <span className="sr-only">Close</span>
               </SheetClose>
@@ -292,25 +292,26 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
             </TabsContent>
 
             <TabsContent value="reviews" className="mt-4 space-y-6">
-              {displayProfile.reviews.map((review) => (
-                <div key={review.id} className="flex gap-3">
-                  <Avatar>
-                    <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 space-y-1">
-                    <div className="flex items-center gap-2">
-                      <p className="font-semibold">{review.author}</p>
-                      <span className="text-xs text-muted-foreground pt-0.5">{review.date}</span>
+              <div className="space-y-6">
+                {displayProfile.reviews.map((review) => (
+                  <div key={review.id} className="flex gap-3">
+                    <Avatar>
+                      <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 space-y-1">
+                      <div className="flex items-center gap-2">
+                        <p className="font-semibold">{review.author}</p>
+                        <span className="text-xs text-muted-foreground pt-0.5">{review.date}</span>
+                      </div>
+                      <StarRating rating={review.rating} />
+                      <p className="text-sm text-muted-foreground pt-2">{review.comment}</p>
                     </div>
-                    <StarRating rating={review.rating} />
-                    <p className="text-sm text-muted-foreground pt-2">{review.comment}</p>
                   </div>
-                </div>
-              ))}
-               <div className="flex justify-end pt-4">
+                ))}
+              </div>
+              <div className="pt-6">
                 {!isCurrentUser && (
-                  <Button variant="outline">
-                    <Plus className="w-4 h-4 mr-2" />
+                  <Button variant="outline" className="w-full">
                     Add a Review
                   </Button>
                 )}
