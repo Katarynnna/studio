@@ -7,12 +7,13 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetClose,
 } from "@/components/ui/sheet";
 import TrailRadio from "./trail-radio";
 import { useState } from "react";
 import ProfileSheet from "./profile-sheet";
 import { TRAIL_ANGELS } from "@/lib/data";
-import { Radio } from "lucide-react";
+import { Radio, X } from "lucide-react";
 import { Separator } from "../ui/separator";
 
 type TrailRadioSheetProps = {
@@ -46,9 +47,11 @@ export default function TrailRadioSheet({ open, onOpenChange }: TrailRadioSheetP
             <Sheet open={open} onOpenChange={onOpenChange}>
                 <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
                     <SheetHeader>
-                        <SheetTitle className="text-3xl font-headline flex items-center gap-2">
-                            <Radio className="w-8 h-8" />
-                            Trail Radio
+                        <SheetTitle className="text-3xl font-headline flex items-center justify-between">
+                            <span className="flex items-center gap-2">
+                                <Radio className="w-8 h-8" />
+                                Trail Radio
+                            </span>
                         </SheetTitle>
                     </SheetHeader>
                     <div className="-mx-6"><Separator className="my-6"/></div>

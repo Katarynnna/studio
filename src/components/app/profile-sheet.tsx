@@ -12,6 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
+  SheetClose,
 } from '@/components/ui/sheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -41,6 +42,8 @@ import {
   Linkedin,
   Youtube,
   Link as LinkIcon,
+  X,
+  Plus
 } from 'lucide-react';
 import SendMessageDialog from './send-message-dialog';
 import { useState } from 'react';
@@ -135,7 +138,8 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
       <SheetContent className="w-full sm:max-w-lg flex flex-col p-0">
         <div className="flex-1 overflow-y-auto p-6">
         <SheetHeader className="text-left space-y-4">
-            <div className="flex items-start gap-4">
+            <div className="flex items-start justify-between">
+              <div className="flex items-start gap-4">
                 <div className="relative">
                     <Avatar className="w-20 h-20">
                         <AvatarImage src={displayProfile.avatar} alt={displayProfile.name} />
@@ -143,7 +147,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     </Avatar>
                      {displayProfile.verified && (
                         <div className="absolute -bottom-1 -right-1 rounded-full p-0.5 bg-background">
-                            <CheckCircle2 className="w-5 h-5 text-primary" title="Verified Angel" />
+                            <CheckCircle2 className="w-5 h-5 text-primary fill-primary-foreground" />
                         </div>
                     )}
                 </div>
@@ -153,6 +157,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     </SheetTitle>
                     <SheetDescription>{displayProfile.location}</SheetDescription>
                 </div>
+              </div>
             </div>
             
             <div className="flex flex-col items-start gap-3 text-xs text-muted-foreground">
@@ -229,6 +234,19 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     <ProfileMap position={displayProfile.position} />
                   </>
               )}
+               <div className="mt-6">
+                {isCurrentUser ? (
+                    <Button variant="outline" className="w-full" asChild>
+                    <Link href="/profile/edit">Edit Profile</Link>
+                    </Button>
+                ) : (
+                    <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
+                        <Button className="w-full">
+                            Message
+                        </Button>
+                    </SendMessageDialog>
+                )}
+              </div>
             </TabsContent>
             
             {showCalendar && (
@@ -272,6 +290,14 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
             </TabsContent>
 
             <TabsContent value="reviews" className="mt-4 space-y-6">
+               <div className="flex justify-end">
+                {!isCurrentUser && (
+                  <Button variant="outline">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add a Review
+                  </Button>
+                )}
+              </div>
               {displayProfile.reviews.map((review) => (
                 <div key={review.id} className="flex gap-3">
                   <Avatar>
@@ -289,19 +315,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               ))}
             </TabsContent>
           </Tabs>
-        </div>
-        <div className="p-6 pt-0">
-          {isCurrentUser ? (
-              <Button variant="outline" className="w-full" asChild>
-              <Link href="/profile/edit">Edit Profile</Link>
-              </Button>
-          ) : (
-              <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
-                  <Button className="w-full">
-                      Message
-                  </Button>
-              </SendMessageDialog>
-          )}
         </div>
       </SheetContent>
     </Sheet>
