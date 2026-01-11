@@ -12,7 +12,6 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-  SheetClose,
 } from '@/components/ui/sheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -135,10 +134,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
   return (
     <Sheet open={!!profile} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-lg flex flex-col p-0">
-        <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary z-50">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </SheetClose>
         <div className="flex-1 overflow-y-auto p-6">
         <SheetHeader className="text-left space-y-4">
             <div className="flex items-start gap-4">
@@ -147,8 +142,8 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         <AvatarImage src={displayProfile.avatar} alt={displayProfile.name} />
                         <AvatarFallback>{displayProfile.name ? displayProfile.name.charAt(0) : 'P'}</AvatarFallback>
                     </Avatar>
-                    {displayProfile.verified && (
-                        <div className="absolute -bottom-1 -right-1 rounded-full p-0.5">
+                     {displayProfile.verified && (
+                        <div className="absolute -bottom-1 -right-1 rounded-full p-0.5 bg-background">
                             <CheckCircle2 className="w-5 h-5 text-primary" title="Verified Angel" />
                         </div>
                     )}
@@ -161,29 +156,27 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                 </div>
             </div>
             
-             <div className="flex flex-col items-start gap-y-2 text-xs text-muted-foreground">
-                <div className="flex flex-col items-start gap-2 text-xs text-muted-foreground">
-                  {displayProfile.lastActivity && <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        <span>Last active: {displayProfile.lastActivity}</span>
-                    </div>
-                    {displayProfile.responseRate && <div className="flex items-center gap-1">
-                        <MessageCircle className="w-3 h-3" />
-                        <span>{displayProfile.responseRate}% response rate</span>
-                    </div>}
-                  </div>}
-
-                  {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
-
-                  {displayProfile.badges.length > 0 && <div className="flex flex-wrap gap-1">
-                      {displayProfile.badges.map((badge) => (
-                          <Badge key={badge} variant="secondary">
-                              {badge}
-                          </Badge>
-                      ))}
-                  </div>}
+            <div className="flex flex-col items-start gap-2 text-xs text-muted-foreground">
+              {displayProfile.lastActivity && <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>Last active: {displayProfile.lastActivity}</span>
                 </div>
+                {displayProfile.responseRate && <div className="flex items-center gap-1">
+                    <MessageCircle className="w-3 h-3" />
+                    <span>{displayProfile.responseRate}% response rate</span>
+                </div>}
+              </div>}
+
+              {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
+
+              {displayProfile.badges.length > 0 && <div className="flex flex-wrap gap-1">
+                  {displayProfile.badges.map((badge) => (
+                      <Badge key={badge} variant="secondary">
+                          {badge}
+                      </Badge>
+                  ))}
+              </div>}
             </div>
 
             {hasSocials && (
@@ -201,9 +194,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
             )}
           </SheetHeader>
           
-          <Separator className="my-6" />
-          
-          <Tabs defaultValue="about" className="relative">
+          <Tabs defaultValue="about" className="relative mt-6">
             <TabsList className={`grid w-full grid-cols-${showCalendar ? '4' : '3'}`}>
               <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1 hidden sm:inline-flex" />About</TabsTrigger>
               {showCalendar && <TabsTrigger value="availability"><CalendarIcon className="w-4 h-4 mr-1 hidden sm:inline-flex" />Calendar</TabsTrigger>}
