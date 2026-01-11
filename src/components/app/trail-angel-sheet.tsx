@@ -190,11 +190,12 @@ export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheet
                 {services.map((service) => (
                   <div key={service.id} className="flex items-center gap-3">
                     <service.icon className="w-5 h-5 text-primary" />
-                    <span className="text-sm">{service.name}</span>
+                    <span className="text-sm text-muted-foreground">{service.name}</span>
                   </div>
                 ))}
               </div>
-
+              
+              <h4 className="font-semibold mt-6 mb-2">Location</h4>
               <ProfileMap position={angel.position} />
 
               <SendMessageDialog angel={angel} open={dialogOpen} onOpenChange={setDialogOpen}>
