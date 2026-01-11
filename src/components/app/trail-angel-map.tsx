@@ -60,7 +60,7 @@ const Polyline = (props: google.maps.PolylineOptions) => {
 const MapControls = () => {
   const map = useMap();
 
-  const centerOnUser = useCallback(() => {
+  const centerOnUser = () => {
     if (map && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -74,7 +74,7 @@ const MapControls = () => {
         }
       );
     }
-  }, [map]);
+  };
 
   return (
      <div className="absolute bottom-4 right-4 z-10">
