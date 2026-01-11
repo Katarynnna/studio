@@ -41,6 +41,7 @@ import {
   Terminal,
 } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from '../ui/alert';
+import { COUNTRIES } from '@/app/profile/edit/page';
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -99,7 +100,9 @@ type UserProfileSheetProps = {
 export default function UserProfileSheet({ open, onOpenChange }: UserProfileSheetProps) {
   const userProfile = useUserProfileStore((state) => state);
   const userServices = ALL_SERVICES.filter(s => userProfile.services.includes(s.id));
-  const userLocation = [userProfile.address.city, userProfile.address.state].filter(Boolean).join(', ');
+  const countryName = COUNTRIES.find(c => c.value === userProfile.address.country)?.label || userProfile.address.country;
+  const userLocation = [userProfile.address.city, userProfile.address.state, countryName].filter(Boolean).join(', ');
+
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -123,15 +126,7 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
             </div>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
                 <div className="flex-1 space-y-2">
-                   <div className="flex flex-wrap gap-2 pt-1">
-                    {userProfile.badges.map((badge) => (
-                      <Badge key={badge} variant="secondary">
-                        {badge}
-                      </Badge>
-                    ))}
-                  </div>
-                    {userProfile.hiking && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground">
+                   <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground">
                       <div className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           <span>Last active: {userProfile.lastActivity}</span>
@@ -141,6 +136,14 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
                           <span>{userProfile.responseRate}% response rate</span>
                       </div>
                   </div>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {userProfile.badges.map((badge) => (
+                      <Badge key={badge} variant="secondary">
+                        {badge}
+                      </Badge>
+                    ))}
+                  </div>
+                  {userProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 </div>
               <div className="flex gap-2 self-start sm:self-center">
                 {userProfile.socials?.twitter && (
@@ -173,12 +176,12 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
             
             {userServices.length > 0 && (
               <>
-                 <h4 className="font-semibold mb-2">Services I Can Offer</h4>
+                <h4 className="font-semibold mb-4">Services I Can Offer</h4>
                 <div className="flex flex-wrap gap-x-6 gap-y-4">
                   {userServices.map((service) => (
                     <div key={service.id} className="flex items-center gap-3">
                       <service.icon className="w-5 h-5 text-primary" />
-                      <span className="text-sm">{service.name} {service.id === 'beds' && userProfile.bedCount > 0 && `(${userProfile.bedCount})`}</span>
+                      <span className="text-sm text-foreground">{service.name} {service.id === 'beds' && userProfile.bedCount > 0 && `(${userProfile.bedCount})`}</span>
                     </div>
                   ))}
                 </div>
@@ -188,6 +191,7 @@ export default function UserProfileSheet({ open, onOpenChange }: UserProfileShee
             {(userProfile.address.city || userProfile.address.state) && (
               <>
                 <h4 className="font-semibold mt-6 mb-2">My Location</h4>
+                <p className="text-sm text-muted-foreground">{userLocation}</p>
                 <ProfileMap position={userProfile.position} />
               </>
             )}

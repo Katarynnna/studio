@@ -2,15 +2,14 @@
 
 "use client";
 
-import { useState, useCallback, FormEvent } from "react";
+import { useState, useCallback } from "react";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetDescription,
 } from "@/components/ui/sheet";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { ArrowLeft, Send } from "lucide-react";
 import type { DirectMessage, TrailAngel } from "@/lib/types";
 import { format, formatDistanceToNow } from "date-fns";
@@ -21,20 +20,20 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import TrailAngelSheet from "./trail-angel-sheet";
 import { Textarea } from "../ui/textarea";
+import { useInbox } from "@/context/inbox-provider";
 
 type InboxSheetProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  messages: DirectMessage[];
-  addMessageToInbox: (angel: TrailAngel, message: string) => void;
 };
 
 
 // Main component for the Inbox
-export default function InboxSheet({ open, onOpenChange, messages, addMessageToInbox }: InboxSheetProps) {
+export default function InboxSheet({ open, onOpenChange }: InboxSheetProps) {
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
   const [reply, setReply] = useState('');
   const userProfile = useUserProfileStore();
+  const { messages, addMessageToInbox } = useInbox();
 
   // Group messages by conversation partner
   const conversations = messages.reduce((acc, msg) => {
@@ -195,7 +194,7 @@ export default function InboxSheet({ open, onOpenChange, messages, addMessageToI
         </div>
       </SheetContent>
     </Sheet>
-    {partner && <TrailAngelSheet angel={isAngelSheetOpen ? partner : null} onOpenChange={onAngelSheetChange} addMessageToInbox={addMessageToInbox} />}
+    {partner && <TrailAngelSheet angel={isAngelSheetOpen ? partner : null} onOpenChange={onAngelSheetChange} />}
     </>
   );
 }

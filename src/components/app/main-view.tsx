@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useMemo, useEffect, useContext } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { TrailAngel } from "@/lib/types";
 import { TRAIL_ANGELS, ALL_SERVICES } from "@/lib/data";
 import Filters, { type FilterState } from "./filters";
@@ -12,7 +12,7 @@ import TrailAngelSheet from "./trail-angel-sheet";
 import TrailAngelList from "./trail-angel-list";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { Filter, List, Map as MapIcon, X } from "lucide-react";
+import { Filter, List, Map as MapIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -30,10 +30,9 @@ const initialFilters: FilterState = {
 
 type MainViewProps = {
   setProfileOpen?: (open: boolean) => void;
-  addMessageToInbox?: (angel: TrailAngel, message: string) => void;
 };
 
-export default function MainView({ setProfileOpen, addMessageToInbox }: MainViewProps) {
+export default function MainView({ setProfileOpen }: MainViewProps) {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedAngel, setSelectedAngel] = useState<TrailAngel | null>(null);
   const [isClient, setIsClient] = useState(false);
@@ -136,7 +135,7 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
             )}
         </div>
         
-        <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
+        <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
       </div>
     );
   }
@@ -162,7 +161,7 @@ export default function MainView({ setProfileOpen, addMessageToInbox }: MainView
           <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
         </div>
       </div>
-      <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} addMessageToInbox={addMessageToInbox} />
+      <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
     </div>
   );
 }

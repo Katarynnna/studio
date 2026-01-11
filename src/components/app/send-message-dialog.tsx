@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import type { TrailAngel } from "@/lib/types";
 import { submitDirectMessage } from "@/lib/actions";
+import { useInbox } from "@/context/inbox-provider";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -32,11 +33,11 @@ type SendMessageDialogProps = {
   children: React.ReactNode;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  addMessageToInbox?: (angel: TrailAngel, message: string) => void;
 };
 
-export default function SendMessageDialog({ angel, children, open, onOpenChange, addMessageToInbox }: SendMessageDialogProps) {
+export default function SendMessageDialog({ angel, children, open, onOpenChange }: SendMessageDialogProps) {
   const { toast } = useToast();
+  const { addMessageToInbox } = useInbox();
   const [textareaValue, setTextareaValue] = useState('');
   
   const initialState = { success: false, message: "", error: null, sentMessage: null };

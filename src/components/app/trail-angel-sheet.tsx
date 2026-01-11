@@ -49,7 +49,6 @@ import StaticCalendar from "./static-calendar";
 type TrailAngelSheetProps = {
   angel: TrailAngel | null;
   onOpenChange: (open: boolean) => void;
-  addMessageToInbox?: (angel: TrailAngel, message: string) => void;
 };
 
 function StarRating({ rating }: { rating: number }) {
@@ -102,7 +101,7 @@ const ProfileMap = ({ position }: { position: { lat: number; lng: number }}) => 
 }
 
 
-export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox }: TrailAngelSheetProps) {
+export default function TrailAngelSheet({ angel, onOpenChange }: TrailAngelSheetProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   if (!angel) return null;
 
@@ -197,9 +196,10 @@ export default function TrailAngelSheet({ angel, onOpenChange, addMessageToInbox
               </div>
 
               <h4 className="font-semibold mt-6 mb-2">Location</h4>
+              <p className="text-sm text-muted-foreground">{angel.location}</p>
               <ProfileMap position={angel.position} />
 
-              <SendMessageDialog angel={angel} open={dialogOpen} onOpenChange={setDialogOpen} addMessageToInbox={addMessageToInbox}>
+              <SendMessageDialog angel={angel} open={dialogOpen} onOpenChange={setDialogOpen}>
                   <Button className="w-full mt-6">
                       Message
                   </Button>
