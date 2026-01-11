@@ -167,6 +167,18 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     <SheetDescription>{displayProfile.location}</SheetDescription>
                 </div>
             </div>
+            
+             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground pt-2">
+                {displayProfile.lastActivity && <div className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>Last active: {displayProfile.lastActivity}</span>
+                </div>}
+                {displayProfile.responseRate && <div className="flex items-center gap-1">
+                    <MessageCircle className="w-3 h-3" />
+                    <span>{displayProfile.responseRate}% response rate</span>
+                </div>}
+            </div>
+
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
                 <div className="flex-1 space-y-2">
                     <div className="flex flex-wrap gap-2 pt-1">
@@ -194,16 +206,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     </Link>
                     )}
                 </div>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground pt-2">
-                {displayProfile.lastActivity && <div className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    <span>Last active: {displayProfile.lastActivity}</span>
-                </div>}
-                {displayProfile.responseRate && <div className="flex items-center gap-1">
-                    <MessageCircle className="w-3 h-3" />
-                    <span>{displayProfile.responseRate}% response rate</span>
-                </div>}
             </div>
           </SheetHeader>
           
@@ -314,5 +316,3 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
     </Sheet>
   );
 }
-
-    
