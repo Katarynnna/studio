@@ -1,4 +1,5 @@
 
+
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -45,7 +46,7 @@ type UserProfileState = {
     email: string;
   };
   emergencyContacts: { name: string; relationship: string; phone: string }[];
-  setProfile: (data: Partial<Omit<UserProfileState, 'address' | 'position'>>) => void;
+  setProfile: (data: Partial<Omit<UserProfileState, 'address' | 'position' | 'contact' | 'socials'>>) => void;
   setService: (service: string, checked: boolean) => void;
   setBedCount: (count: number) => void;
   setAddress: (address: Partial<UserProfileState['address']>) => void;
@@ -54,10 +55,26 @@ type UserProfileState = {
   setPosition: (position: { lat: number; lng: number }) => void;
 };
 
+// Function to geocode address (placeholder)
+async function geocodeAddress(address: Partial<UserProfileState['address']>) {
+    // In a real app, you would use a geocoding service API
+    // For this example, we'll return a mock position based on a known city.
+    console.log("Geocoding:", address);
+    if (address.city?.toLowerCase() === 'wrightwood' && address.state?.toLowerCase() === 'ca') {
+        return { lat: 34.363, lng: -117.633 };
+    }
+    if (address.city?.toLowerCase() === 'san diego' && address.state?.toLowerCase() === 'ca') {
+        return { lat: 32.7157, lng: -117.1611 };
+    }
+    // Return a default or existing position if geocoding fails
+    return useUserProfileStore.getState().position;
+}
+
+
 const useUserProfileStore = create(
   persist<UserProfileState>(
     (set, get) => ({
-      trailName: '',
+      trailName: 'Wired',
       description: "PCT Class of '24",
       avatar: "https://picsum.photos/seed/123/200/200",
       about: "Just a hiker trying to make it from Mexico to Canada. I love meeting new people and sharing trail stories. Always on the lookout for good coffee and a place to charge my power bank.",
@@ -70,7 +87,7 @@ const useUserProfileStore = create(
           { id: 'r-1-1', author: 'Bighorn Betty', rating: 5, comment: 'Wired was a respectful and tidy guest. A joy to host!', date: '2023-05-10' },
           { id: 'r-1-2', author: 'Cascade Dave', rating: 5, comment: 'Great conversation. Left the place cleaner than they found it.', date: '2023-08-02' },
       ],
-      socials: {},
+      socials: { instagram: 'wired_hiker', twitter: 'wired_hiker' },
       position: { lat: 34.2, lng: -117.8 },
       status: 'hiking',
       services: [],
@@ -85,10 +102,10 @@ const useUserProfileStore = create(
         isPrivate: false,
       },
       contact: {
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
+        firstName: 'Alex',
+        lastName: 'Wired',
+        phone: '123-456-7890',
+        email: 'alex.wired@example.com',
       },
       emergencyContacts: [],
     
@@ -104,15 +121,12 @@ const useUserProfileStore = create(
     
       setBedCount: (count) => set({ bedCount: count }),
     
-      setAddress: (address) => {
-        set(state => ({ 
-          address: { ...state.address, ...address }
-        }));
-        // When address changes, you might want to geocode it to update position.
-        // This is a placeholder for that logic.
-        // For now, let's set a mock position update.
-        if (address.city?.toLowerCase() === 'wrightwood') {
-            get().setPosition({ lat: 34.363, lng: -117.633 });
+      setAddress: async (address) => {
+        const fullAddress = { ...get().address, ...address };
+        set({ address: fullAddress });
+        if (fullAddress.city && fullAddress.state && fullAddress.country) {
+            const newPosition = await geocodeAddress(fullAddress);
+            set({ position: newPosition });
         }
       },
       

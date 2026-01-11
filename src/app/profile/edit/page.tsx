@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import {
@@ -21,11 +22,12 @@ import {
   Linkedin,
   Twitter,
   Instagram,
+  Link as LinkIcon,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -104,12 +106,12 @@ export default function EditProfilePage() {
   const router = useRouter();
   const { 
     trailName, status, badges, about, services, bedCount, socials, address: userAddress, contact,
-    setProfile, setService, setBedCount, setAddress, setContact, setSocials, setPosition 
+    setProfile, setService, setBedCount, setAddress, setContact, setSocials, setPosition, position
   } = useUserProfileStore();
     
   const [hasBeds, setHasBeds] = useState(services.includes('beds'));
   const { toast } = useToast();
-    
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -130,6 +132,12 @@ export default function EditProfilePage() {
       email: contact.email || '',
     },
   });
+  
+  useEffect(() => {
+    if (services.includes('beds') && bedCount === 0) {
+      setBedCount(1);
+    }
+  }, [services, bedCount, setBedCount]);
 
   function onSubmit(data: ProfileFormValues) {
     const { instagram, twitter, facebook, tiktok, youtube, linkedin, website, firstName, lastName, phone, email, ...profileData } = data;
@@ -143,7 +151,7 @@ export default function EditProfilePage() {
       title: "Profile Saved!",
       description: "Your changes have been saved successfully.",
     });
-    router.back();
+    router.push('/');
   }
 
   const serviceIcons = {
@@ -162,6 +170,8 @@ export default function EditProfilePage() {
   const primaryServices = ['beds', 'couch-floor', 'camping'];
   const primaryServiceObjects = ALL_SERVICES.filter(s => primaryServices.includes(s.id));
   const otherServiceObjects = ALL_SERVICES.filter(s => !primaryServices.includes(s.id));
+  
+  const angelsForMap = [{ ...useUserProfileStore.getState(), id: 'user-location', name: 'Your Location' }];
     
   return (
     <AppLayout>
@@ -170,7 +180,7 @@ export default function EditProfilePage() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       <div className="container mx-auto max-w-5xl py-8 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-            <button type="button" onClick={() => router.back()} className='flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4'>
+            <button type="button" onClick={() => router.push('/')} className='flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4'>
                 <ArrowLeft className="w-4 h-4" />
                 Back to profile
             </button>
@@ -296,27 +306,29 @@ export default function EditProfilePage() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {primaryServiceObjects.map(service => {
                        const Icon = serviceIcons[service.id as keyof typeof serviceIcons] || Car;
+                       const isChecked = services.includes(service.id);
                        if (service.id === 'beds') {
                            return (
                              <div key={service.id} className="flex items-center justify-between p-3 border rounded-lg col-span-2 sm:col-span-1">
                                  <div className='flex items-center gap-2'>
                                     <Checkbox id="beds-checkbox" checked={hasBeds} onCheckedChange={(checked) => {
-                                        setHasBeds(Boolean(checked));
-                                        setService('beds', Boolean(checked));
+                                        const isChecked = Boolean(checked);
+                                        setHasBeds(isChecked);
+                                        setService('beds', isChecked);
                                     }} />
                                     <Label htmlFor="beds-checkbox" className="font-normal flex items-center gap-1.5">
                                       <Bed className="w-5 h-5 text-primary" /> Beds
                                     </Label>
                                  </div>
                                  {hasBeds && (
-                                   <Input id="beds-count" type="number" min="1" max="99" placeholder="1" className="w-14 h-8 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" defaultValue={bedCount > 0 ? bedCount : ''} onChange={e => setBedCount(parseInt(e.target.value) || 0)} />
+                                   <Input id="beds-count" type="number" min="1" max="99" placeholder="1" className="w-14 h-8 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={bedCount > 0 ? bedCount : ''} onChange={e => setBedCount(parseInt(e.target.value) || 1)} />
                                  )}
                              </div>
                            )
                        }
                        return (
                         <div key={service.id} className="flex items-center gap-2 p-3 border rounded-lg">
-                            <Checkbox id={service.id} checked={services.includes(service.id)} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
+                            <Checkbox id={service.id} checked={isChecked} onCheckedChange={(checked) => setService(service.id, Boolean(checked))} />
                             <Label htmlFor={service.id} className="font-normal flex items-center gap-1.5">
                               <Icon className="w-5 h-5 text-primary"/> {service.name}
                             </Label>
@@ -342,7 +354,7 @@ export default function EditProfilePage() {
                     <h3 className="font-semibold mb-2">Location</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="h-80 w-full rounded-lg overflow-hidden border">
-                            <TrailAngelMap angels={TRAIL_ANGELS.slice(0,1)} onSelectAngel={() => {}} />
+                            <TrailAngelMap angels={angelsForMap} onSelectAngel={() => {}} />
                         </div>
                         <div className="space-y-4">
                             <Input placeholder="Address Line 1" value={userAddress.line1} onChange={e => setAddress({ ...userAddress, line1: e.target.value })} />
@@ -448,8 +460,8 @@ export default function EditProfilePage() {
                             )} />
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 pt-1">
-                        <Mail className="w-5 h-5 text-muted-foreground" />
+                     <div className="flex items-center gap-2 pt-1">
+                        <LinkIcon className="w-5 h-5 text-muted-foreground" />
                         <FormField control={form.control} name="website" render={({ field }) => (
                            <Input type="url" placeholder="Website or blog URL" {...field} />
                         )} />
@@ -460,7 +472,7 @@ export default function EditProfilePage() {
         </div>
 
         <div className="mt-8 flex justify-end gap-2">
-          <Button variant="ghost" type="button" onClick={() => router.back()}>Cancel</Button>
+          <Button variant="ghost" type="button" onClick={() => router.push('/')}>Cancel</Button>
           <Button type="submit">Save Changes</Button>
         </div>
       </div>
