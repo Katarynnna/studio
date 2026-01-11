@@ -12,7 +12,7 @@ import ProfileSheet from "./profile-sheet";
 import TrailAngelList from "./trail-angel-list";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { Filter, List, Map as MapIcon, X } from "lucide-react";
+import { Filter, List, Map as MapIcon, Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -109,16 +109,16 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
         <div className="absolute top-4 left-4 z-10">
            <Dialog open={filterDialogOpen} onOpenChange={setFilterDialogOpen}>
             <DialogTrigger asChild>
-              <Button size="icon" variant="outline">
+              <Button size="icon" variant="default" className="rounded-full shadow-lg">
                 <Filter />
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="bg-background">
               <DialogHeader>
                 <DialogTitle className="flex items-center justify-between">
                     <span className="flex items-center gap-2"><Filter /> Filter</span>
                     <Button variant="ghost" size="icon" onClick={clearFilters} className="h-8 w-8">
-                        <X className="w-4 h-4" />
+                        <Trash2 className="w-4 h-4" />
                         <span className="sr-only">Clear filters</span>
                     </Button>
                 </DialogTitle>

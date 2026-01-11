@@ -41,7 +41,6 @@ import {
   Linkedin,
   Youtube,
   Link as LinkIcon,
-  Plus,
 } from 'lucide-react';
 import SendMessageDialog from './send-message-dialog';
 import { useState } from 'react';
@@ -171,11 +170,10 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         </Badge>
                     ))}
                 </div>
-                <Separator />
                  {hasSocials && (
-                    <div className="flex items-center gap-1">
-                        {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer"><Instagram /></Link></Button>}
-                        {displayProfile.socials.twitter && <Button variant="social" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer"><Twitter /></Link></Button>}
+                    <div className="flex items-center gap-1 pt-2">
+                        {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer"><Instagram/></Link></Button>}
+                        {displayProfile.socials.twitter && <Button variant="social" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer"><Twitter/></Link></Button>}
                         {displayProfile.socials.facebook && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer"><FacebookIcon /></Link></Button>}
                         {displayProfile.socials.tiktok && <Button variant="social" size="icon" asChild><Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer"><TikTokIcon /></Link></Button>}
                         {displayProfile.socials.youtube && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer"><Youtube /></Link></Button>}
@@ -201,10 +199,10 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               
               {hasServices && (
                 <>
-                  <div className="flex items-center gap-2 my-4">
-                    <h4 className="font-semibold">Services Offered</h4>
-                    {displayProfile.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
-                  </div>
+                  <h4 className="font-semibold my-4">
+                    Services Offered
+                    {displayProfile.donationExpected && <Badge variant="destructive" className="ml-2">Donation Expected</Badge>}
+                  </h4>
                   <div className="flex flex-wrap gap-x-6 gap-y-4">
                     {profileServices.map((service) => (
                       <div key={service.id} className="flex items-center gap-1.5">
@@ -283,7 +281,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                {!isCurrentUser && (
                 <div className="pt-4">
                   <Button variant="outline" className="w-full">
-                    <Plus className="w-4 h-4 mr-2" />
                     Add a Review
                   </Button>
                 </div>
