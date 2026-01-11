@@ -1,3 +1,4 @@
+
 "use client";
 
 import { APIProvider, Map, AdvancedMarker, useMap } from "@vis.gl/react-google-maps";
@@ -77,7 +78,7 @@ const MapControls = () => {
 
   return (
      <div className="absolute bottom-4 right-4 z-10">
-      <Button size="icon" onClick={centerOnUser} title="Center on my location">
+      <Button type="button" size="icon" onClick={centerOnUser} title="Center on my location">
         <LocateFixed />
       </Button>
     </div>
