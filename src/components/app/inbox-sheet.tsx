@@ -119,11 +119,9 @@ export default function InboxSheet({ open, onOpenChange }: InboxSheetProps) {
                         ) : 'Inbox'}
                      </SheetTitle>
                 </div>
-                 <SheetClose asChild>
-                    <Button variant="ghost" size="icon" className="shrink-0">
-                      <X className="h-5 w-5" />
-                      <span className="sr-only">Close</span>
-                    </Button>
+                 <SheetClose>
+                    <X className="h-5 w-5" />
+                    <span className="sr-only">Close</span>
                   </SheetClose>
             </div>
         </SheetHeader>

@@ -53,11 +53,9 @@ export default function TrailRadioSheet({ open, onOpenChange }: TrailRadioSheetP
                                 <Radio className="w-8 h-8" />
                                 Trail Radio
                             </span>
-                             <SheetClose asChild>
-                                <Button variant="ghost" size="icon" className="shrink-0">
+                             <SheetClose>
                                   <X className="h-5 w-5" />
                                   <span className="sr-only">Close</span>
-                                </Button>
                               </SheetClose>
                         </SheetTitle>
                     </SheetHeader>

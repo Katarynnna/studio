@@ -158,11 +158,9 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     <SheetDescription>{displayProfile.location}</SheetDescription>
                 </div>
               </div>
-              <SheetClose asChild>
-                <Button variant="ghost" size="icon" className="shrink-0">
-                  <X className="h-5 w-5" />
-                  <span className="sr-only">Close</span>
-                </Button>
+              <SheetClose>
+                <X className="h-5 w-5" />
+                <span className="sr-only">Close</span>
               </SheetClose>
             </div>
             
