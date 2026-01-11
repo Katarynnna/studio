@@ -41,6 +41,7 @@ import {
   Linkedin,
   Youtube,
   Link as LinkIcon,
+  Plus,
 } from 'lucide-react';
 import SendMessageDialog from './send-message-dialog';
 import { useState } from 'react';
@@ -127,13 +128,13 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
   const profileServices = ALL_SERVICES.filter((s) => displayProfile.services.includes(s.id));
   const hasServices = profileServices.length > 0;
   const hasSocials = Object.values(displayProfile.socials).some(s => !!s);
-  const showCalendar = hasServices && displayProfile.availability.length > 0;
+  const showCalendar = false; // Temporarily disabled
 
   return (
     <Sheet open={!!profile} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg flex flex-col overflow-y-auto p-0">
+      <SheetContent className="w-full sm:max-w-lg flex flex-col p-0">
         <div className="flex-1 overflow-y-auto p-6">
-        <SheetHeader className="text-left">
+        <SheetHeader className="text-left space-y-4">
             <div className="flex items-start gap-4">
                 <Avatar className="w-20 h-20">
                     <AvatarImage src={displayProfile.avatar} alt={displayProfile.name} />
@@ -148,8 +149,8 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                 </div>
             </div>
             
-            <div className="flex flex-col items-start gap-y-2 text-xs text-muted-foreground pt-4">
-                 {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
+            <div className="flex flex-col items-start gap-y-2 text-xs text-muted-foreground">
+                {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
                 <div className="flex items-center gap-4">
                     {displayProfile.lastActivity && <div className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />
@@ -162,7 +163,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                 </div>
             </div>
 
-            <div className="pt-4 space-y-2">
+            <div className="space-y-4">
                 <div className="flex flex-wrap gap-2 pt-1">
                     {displayProfile.badges.map((badge) => (
                         <Badge key={badge} variant="secondary">
@@ -170,8 +171,9 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         </Badge>
                     ))}
                 </div>
+                <Separator />
                  {hasSocials && (
-                    <div className="flex items-center gap-1 pt-2">
+                    <div className="flex items-center gap-1">
                         {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer"><Instagram /></Link></Button>}
                         {displayProfile.socials.twitter && <Button variant="social" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer"><Twitter /></Link></Button>}
                         {displayProfile.socials.facebook && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer"><FacebookIcon /></Link></Button>}
@@ -278,6 +280,14 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                   </div>
                 </div>
               ))}
+               {!isCurrentUser && (
+                <div className="pt-4">
+                  <Button variant="outline" className="w-full">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add a Review
+                  </Button>
+                </div>
+              )}
             </TabsContent>
           </Tabs>
            <div className="mt-6">

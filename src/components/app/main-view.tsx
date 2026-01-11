@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -108,7 +109,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
         <div className="absolute top-4 left-4 z-10">
            <Dialog open={filterDialogOpen} onOpenChange={setFilterDialogOpen}>
             <DialogTrigger asChild>
-              <Button size="icon" variant="secondary">
+              <Button size="icon" variant="outline">
                 <Filter />
               </Button>
             </DialogTrigger>

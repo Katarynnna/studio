@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Filter, X } from "lucide-react";
+import { Filter, Trash2 } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ReactNode, Dispatch, SetStateAction } from "react";
 import React from 'react';
@@ -94,7 +94,7 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
         </CardTitle>
         <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" onClick={clearFilters} className="h-8 w-8">
-                <X className="w-4 h-4" />
+                <Trash2 className="w-4 h-4" />
                 <span className="sr-only">Clear filters</span>
             </Button>
             {viewToggle}
