@@ -109,9 +109,9 @@ export default function InboxSheet({ open, onOpenChange }: InboxSheetProps) {
             <div className="flex flex-row items-center justify-between">
                 <div className="flex items-center gap-2">
                     {selectedConversationId && (
-                        <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
+                        <button onClick={handleBack} className="shrink-0 -ml-2 p-2">
                             <ArrowLeft />
-                        </Button>
+                        </button>
                     )}
                      <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                         {selectedConversationId ? (
