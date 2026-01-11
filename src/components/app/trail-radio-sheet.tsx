@@ -7,12 +7,13 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetClose
 } from "@/components/ui/sheet";
 import TrailRadio from "./trail-radio";
 import { useState } from "react";
 import ProfileSheet from "./profile-sheet";
 import { TRAIL_ANGELS } from "@/lib/data";
-import { Radio } from "lucide-react";
+import { Radio, X } from "lucide-react";
 import { Separator } from "../ui/separator";
 
 type TrailRadioSheetProps = {
@@ -51,6 +52,12 @@ export default function TrailRadioSheet({ open, onOpenChange }: TrailRadioSheetP
                             Trail Radio
                         </SheetTitle>
                     </SheetHeader>
+                     <div className="absolute right-6 top-6 rounded-sm opacity-70 transition-opacity hover:opacity-100 z-50">
+                        <SheetClose>
+                            <X className="h-5 w-5" />
+                            <span className="sr-only">Close</span>
+                        </SheetClose>
+                    </div>
                     <div className="-mx-6"><Separator className="my-6"/></div>
                     <TrailRadio onSelectAngel={handleAuthorClick} isSheet={true} />
                 </SheetContent>

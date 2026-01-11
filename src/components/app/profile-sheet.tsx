@@ -12,6 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
+  SheetClose,
 } from '@/components/ui/sheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -41,6 +42,7 @@ import {
   Linkedin,
   Youtube,
   Link as LinkIcon,
+  X,
 } from 'lucide-react';
 import SendMessageDialog from './send-message-dialog';
 import { useState } from 'react';
@@ -49,6 +51,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { COUNTRIES } from '@/app/profile/edit/page';
 import { useUserProfileStore } from '@/lib/user-profile-store';
 import ProfileMap from './profile-map';
+import { cn } from '@/lib/utils';
 
 
 type ProfileData = Partial<TrailAngel> & {
@@ -132,6 +135,12 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
   return (
     <Sheet open={!!profile} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-lg flex flex-col p-0">
+         <div className="absolute right-6 top-6 rounded-sm opacity-70 transition-opacity hover:opacity-100 z-50">
+            <SheetClose>
+                <X className="h-5 w-5" />
+                <span className="sr-only">Close</span>
+            </SheetClose>
+        </div>
         <div className="flex-1 overflow-y-auto p-6">
         <SheetHeader className="text-left space-y-4">
             <div className="flex items-start gap-4">
@@ -141,8 +150,8 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         <AvatarFallback>{displayProfile.name ? displayProfile.name.charAt(0) : 'P'}</AvatarFallback>
                     </Avatar>
                     {displayProfile.verified && (
-                        <div className="absolute -bottom-1 -right-1 bg-green-800 rounded-full p-0.5 border-2 border-background">
-                            <CheckCircle2 className="w-5 h-5 text-green-200" title="Verified Angel" />
+                        <div className="absolute -bottom-1 -right-1 bg-green-900 rounded-full p-0.5">
+                            <CheckCircle2 className="w-5 h-5 text-green-400" title="Verified Angel" />
                         </div>
                     )}
                 </div>
@@ -155,40 +164,41 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
             </div>
             
              <div className="flex flex-col items-start gap-y-2 text-xs text-muted-foreground">
-                 <div className="flex flex-wrap gap-2 pt-1">
+                {displayProfile.lastActivity && <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      <span>Last active: {displayProfile.lastActivity}</span>
+                  </div>
+                  {displayProfile.responseRate && <div className="flex items-center gap-1">
+                      <MessageCircle className="w-3 h-3" />
+                      <span>{displayProfile.responseRate}% response rate</span>
+                  </div>}
+                </div>}
+
+                {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
+
+                {displayProfile.badges.length > 0 && <div className="flex flex-wrap gap-1 pt-1">
                     {displayProfile.badges.map((badge) => (
                         <Badge key={badge} variant="secondary">
                             {badge}
                         </Badge>
                     ))}
-                </div>
-                {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
-
-                <div className="flex items-center gap-4">
-                    {displayProfile.lastActivity && <div className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        <span>Last active: {displayProfile.lastActivity}</span>
-                    </div>}
-                    {displayProfile.responseRate && <div className="flex items-center gap-1">
-                        <MessageCircle className="w-3 h-3" />
-                        <span>{displayProfile.responseRate}% response rate</span>
-                    </div>}
-                </div>
+                </div>}
             </div>
 
-            <div className="space-y-4">
-                 {hasSocials && (
-                    <div className="flex items-center gap-1 pt-2">
-                        {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer"><Instagram/></Link></Button>}
-                        {displayProfile.socials.twitter && <Button variant="social" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer"><Twitter/></Link></Button>}
-                        {displayProfile.socials.facebook && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer"><FacebookIcon /></Link></Button>}
-                        {displayProfile.socials.tiktok && <Button variant="social" size="icon" asChild><Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer"><TikTokIcon /></Link></Button>}
-                        {displayProfile.socials.youtube && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer"><Youtube /></Link></Button>}
-                        {displayProfile.socials.linkedin && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin /></Link></Button>}
-                        {displayProfile.socials.website && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer"><LinkIcon /></Link></Button>}
-                    </div>
-                )}
-            </div>
+            {hasSocials && (
+              <div className="space-y-4">
+                 <div className="flex items-center gap-1 pt-2">
+                    {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer"><Instagram/></Link></Button>}
+                    {displayProfile.socials.twitter && <Button variant="social" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer"><Twitter/></Link></Button>}
+                    {displayProfile.socials.facebook && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer"><FacebookIcon /></Link></Button>}
+                    {displayProfile.socials.tiktok && <Button variant="social" size="icon" asChild><Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer"><TikTokIcon /></Link></Button>}
+                    {displayProfile.socials.youtube && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer"><Youtube /></Link></Button>}
+                    {displayProfile.socials.linkedin && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin /></Link></Button>}
+                    {displayProfile.socials.website && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer"><LinkIcon /></Link></Button>}
+                </div>
+              </div>
+            )}
           </SheetHeader>
           
           <Separator className="my-6" />
@@ -227,7 +237,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     <ProfileMap position={displayProfile.position} />
                   </>
               )}
-              <div className="mt-6">
+               <div className="mt-6">
                 {isCurrentUser ? (
                     <Button variant="outline" className="w-full" asChild>
                     <Link href="/profile/edit">Edit Profile</Link>

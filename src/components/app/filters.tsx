@@ -102,6 +102,13 @@ export default function Filters({ services, filters, setFilters, viewToggle, has
   if (isMobile) {
       return content;
   }
+  
+  const clearFilterButton = (
+    <Button variant="ghost" size="icon" onClick={clearFilters} disabled={!hasActiveFilters} className="h-9 w-9 rounded-full bg-green-100 text-green-700 hover:bg-green-200 hover:text-green-800 disabled:bg-muted disabled:text-muted-foreground">
+        <FunnelX className="w-5 h-5" />
+        <span className="sr-only">Clear filters</span>
+    </Button>
+  );
 
   return (
     <Card>
@@ -114,6 +121,7 @@ export default function Filters({ services, filters, setFilters, viewToggle, has
         </div>
         <div className="flex items-center gap-2">
             {viewToggle}
+            {clearFilterButton}
         </div>
       </CardHeader>
       <CardContent className="relative">

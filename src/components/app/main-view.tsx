@@ -107,6 +107,13 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
   };
 
   const hasActiveFilters = filters.name !== '' || filters.location !== '' || filters.services.length > 0;
+  
+  const clearFilterButton = (
+    <Button variant="ghost" size="icon" onClick={clearFilters} disabled={!hasActiveFilters} className="h-9 w-9 rounded-full bg-green-100 text-green-700 hover:bg-green-200 hover:text-green-800 disabled:bg-muted disabled:text-muted-foreground">
+        <FunnelX className="w-5 h-5" />
+        <span className="sr-only">Clear filters</span>
+    </Button>
+  );
 
   const viewToggle = (
     <div className="flex items-center gap-2">
@@ -118,10 +125,6 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
           <List size={16} />
         </Button>
       </div>
-       <Button variant="ghost" size="icon" onClick={clearFilters} disabled={!hasActiveFilters} className="h-9 w-9 rounded-full bg-green-100 text-green-700 hover:bg-green-200 hover:text-green-800 disabled:bg-muted disabled:text-muted-foreground">
-          <FunnelX className="w-5 h-5" />
-          <span className="sr-only">Clear filters</span>
-      </Button>
     </div>
   );
 
@@ -144,7 +147,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
               <DialogHeader>
                 <DialogTitle className="flex items-center justify-between">
                     <span className="flex items-center gap-2"><Filter /> Filter</span>
-                     <Button variant="ghost" size="icon" onClick={clearFilters} className="h-8 w-8">
+                     <Button variant="ghost" size="icon" onClick={() => { clearFilters(); setFilterDialogOpen(false);}} className="h-8 w-8">
                         <FunnelX className="w-4 h-4 text-green-600" />
                         <span className="sr-only">Clear filters</span>
                     </Button>
@@ -157,10 +160,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
               />
             </DialogContent>
           </Dialog>
-           <Button variant="ghost" size="icon" onClick={clearFilters} disabled={!hasActiveFilters} className="h-9 w-9 rounded-full bg-green-100 text-green-700 hover:bg-green-200 hover:text-green-800 disabled:bg-muted disabled:text-muted-foreground">
-              <FunnelX className="w-5 h-5" />
-              <span className="sr-only">Clear filters</span>
-          </Button>
+           {clearFilterButton}
         </div>
         <div className="absolute top-4 right-4 z-10">
             {viewToggle}
