@@ -147,10 +147,6 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
               <DialogHeader>
                 <DialogTitle className="flex items-center justify-between">
                     <span className="flex items-center gap-2"><Filter /> Filter</span>
-                     <Button variant="ghost" size="icon" onClick={() => { clearFilters(); setFilterDialogOpen(false);}} className="h-8 w-8">
-                        <FunnelX className="w-4 h-4 text-green-600" />
-                        <span className="sr-only">Clear filters</span>
-                    </Button>
                 </DialogTitle>
               </DialogHeader>
               <Filters
