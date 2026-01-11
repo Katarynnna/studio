@@ -93,17 +93,17 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
               <Filter className="w-6 h-6" />
               <span>Filter</span>
             </CardTitle>
-            <Button variant="ghost" size="icon" onClick={clearFilters} className="h-8 w-8">
-                <Trash2 className="w-4 h-4" />
-                <span className="sr-only">Clear filters</span>
-            </Button>
         </div>
         <div className="flex items-center gap-2">
             {viewToggle}
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative">
           {content}
+          <Button variant="ghost" size="icon" onClick={clearFilters} className="absolute bottom-4 right-2 h-8 w-8">
+              <Trash2 className="w-4 h-4 text-green-600" />
+              <span className="sr-only">Clear filters</span>
+          </Button>
       </CardContent>
     </Card>
   );

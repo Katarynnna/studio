@@ -135,21 +135,33 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
         <div className="flex-1 overflow-y-auto p-6">
         <SheetHeader className="text-left space-y-4">
             <div className="flex items-start gap-4">
-                <Avatar className="w-20 h-20">
-                    <AvatarImage src={displayProfile.avatar} alt={displayProfile.name} />
-                    <AvatarFallback>{displayProfile.name ? displayProfile.name.charAt(0) : 'P'}</AvatarFallback>
-                </Avatar>
+                <div className="relative">
+                    <Avatar className="w-20 h-20">
+                        <AvatarImage src={displayProfile.avatar} alt={displayProfile.name} />
+                        <AvatarFallback>{displayProfile.name ? displayProfile.name.charAt(0) : 'P'}</AvatarFallback>
+                    </Avatar>
+                    {displayProfile.verified && (
+                        <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5">
+                            <CheckCircle2 className="w-6 h-6 text-primary" title="Verified Angel" />
+                        </div>
+                    )}
+                </div>
                 <div className="space-y-1.5 flex-1">
                     <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                       {displayProfile.name}
-                      {displayProfile.verified && <CheckCircle2 className="w-6 h-6 text-primary" title="Verified Angel" />}
                     </SheetTitle>
                     <SheetDescription>{displayProfile.location}</SheetDescription>
                 </div>
             </div>
             
             <div className="flex flex-col items-start gap-y-2 text-xs text-muted-foreground">
-                {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
+                 <div className="flex flex-wrap gap-2 pt-1">
+                    {displayProfile.badges.map((badge) => (
+                        <Badge key={badge} variant="secondary">
+                            {badge}
+                        </Badge>
+                    ))}
+                </div>
                 <div className="flex items-center gap-4">
                     {displayProfile.lastActivity && <div className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />
@@ -160,16 +172,10 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         <span>{displayProfile.responseRate}% response rate</span>
                     </div>}
                 </div>
+                {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
             </div>
 
             <div className="space-y-4">
-                <div className="flex flex-wrap gap-2 pt-1">
-                    {displayProfile.badges.map((badge) => (
-                        <Badge key={badge} variant="secondary">
-                            {badge}
-                        </Badge>
-                    ))}
-                </div>
                  {hasSocials && (
                     <div className="flex items-center gap-1 pt-2">
                         {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer"><Instagram/></Link></Button>}
