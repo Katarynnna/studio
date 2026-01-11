@@ -159,7 +159,7 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                 </div>
               </div>
               <SheetClose>
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
                 <span className="sr-only">Close</span>
               </SheetClose>
             </div>
