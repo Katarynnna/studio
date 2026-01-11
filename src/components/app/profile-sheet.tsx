@@ -222,18 +222,22 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
             <TabsContent value="about" className="mt-4">
               <p className="text-muted-foreground mb-4">{displayProfile.about}</p>
               
-              <div className="flex items-center gap-2 my-4">
-                <h4 className="font-semibold">Services Offered</h4>
-                {displayProfile.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
-              </div>
-              <div className="flex flex-wrap gap-x-6 gap-y-4">
-                {profileServices.map((service) => (
-                  <div key={service.id} className="flex items-center gap-3">
-                    <service.icon className="w-5 h-5 text-primary" />
-                    <span className="text-sm text-muted-foreground">{service.name} {isCurrentUser && service.id === 'beds' && displayProfile.bedCount && displayProfile.bedCount > 0 ? `(${displayProfile.bedCount})` : ''}</span>
+              {profileServices.length > 0 && (
+                <>
+                  <div className="flex items-center gap-2 my-4">
+                    <h4 className="font-semibold">Services Offered</h4>
+                    {displayProfile.donationExpected && <Badge variant="destructive">Donation Expected</Badge>}
                   </div>
-                ))}
-              </div>
+                  <div className="flex flex-wrap gap-x-6 gap-y-4">
+                    {profileServices.map((service) => (
+                      <div key={service.id} className="flex items-center gap-3">
+                        <service.icon className="w-5 h-5 text-primary" />
+                        <span className="text-sm text-muted-foreground">{service.name} {isCurrentUser && service.id === 'beds' && displayProfile.bedCount && displayProfile.bedCount > 0 ? `(${displayProfile.bedCount})` : ''}</span>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
               
               {displayProfile.position && (
                   <>
