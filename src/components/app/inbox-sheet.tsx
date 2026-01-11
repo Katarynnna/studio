@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useState, useCallback } from "react";
@@ -11,14 +10,14 @@ import {
 } from "@/components/ui/sheet";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Send } from "lucide-react";
-import type { DirectMessage, TrailAngel } from "@/lib/types";
+import type { DirectMessage } from "@/lib/types";
 import { format, formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { TRAIL_ANGELS } from "@/lib/data";
 import { useUserProfileStore } from '@/lib/user-profile-store';
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import TrailAngelSheet from "./trail-angel-sheet";
+import ProfileSheet from "./profile-sheet";
 import { Textarea } from "../ui/textarea";
 import { useInbox } from "@/context/inbox-provider";
 
@@ -194,7 +193,7 @@ export default function InboxSheet({ open, onOpenChange }: InboxSheetProps) {
         </div>
       </SheetContent>
     </Sheet>
-    {partner && <TrailAngelSheet angel={isAngelSheetOpen ? partner : null} onOpenChange={onAngelSheetChange} />}
+    <ProfileSheet profile={isAngelSheetOpen ? partner : null} onOpenChange={onAngelSheetChange} />
     </>
   );
 }

@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import type { TrailAngel } from "@/lib/types";
@@ -11,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import TrailRadio from "./trail-radio";
 import { useState } from "react";
-import TrailAngelSheet from "./trail-angel-sheet";
+import ProfileSheet from "./profile-sheet";
 import { TRAIL_ANGELS } from "@/lib/data";
 import { Radio } from "lucide-react";
 import { Separator } from "../ui/separator";
@@ -56,7 +55,7 @@ export default function TrailRadioSheet({ open, onOpenChange }: TrailRadioSheetP
                     <TrailRadio onSelectAngel={handleAuthorClick} isSheet={true} />
                 </SheetContent>
             </Sheet>
-            <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
+            <ProfileSheet profile={selectedAngel} onOpenChange={handleSheetOpenChange} />
         </>
     );
 }

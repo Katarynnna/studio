@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -8,7 +7,7 @@ import { TRAIL_ANGELS, ALL_SERVICES } from "@/lib/data";
 import Filters, { type FilterState } from "./filters";
 import TrailRadio from "./trail-radio";
 import TrailAngelMap from "./trail-angel-map";
-import TrailAngelSheet from "./trail-angel-sheet";
+import ProfileSheet from "./profile-sheet";
 import TrailAngelList from "./trail-angel-list";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
@@ -135,7 +134,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
             )}
         </div>
         
-        <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
+        <ProfileSheet profile={selectedAngel} onOpenChange={handleSheetOpenChange} />
       </div>
     );
   }
@@ -161,7 +160,7 @@ export default function MainView({ setProfileOpen }: MainViewProps) {
           <TrailRadio onSelectAngel={handleSelectAngel} setProfileOpen={setProfileOpen} />
         </div>
       </div>
-      <TrailAngelSheet angel={selectedAngel} onOpenChange={handleSheetOpenChange} />
+      <ProfileSheet profile={selectedAngel} onOpenChange={handleSheetOpenChange} />
     </div>
   );
 }

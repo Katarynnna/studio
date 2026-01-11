@@ -1,15 +1,14 @@
 
-
 "use client";
 
 import type { ReactNode } from "react";
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import Header from "./header";
-import UserProfileSheet from "./user-profile-sheet";
+import ProfileSheet from "./profile-sheet";
 import InboxSheet from "./inbox-sheet";
 import TrailRadioSheet from "./trail-radio-sheet";
-import { type TrailAngel } from "@/lib/types";
 import { InboxProvider, useInbox } from "@/context/inbox-provider";
+import { useUserProfileStore } from "@/lib/user-profile-store";
 
 
 type AppLayoutProps = {
@@ -21,7 +20,8 @@ function AppLayoutContent({ children }: AppLayoutProps) {
   const [inboxOpen, setInboxOpen] = useState(false);
   const [trailRadioOpen, setTrailRadioOpen] = useState(false);
   
-  const { messages, hasUnread, addMessageToInbox, markAllAsRead } = useInbox();
+  const { hasUnread, markAllAsRead } = useInbox();
+  const userProfile = useUserProfileStore();
   
   const handleInboxOpenChange = (open: boolean) => {
     setInboxOpen(open);
@@ -47,7 +47,7 @@ function AppLayoutContent({ children }: AppLayoutProps) {
         hasUnreadMessages={hasUnread}
       />
       <main className="flex-1 bg-background">{childrenWithProps}</main>
-      <UserProfileSheet open={profileOpen} onOpenChange={setProfileOpen} />
+      <ProfileSheet profile={profileOpen ? userProfile : null} isCurrentUser={true} onOpenChange={setProfileOpen} />
       <InboxSheet 
         open={inboxOpen} 
         onOpenChange={handleInboxOpenChange} 
