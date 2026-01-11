@@ -294,14 +294,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
             </TabsContent>
 
             <TabsContent value="reviews" className="mt-4 space-y-6">
-               <div className="flex justify-end">
-                {!isCurrentUser && (
-                  <Button variant="outline">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add a Review
-                  </Button>
-                )}
-              </div>
               {displayProfile.reviews.map((review) => (
                 <div key={review.id} className="flex gap-3">
                   <Avatar>
@@ -317,6 +309,14 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                   </div>
                 </div>
               ))}
+               <div className="flex justify-end pt-4">
+                {!isCurrentUser && (
+                  <Button variant="outline">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add a Review
+                  </Button>
+                )}
+              </div>
             </TabsContent>
           </Tabs>
         </div>
