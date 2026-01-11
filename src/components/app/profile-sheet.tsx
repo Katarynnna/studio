@@ -84,10 +84,10 @@ function StarRating({ rating }: { rating: number }) {
 
 // Mockup for icons not in lucide-react
 const FacebookIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
 );
 const TikTokIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M12 12a4 4 0 1 0 4 4V8a8 8 0 1 0-8 8"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12 12a4 4 0 1 0 4 4V8a8 8 0 1 0-8 8"></path></svg>
 );
 
 
@@ -169,14 +169,14 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                         ))}
                     </div>
                      {hasSocials && (
-                        <div className="flex items-center gap-3 pt-2">
-                            {displayProfile.socials.instagram && <Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Instagram className="w-5 h-5" /></Link>}
-                            {displayProfile.socials.twitter && <Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Twitter className="w-5 h-5" /></Link>}
-                            {displayProfile.socials.facebook && <Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><FacebookIcon /></Link>}
-                            {displayProfile.socials.tiktok && <Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><TikTokIcon /></Link>}
-                            {displayProfile.socials.youtube && <Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Youtube className="w-5 h-5" /></Link>}
-                            {displayProfile.socials.linkedin && <Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Linkedin className="w-5 h-5" /></Link>}
-                            {displayProfile.socials.website && <Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><LinkIcon className="w-5 h-5" /></Link>}
+                        <div className="flex items-center gap-1 pt-2">
+                            {displayProfile.socials.instagram && <Button variant="ghost" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Instagram className="w-5 h-5" /></Link></Button>}
+                            {displayProfile.socials.twitter && <Button variant="ghost" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Twitter className="w-5 h-5" /></Link></Button>}
+                            {displayProfile.socials.facebook && <Button variant="ghost" size="icon" asChild><Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><FacebookIcon /></Link></Button>}
+                            {displayProfile.socials.tiktok && <Button variant="ghost" size="icon" asChild><Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><TikTokIcon /></Link></Button>}
+                            {displayProfile.socials.youtube && <Button variant="ghost" size="icon" asChild><Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Youtube className="w-5 h-5" /></Link></Button>}
+                            {displayProfile.socials.linkedin && <Button variant="ghost" size="icon" asChild><Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><Linkedin className="w-5 h-5" /></Link></Button>}
+                            {displayProfile.socials.website && <Button variant="ghost" size="icon" asChild><Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground"><LinkIcon className="w-5 h-5" /></Link></Button>}
                         </div>
                     )}
                 </div>

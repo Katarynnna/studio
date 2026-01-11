@@ -182,7 +182,7 @@ export default function EditProfilePage() {
         <div className="mb-8">
             <button type="button" onClick={() => router.push('/')} className='flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4'>
                 <ArrowLeft className="w-4 h-4" />
-                Back to profile
+                Back to Map
             </button>
           <h1 className="text-4xl font-bold font-headline">Edit Profile</h1>
           <p className="text-muted-foreground">
