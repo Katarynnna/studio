@@ -20,7 +20,7 @@ export default function Header({ setProfileOpen, setInboxOpen, setTrailRadioOpen
     <header className="flex items-center justify-between h-16 px-4 md:px-6 border-b shrink-0 z-20 bg-background">
       <Link href="/" className="flex items-center gap-2">
         <LogoIcon className="w-8 h-8 text-primary" />
-        <h1 className="text-xl md:text-2xl font-bold tracking-tight font-headline">
+        <h1 className="text-xl md:text-2xl font-bold tracking-tight font-headline hidden sm:block">
           Trail Angel Hub
         </h1>
       </Link>

@@ -6,10 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Filter } from "lucide-react";
+import { Filter, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ReactNode, Dispatch, SetStateAction } from "react";
 import React from 'react';
+import { Button } from "../ui/button";
 
 export type FilterState = {
   name: string;
@@ -40,6 +41,10 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
       return { ...prev, services: newServices };
     });
   };
+  
+  const clearFilters = () => {
+    setFilters({ name: '', location: '', services: [] });
+  }
 
   const content = (
       <div className="space-y-4">
@@ -87,7 +92,13 @@ export default function Filters({ services, filters, setFilters, viewToggle }: F
           <Filter className="w-6 h-6" />
           <span>Filter Angels</span>
         </CardTitle>
-        {viewToggle}
+        <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={clearFilters} className="h-8 w-8">
+                <X className="w-4 h-4" />
+                <span className="sr-only">Clear filters</span>
+            </Button>
+            {viewToggle}
+        </div>
       </CardHeader>
       <CardContent>
           {content}

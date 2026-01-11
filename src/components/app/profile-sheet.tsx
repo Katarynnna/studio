@@ -131,14 +131,15 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
 
   return (
     <Sheet open={!!profile} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
+      <SheetContent className="w-full sm:max-w-lg flex flex-col overflow-y-auto p-0">
+        <div className="flex-1 overflow-y-auto p-6 pb-24">
         <SheetHeader>
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
                 <Avatar className="w-20 h-20">
                     <AvatarImage src={displayProfile.avatar} alt={displayProfile.name} />
                     <AvatarFallback>{displayProfile.name ? displayProfile.name.charAt(0) : 'P'}</AvatarFallback>
                 </Avatar>
-                <div className="space-y-1.5 flex-1">
+                <div className="space-y-1.5 flex-1 text-left">
                     <SheetTitle className="text-3xl font-headline flex items-center gap-2">
                       {displayProfile.name}
                       {displayProfile.verified && <CheckCircle2 className="w-6 h-6 text-primary" title="Verified Angel" />}
@@ -147,45 +148,45 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                 </div>
             </div>
             
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-xs text-muted-foreground pt-4">
-                {displayProfile.lastActivity && <div className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    <span>Last active: {displayProfile.lastActivity}</span>
-                </div>}
-                {displayProfile.responseRate && <div className="flex items-center gap-1">
-                    <MessageCircle className="w-3 h-3" />
-                    <span>{displayProfile.responseRate}% response rate</span>
-                </div>}
+            <div className="flex flex-col items-start gap-y-2 text-xs text-muted-foreground pt-4">
+                <div className="flex items-center gap-4">
+                    {displayProfile.lastActivity && <div className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        <span>Last active: {displayProfile.lastActivity}</span>
+                    </div>}
+                    {displayProfile.responseRate && <div className="flex items-center gap-1">
+                        <MessageCircle className="w-3 h-3" />
+                        <span>{displayProfile.responseRate}% response rate</span>
+                    </div>}
+                </div>
+                {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-4">
-                <div className="flex-1 space-y-2">
-                    {displayProfile.status === 'hiking' && <Badge variant="outline" className="border-primary text-primary"><Footprints className="w-3 h-3 mr-1" /> Currently Hiking</Badge>}
-                    <div className="flex flex-wrap gap-2 pt-1">
-                        {displayProfile.badges.map((badge) => (
-                            <Badge key={badge} variant="secondary">
-                                {badge}
-                            </Badge>
-                        ))}
-                    </div>
-                     {hasSocials && (
-                        <div className="flex items-center gap-1 pt-2">
-                            {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer"><Instagram /></Link></Button>}
-                            {displayProfile.socials.twitter && <Button variant="social" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer"><Twitter /></Link></Button>}
-                            {displayProfile.socials.facebook && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer"><FacebookIcon /></Link></Button>}
-                            {displayProfile.socials.tiktok && <Button variant="social" size="icon" asChild><Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer"><TikTokIcon /></Link></Button>}
-                            {displayProfile.socials.youtube && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer"><Youtube /></Link></Button>}
-                            {displayProfile.socials.linkedin && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin /></Link></Button>}
-                            {displayProfile.socials.website && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer"><LinkIcon /></Link></Button>}
-                        </div>
-                    )}
+            <div className="pt-4 space-y-2">
+                <div className="flex flex-wrap gap-2 pt-1">
+                    {displayProfile.badges.map((badge) => (
+                        <Badge key={badge} variant="secondary">
+                            {badge}
+                        </Badge>
+                    ))}
                 </div>
+                 {hasSocials && (
+                    <div className="flex items-center gap-1 pt-2">
+                        {displayProfile.socials.instagram && <Button variant="social" size="icon" asChild><Link href={`https://instagram.com/${displayProfile.socials.instagram}`} target="_blank" rel="noopener noreferrer"><Instagram /></Link></Button>}
+                        {displayProfile.socials.twitter && <Button variant="social" size="icon" asChild><Link href={`https://twitter.com/${displayProfile.socials.twitter}`} target="_blank" rel="noopener noreferrer"><Twitter /></Link></Button>}
+                        {displayProfile.socials.facebook && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.facebook} target="_blank" rel="noopener noreferrer"><FacebookIcon /></Link></Button>}
+                        {displayProfile.socials.tiktok && <Button variant="social" size="icon" asChild><Link href={`https://tiktok.com/@${displayProfile.socials.tiktok}`} target="_blank" rel="noopener noreferrer"><TikTokIcon /></Link></Button>}
+                        {displayProfile.socials.youtube && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.youtube} target="_blank" rel="noopener noreferrer"><Youtube /></Link></Button>}
+                        {displayProfile.socials.linkedin && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin /></Link></Button>}
+                        {displayProfile.socials.website && <Button variant="social" size="icon" asChild><Link href={displayProfile.socials.website} target="_blank" rel="noopener noreferrer"><LinkIcon /></Link></Button>}
+                    </div>
+                )}
             </div>
           </SheetHeader>
           
-          <div className='-mx-6'><Separator className="my-6" /></div>
+          <Separator className="my-6" />
           
-          <Tabs defaultValue="about">
+          <Tabs defaultValue="about" className="relative">
             <TabsList className={`grid w-full grid-cols-${showCalendar ? '4' : '3'}`}>
               <TabsTrigger value="about"><BadgeInfo className="w-4 h-4 mr-1 hidden sm:inline-flex" />About</TabsTrigger>
               {showCalendar && <TabsTrigger value="availability"><CalendarIcon className="w-4 h-4 mr-1 hidden sm:inline-flex" />Calendar</TabsTrigger>}
@@ -219,19 +220,6 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
                     <ProfileMap position={displayProfile.position} />
                   </>
               )}
-
-              {isCurrentUser ? (
-                 <Button variant="outline" className="w-full mt-4" asChild>
-                    <Link href="/profile/edit">Edit Profile</Link>
-                </Button>
-              ) : (
-                <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <Button className="w-full mt-6">
-                        Message
-                    </Button>
-                </SendMessageDialog>
-              )}
-
             </TabsContent>
             
             {showCalendar && (
@@ -292,6 +280,20 @@ export default function ProfileSheet({ profile, isCurrentUser = false, onOpenCha
               ))}
             </TabsContent>
           </Tabs>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 p-6 bg-background/95 backdrop-blur-sm border-t">
+          {isCurrentUser ? (
+              <Button variant="outline" className="w-full" asChild>
+                <Link href="/profile/edit">Edit Profile</Link>
+              </Button>
+            ) : (
+              <SendMessageDialog angel={profile as TrailAngel} open={dialogOpen} onOpenChange={setDialogOpen}>
+                  <Button className="w-full">
+                      Message
+                  </Button>
+              </SendMessageDialog>
+            )}
+        </div>
       </SheetContent>
     </Sheet>
   );
